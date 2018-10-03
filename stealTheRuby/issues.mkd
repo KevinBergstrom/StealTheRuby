@@ -1,0 +1,5 @@
+## Resolved Issues ##
+
+## Open Issues ##
+
+- **[1]** Need a skeletal, executable game
