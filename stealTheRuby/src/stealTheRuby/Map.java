@@ -6,6 +6,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
 import jig.ResourceManager;
+import jig.Vector;
 
 public class Map {
 
@@ -23,25 +24,74 @@ public class Map {
 	private int tilesY;
 	private int tileSizeX;
 	private int tileSizeY;
-	private Entity[][] geometry;
+	private Tile[][] geometry;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
 		tilesY = sy;
 		tileSizeX = tsx;
 		tileSizeY = tsy;
-		geometry = new Entity[sx][sy];
+		geometry = new Tile[sx][sy];
 		loadTextures();
 		testLevel();
 		
 	}
 	
 	public void testLevel() {
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+				{1,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
+				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
-					geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY, GRASSIMG_RSC);
+					if(tlevel[y][x]==0) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								true ,STEELIMG_RSC);
+					}else if(tlevel[y][x]==1) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								false ,GRASSIMG_RSC);
+					}
 			}
 		}
+	}
+	
+	public Vector getGridPos(float x, float y) {
+		int gridX = (int) Math.floor(x/(tileSizeX));
+		int gridY = (int) Math.floor(y/(tileSizeY));
+		return new Vector(gridX, gridY);
+	}
+	
+	public Tile getPoint(int tileX, int tileY) {
+		
+		if(tileX<0 || tileX > tilesX-1) {
+			return null;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return null;
+		}
+		return geometry[tileX][tileY];
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {

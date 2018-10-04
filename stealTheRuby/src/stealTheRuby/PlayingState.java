@@ -30,6 +30,11 @@ public class PlayingState extends BasicGameState{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
+		if(delta>100) {
+			//ignore large deltas
+			return;
+		}
+		
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
 		
@@ -50,6 +55,7 @@ public class PlayingState extends BasicGameState{
 		//update everything
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight);
+		mg.player.collideWithMap(mg.map);
 		
 	}
 

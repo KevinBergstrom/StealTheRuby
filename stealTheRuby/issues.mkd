@@ -4,8 +4,8 @@
 - **[2]** Need a playing state
 - **[3]** Basic player and controls
 - **[4]** Add basic map
+- **[5]** Add map collision
 
 ## Open Issues ##
 
-- **[5]** Add map collision
 - **[6]** Splash state
