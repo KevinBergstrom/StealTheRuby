@@ -5,21 +5,38 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import jig.Entity;
+import jig.ResourceManager;
 import stealTheRuby.PlayingState;
 
 public class MainGame extends StateBasedGame {
 
 	public static final int PLAYINGSTATE = 0;
 	
+	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
+	
+	Player player;
+	
+	public final int ScreenWidth;
+	public final int ScreenHeight;
+	
 	public MainGame(String title, int width, int height) {
 		super (title);
+		
+		ScreenHeight = height;
+		ScreenWidth = width;
+		
+		Entity.setCoarseGrainedCollisionBoundary(Entity.AABB);
+		
 	    }
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		addState(new PlayingState());
 	
-
+		ResourceManager.loadImage(TESTIMG_RSC);
+		
+		player = new Player(100,100,32,32);
 	}
 	
 	public static void main(String[] args) {
