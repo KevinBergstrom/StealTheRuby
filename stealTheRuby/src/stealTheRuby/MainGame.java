@@ -16,6 +16,7 @@ public class MainGame extends StateBasedGame {
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	
 	Player player;
+	Map map;
 	
 	public final int ScreenWidth;
 	public final int ScreenHeight;
@@ -37,6 +38,9 @@ public class MainGame extends StateBasedGame {
 		ResourceManager.loadImage(TESTIMG_RSC);
 		
 		player = new Player(100,100,32,32);
+		
+		map = new Map(25, 19, 32, 32);
+		
 	}
 	
 	public static void main(String[] args) {
