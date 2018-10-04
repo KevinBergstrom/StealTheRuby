@@ -3,7 +3,9 @@
 - **[1]** Need a skeletal, executable game
 - **[2]** Need a playing state
 - **[3]** Basic player and controls
+- **[4]** Add basic map
 
 ## Open Issues ##
 
-- **[4]** Splash state
+- **[5]** Add map collision
+- **[6]** Splash state
