@@ -2,8 +2,8 @@
 
 - **[1]** Need a skeletal, executable game
 - **[2]** Need a playing state
+- **[3]** Basic player and controls
 
 ## Open Issues ##
 
-- **[3]** Basic player and controls
 - **[4]** Splash state
