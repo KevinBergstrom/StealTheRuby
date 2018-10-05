@@ -9,3 +9,5 @@
 ## Open Issues ##
 
 - **[6]** Splash state
+- **[7]** Add GUI
+- **[8]** Add coins
