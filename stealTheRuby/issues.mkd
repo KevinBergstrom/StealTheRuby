@@ -5,9 +5,9 @@
 - **[3]** Basic player and controls
 - **[4]** Add basic map
 - **[5]** Add map collision
+- **[6]** Splash state
 
 ## Open Issues ##
 
-- **[6]** Splash state
 - **[7]** Add GUI
 - **[8]** Add coins

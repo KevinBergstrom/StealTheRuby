@@ -43,6 +43,14 @@ public class SplashState extends BasicGameState{
 	private float maxFlickerTimer;
 	private float flickerTimer;
 	
+	private float maxRatTimer;
+	private float ratTimer;
+	private float ratSpeed;
+	
+	private float maxHeliTimer;
+	private float heliTimer;
+	private float heliSpeed;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		//load stuff
@@ -52,10 +60,18 @@ public class SplashState extends BasicGameState{
 		flickerTimer = maxFlickerTimer;
 		flickerDebounce = 60;
 		
+		maxRatTimer = 15000;
+		ratTimer = maxRatTimer;
+		ratSpeed = 0.1f;
+		
+		maxHeliTimer = 20000;
+		heliTimer = maxHeliTimer;
+		heliSpeed = 0.05f;
+		
 		ruby = new Tile(198*2,185*2,128,128,false,BIGRUBYIMG_RSC);
 		light = new Tile(395,183*2,163*2,158*2,true,SPLASHLIGHT_RSC);
-		rat = new Tile(351*2,258*2,23*2,8*2,false,SPLASHRATIMG_RSC);
-		heli = new Tile(19*2,150*2,14*2,8*2,false,SPLASHHELIIMG_RSC);
+		rat = new Tile(-100,258*2,23*2,8*2,false,SPLASHRATIMG_RSC);
+		heli = new Tile(-100,150*2,14*2,8*2,false,SPLASHHELIIMG_RSC);
 		
 	}
 	
@@ -98,10 +114,44 @@ public class SplashState extends BasicGameState{
 		
 		timer += delta;
 		flickerTimer -= delta;
+		ratTimer -= delta;
+		heliTimer -= delta;
 		
 		ruby.setPosition(198*2,(185*2)+(float)Math.sin(timer/500)*6);
 		
-
+		//rat running
+		if(ratTimer<=0) {
+			if(rat.getSolid()) {
+				if(rat.getCoarseGrainedMaxX()<0) {
+					rat.setSolid(false);
+					rat.setPosition(-100,rat.getY());
+					ratTimer = maxRatTimer + (float)Math.random()*4500;
+				}else {
+					rat.setPosition(rat.getX()-(delta*ratSpeed),rat.getY());
+				}
+			}else {
+				rat.setSolid(true);
+				rat.setPosition(mg.ScreenWidth+(23*2),rat.getY());
+			}
+		}
+		
+		//heli flying
+		if(heliTimer<=0) {
+			if(heli.getSolid()) {
+				if(heli.getCoarseGrainedMinX()>mg.ScreenWidth) {
+					heli.setSolid(false);
+					heli.setPosition(-100,150*2);
+					heliTimer = maxHeliTimer + (float)Math.random()*4500;
+				}else {
+					heli.setPosition(heli.getX()+(delta*heliSpeed),150*2 +(float)Math.sin(timer/1000)*5);
+				}
+			}else {
+				heli.setSolid(true);
+				heli.setPosition(-14*2,150*2);
+			}
+		}
+		
+		//light flicker
 		if(flickerTimer<=0) {
 			if(light.getSolid()) {
 				//on
