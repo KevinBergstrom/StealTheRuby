@@ -11,7 +11,8 @@ import stealTheRuby.PlayingState;
 
 public class MainGame extends StateBasedGame {
 
-	public static final int PLAYINGSTATE = 0;
+	public static final int SPLASHSTATE = 0;
+	public static final int PLAYINGSTATE = 1;
 	
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	
@@ -33,6 +34,7 @@ public class MainGame extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
+		addState(new SplashState());
 		addState(new PlayingState());
 	
 		ResourceManager.loadImage(TESTIMG_RSC);

@@ -25,4 +25,8 @@ public class Tile extends Entity{
 		return solid;
 	}
 	
+	public void setSolid(boolean sol) {
+		solid = sol;
+	}
+	
 }
