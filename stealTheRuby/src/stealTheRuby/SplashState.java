@@ -38,13 +38,22 @@ public class SplashState extends BasicGameState{
 	private Tile heli;
 	private Tile light;
 	
+	private double timer;
+	private float flickerDebounce;
+	private float maxFlickerTimer;
+	private float flickerTimer;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		//load stuff
 		loadTextures();
 		
+		maxFlickerTimer = 3000;
+		flickerTimer = maxFlickerTimer;
+		flickerDebounce = 60;
+		
 		ruby = new Tile(198*2,185*2,128,128,false,BIGRUBYIMG_RSC);
-		light = new Tile(395,183*2,163*2,158*2,false,SPLASHLIGHT_RSC);
+		light = new Tile(395,183*2,163*2,158*2,true,SPLASHLIGHT_RSC);
 		rat = new Tile(351*2,258*2,23*2,8*2,false,SPLASHRATIMG_RSC);
 		heli = new Tile(19*2,150*2,14*2,8*2,false,SPLASHHELIIMG_RSC);
 		
@@ -54,6 +63,7 @@ public class SplashState extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) {
 		//container.setSoundOn(false);
 		readyToProgress = false;
+		timer = 0;
 	}
 
 	@Override
@@ -75,7 +85,9 @@ public class SplashState extends BasicGameState{
 				0, 0, mg.ScreenWidth, mg.ScreenHeight,0, 0,400,300 );
 		
 		ruby.render(g);
-		light.render(g);
+		if(light.getSolid()) {
+			light.render(g);
+		}
 	}
 
 	@Override
@@ -83,6 +95,30 @@ public class SplashState extends BasicGameState{
 		// TODO Auto-generated method stub
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
+		
+		timer += delta;
+		flickerTimer -= delta;
+		
+		ruby.setPosition(198*2,(185*2)+(float)Math.sin(timer/500)*6);
+		
+
+		if(flickerTimer<=0) {
+			if(light.getSolid()) {
+				//on
+				flickerTimer = flickerDebounce;
+				light.setSolid(false);
+			}else {
+				//off
+				if(Math.random()>0.65) {
+					//more than one flicker
+					flickerTimer = flickerDebounce;
+				}else {
+					flickerTimer = maxFlickerTimer + (float)Math.random()*4500;
+				}
+				light.setSolid(true);
+			}
+		}
+
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(readyToProgress) {
