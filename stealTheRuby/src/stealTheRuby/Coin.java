@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.ResourceManager;
+import jig.Vector;
 
 public class Coin extends Item{
 
@@ -18,6 +19,8 @@ public class Coin extends Item{
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addCoins(1);
+		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
+		mg.map.removeItem((int)gridPos.getX(), (int)gridPos.getY());
 	}
 	
 	

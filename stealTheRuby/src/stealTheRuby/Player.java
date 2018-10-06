@@ -1,5 +1,7 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -15,6 +17,9 @@ public class Player extends Entity{
 	private int sizey;
 	
 	private int coins;
+	private boolean hasRuby;
+	
+	private ArrayList<Item> inventory;
 	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
@@ -31,6 +36,10 @@ public class Player extends Entity{
 		speed = 0.1f;
 		
 		coins = 0;
+		hasRuby = false;
+		
+		inventory = new ArrayList<Item>();
+		
 	}
 	
 	public void setVelocity(final Vector v) {
@@ -39,6 +48,12 @@ public class Player extends Entity{
 
 	public Vector getVelocity() {
 		return velocity;
+	}
+	
+	public void reset() {
+		//TODO update when more things added
+		coins = 0;
+		hasRuby = false;
 	}
 	
 	public void keepInBounds(float x1,float x2,float y1,float y2) {
@@ -67,9 +82,7 @@ public class Player extends Entity{
 		
 		if(p!=null && collides(p) != null) {
 			p.pickup(mg);
-			mg.map.removeItem((int)gridPos.getX(), (int)gridPos.getY());
 		}
-		
 	}
 	
 	public void collideWithMap(Map map) {

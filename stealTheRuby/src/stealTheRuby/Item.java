@@ -5,7 +5,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import jig.Entity;
 
 public class Item extends Entity{
-
+	
 	public Item(float x, float y) {
 		super(x,y);
 	}

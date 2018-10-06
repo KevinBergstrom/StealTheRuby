@@ -10,5 +10,8 @@
 
 ## Open Issues ##
 
-- **[8]** Add GUI
+- **[8]** Add ruby
+- **[9]** Add keys
+- **[10]** Add locks
+- **[11]** Add GUI
 
