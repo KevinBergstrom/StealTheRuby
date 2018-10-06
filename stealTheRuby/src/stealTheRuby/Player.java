@@ -22,6 +22,7 @@ public class Player extends Entity{
 	
 	private ArrayList<Item> inventory;
 	
+	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
 		Image newImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);

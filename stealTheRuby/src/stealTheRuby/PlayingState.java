@@ -1,5 +1,7 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -35,7 +37,7 @@ public class PlayingState extends BasicGameState{
 		loadTextures();
 		
 		rubyCase = new Tile(52,460,74,76,false,RUBYCASEIMG_RSC);
-		bigRuby = new Tile(52,467,64,64,true,SplashState.BIGRUBYIMG_RSC);
+		bigRuby = new Tile(52,467,64,64,false,SplashState.BIGRUBYIMG_RSC);
 		itemGUI = new Tile(399,519,280,64,true,ITEMGUIIMG_RSC);
 		
 	}
@@ -49,7 +51,8 @@ public class PlayingState extends BasicGameState{
 		mg.player.render(g);
 		
 		//render gui
-		if(mg.player.hasRuby()) {
+		if(bigRuby.getSolid()) {
+			//ruby will only show if solid
 			bigRuby.render(g);
 		}
 		rubyCase.render(g);
@@ -59,6 +62,11 @@ public class PlayingState extends BasicGameState{
 		infoGUI.setFilter(Image.FILTER_NEAREST);
 		g.drawImage(infoGUI,
 				0, 499, mg.ScreenWidth, mg.ScreenHeight,0, 0,800,101 );
+		
+		for(int i = 0;i<mg.collectAnims.size();i++) {
+			mg.collectAnims.get(i).render(g);
+		}
+		
 	}
 
 	@Override
@@ -95,6 +103,19 @@ public class PlayingState extends BasicGameState{
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight-100);
 		mg.player.collideWithItems(mg);
 		mg.player.collideWithMap(mg.map);
+		
+		for(int i = 0;i<mg.collectAnims.size();i++) {
+			ProjectileImage next = mg.collectAnims.get(i);
+			next.update(delta);
+			if(next.getFinished()) {
+				if(next.getType()==2) {
+					//ruby
+					bigRuby.setSolid(true);
+				}
+				mg.collectAnims.remove(i);
+				i--;
+			}
+		}
 		
 	}
 

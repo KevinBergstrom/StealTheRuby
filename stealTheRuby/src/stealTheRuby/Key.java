@@ -8,23 +8,24 @@ import jig.Vector;
 
 public class Key extends Item{
 
+	final int type = 3;
+	
 	private Color color;
 	
 	public Key(float x, float y, Color col) {
 		super(x, y, false);
 		
 		color = col;
-		
-		Image newImage = ResourceManager.getImage(Item.KEYIMG_RSC).getScaledCopy(32, 32);
-		newImage.setFilter(Image.FILTER_NEAREST);
-		newImage.setImageColor(col.r, col.g, col.b);
-		addImageWithBoundingBox(newImage);
+		setImageWithColor(Item.KEYIMG_RSC,32,32, col);
 	}
 	
 	@Override
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addItem(this);
+		System.out.println("got it");
+		addCollectAnim(getX(),getY(),400,520,type,game);
+	
 		removeThis(game);
 	}
 	

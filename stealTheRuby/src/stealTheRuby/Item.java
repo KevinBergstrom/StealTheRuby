@@ -1,6 +1,7 @@
 package stealTheRuby;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
@@ -24,6 +25,7 @@ public class Item extends Entity{
 	}
 	
 	private boolean solid;
+	private Image image;
 	
 	public Item(float x, float y, boolean sol) {
 		super(x,y);
@@ -36,6 +38,27 @@ public class Item extends Entity{
 	
 	public void use(StateBasedGame game) {
 		
+	}
+	
+	public void setImage(String texture, int sizeX,int sizeY) {
+		Image newImage = ResourceManager.getImage(texture).getScaledCopy(sizeX, sizeY);
+		newImage.setFilter(Image.FILTER_NEAREST);
+		addImageWithBoundingBox(newImage);
+		image = newImage;
+	}
+	
+	public void setImageWithColor(String texture, int sizeX,int sizeY, Color col) {
+		
+		Image newImage = ResourceManager.getImage(texture).getScaledCopy(sizeX, sizeY);
+		newImage.setFilter(Image.FILTER_NEAREST);
+		newImage.setImageColor(col.r, col.g, col.b);
+		addImageWithBoundingBox(newImage);
+		image = newImage;
+		
+	}
+	
+	public Image getImage() {
+		return image;
 	}
 	
 	public void removeThis(StateBasedGame game) {
@@ -59,6 +82,12 @@ public class Item extends Entity{
 	
 	public boolean unlock(Color c, StateBasedGame game) {
 		return false;
+	}
+	
+	public void addCollectAnim(float startX, float startY, float endX, float endY, int type, StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		ProjectileImage newPI = new ProjectileImage(getX(), getY(), startX, startY, endX, endY, type, this);
+		mg.collectAnims.add(newPI);
 	}
 	
 }

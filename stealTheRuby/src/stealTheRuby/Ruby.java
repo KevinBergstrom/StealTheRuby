@@ -1,23 +1,24 @@
 package stealTheRuby;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-import jig.ResourceManager;
 
 public class Ruby extends Item{
 
+	final int type = 2;
+	
 	public Ruby(float x, float y) {
 		super(x, y, false);
-		Image newImage = ResourceManager.getImage(Item.SMALLRUBYIMG_RSC).getScaledCopy(32, 32);
-		newImage.setFilter(Image.FILTER_NEAREST);
-		addImageWithBoundingBox(newImage);
+		setImage(Item.SMALLRUBYIMG_RSC,32,32);
 	}
 	
 	@Override
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addRuby();
+		
+		addCollectAnim(getX(),getY(),53,464,type,game);
+		
 		removeThis(game);
 	}
 
