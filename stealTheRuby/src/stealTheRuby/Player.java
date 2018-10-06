@@ -81,6 +81,10 @@ public class Player extends Entity{
 		hasRuby = true;
 	}
 	
+	public boolean hasRuby() {
+		return hasRuby;
+	}
+	
 	public void addItem(Item t) {
 		inventory.add(t);
 		//update gui?

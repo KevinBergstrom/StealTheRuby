@@ -43,7 +43,7 @@ public class MainGame extends StateBasedGame {
 		
 		player = new Player(100,100,32,32);
 		
-		map = new Map(25, 19, 32, 32);
+		map = new Map(25, 16, 32, 32);
 		
 	}
 	
