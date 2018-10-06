@@ -12,11 +12,13 @@ public class Map {
 
 	public static final String GRASSIMG_RSC = "stealTheRuby/resource/grassTile.png";
 	public static final String STEELIMG_RSC = "stealTheRuby/resource/steelTile.png";
+	public static final String COINIMG_RSC = "stealTheRuby/resource/coin.png";
 	
 	public void loadTextures() {
 		
 		ResourceManager.loadImage(GRASSIMG_RSC);
 		ResourceManager.loadImage(STEELIMG_RSC);
+		ResourceManager.loadImage(COINIMG_RSC);
 		
 	}
 	
@@ -25,6 +27,7 @@ public class Map {
 	private int tileSizeX;
 	private int tileSizeY;
 	private Tile[][] geometry;
+	private Item[][] items;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
@@ -32,6 +35,7 @@ public class Map {
 		tileSizeX = tsx;
 		tileSizeY = tsy;
 		geometry = new Tile[sx][sy];
+		items = new Item[sx][sy];
 		loadTextures();
 		testLevel();
 		
@@ -60,6 +64,28 @@ public class Map {
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
 		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
 					if(tlevel[y][x]==0) {
@@ -75,6 +101,26 @@ public class Map {
 					}
 			}
 		}
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(ilevel[y][x]==0) {
+
+					}else if(ilevel[y][x]==1) {
+						items[x][y] = new Coin(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
+					}
+			}
+		}
+	}
+	
+	public void removeItem(int tileX, int tileY) {
+		if(tileX<0 || tileX > tilesX-1) {
+			return;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return;
+		}
+		items[tileX][tileY] = null;
 	}
 	
 	public Vector getGridPos(float x, float y) {
@@ -94,11 +140,25 @@ public class Map {
 		return geometry[tileX][tileY];
 	}
 	
+	public Item getItemAtPoint(int tileX, int tileY) {
+		
+		if(tileX<0 || tileX > tilesX-1) {
+			return null;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return null;
+		}
+		return items[tileX][tileY];
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
 				if(geometry[x][y]!=null) {
 					geometry[x][y].render(g);
+				}
+				if(items[x][y]!=null) {
+					items[x][y].render(g);
 				}
 			}
 		}

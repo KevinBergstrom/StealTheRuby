@@ -1,7 +1,7 @@
 package stealTheRuby;
 
 import org.newdawn.slick.Image;
-
+import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
 import jig.ResourceManager;
@@ -13,6 +13,8 @@ public class Player extends Entity{
 	private float speed;
 	private int sizex;
 	private int sizey;
+	
+	private int coins;
 	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
@@ -27,6 +29,8 @@ public class Player extends Entity{
 		
 		//only -0.3 to 0.3 speeds are safe
 		speed = 0.1f;
+		
+		coins = 0;
 	}
 	
 	public void setVelocity(final Vector v) {
@@ -50,6 +54,22 @@ public class Player extends Entity{
 		}else if(this.getCoarseGrainedMaxY()>y2){
 			this.setPosition(this.getX(), y2-(sizey/2));
 		}
+	}
+	
+	public void addCoins(int n) {
+		coins = coins + n;
+	}
+	
+	public void collideWithItems(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
+		Item p = mg.map.getItemAtPoint((int)gridPos.getX(),(int)gridPos.getY());
+		
+		if(p!=null && collides(p) != null) {
+			p.pickup(mg);
+			mg.map.removeItem((int)gridPos.getX(), (int)gridPos.getY());
+		}
+		
 	}
 	
 	public void collideWithMap(Map map) {
