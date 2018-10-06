@@ -14,6 +14,8 @@ public class Player extends Entity{
 	private int sizex;
 	private int sizey;
 	
+	private int coins;
+	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
 		Image newImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
@@ -27,6 +29,8 @@ public class Player extends Entity{
 		
 		//only -0.3 to 0.3 speeds are safe
 		speed = 0.1f;
+		
+		coins = 0;
 	}
 	
 	public void setVelocity(final Vector v) {
@@ -50,6 +54,10 @@ public class Player extends Entity{
 		}else if(this.getCoarseGrainedMaxY()>y2){
 			this.setPosition(this.getX(), y2-(sizey/2));
 		}
+	}
+	
+	public void addCoins(int n) {
+		coins = coins + n;
 	}
 	
 	public void collideWithMap(Map map) {
