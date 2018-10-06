@@ -19,8 +19,10 @@ public class Player extends Entity{
 	private int coins;
 	private boolean hasRuby;
 	private int itemSelected;
+	private int lives;
 	
 	private ArrayList<Item> inventory;
+	
 	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
@@ -39,6 +41,7 @@ public class Player extends Entity{
 		
 		coins = 0;
 		hasRuby = false;
+		lives = 3;
 		
 		inventory = new ArrayList<Item>();
 		
@@ -73,6 +76,18 @@ public class Player extends Entity{
 		}
 	}
 	
+	public int getLives() {
+		return lives;
+	}
+	
+	public void subLives() {
+		lives--;
+	}
+	
+	public int getCoins() {
+		return coins;
+	}
+	
 	public void addCoins(int n) {
 		coins = coins + n;
 	}
@@ -81,9 +96,26 @@ public class Player extends Entity{
 		hasRuby = true;
 	}
 	
+	public boolean hasRuby() {
+		return hasRuby;
+	}
+	
 	public void addItem(Item t) {
 		inventory.add(t);
 		//update gui?
+	}
+	
+	public Item[] getSelectedItems() {
+		Item[] ret = {null,null,null};
+		
+		for(int i = 0;i<3;i++) {
+			if(i-1+itemSelected>=0 && i-1+itemSelected<inventory.size()) {
+				ret[i]=inventory.get(i-1+itemSelected);
+			}
+		}
+		
+		return ret;
+		
 	}
 	
 	public void useItem(StateBasedGame game) {
@@ -105,13 +137,13 @@ public class Player extends Entity{
 	public void itemScroll(boolean forward) {
 		if(forward) {
 			itemSelected++;
-			if(itemSelected>inventory.size()) {
-				itemSelected = 0;
+			if(itemSelected>=inventory.size()) {
+				itemSelected = inventory.size()-1;
 			}
 		}else {
 			itemSelected--;
 			if(itemSelected<0) {
-				itemSelected = inventory.size();
+				itemSelected = 0;
 			}
 		}
 	}

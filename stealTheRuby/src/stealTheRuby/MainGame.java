@@ -1,5 +1,7 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -18,6 +20,8 @@ public class MainGame extends StateBasedGame {
 	
 	Player player;
 	Map map;
+	
+	public ArrayList<ProjectileImage> collectAnims;
 	
 	public final int ScreenWidth;
 	public final int ScreenHeight;
@@ -42,8 +46,9 @@ public class MainGame extends StateBasedGame {
 		Item.loadTextures();
 		
 		player = new Player(100,100,32,32);
+		map = new Map(25, 16, 32, 32);
 		
-		map = new Map(25, 19, 32, 32);
+		collectAnims = new ArrayList<ProjectileImage>();
 		
 	}
 	

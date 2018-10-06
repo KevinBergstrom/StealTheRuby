@@ -9,8 +9,8 @@
 - **[7]** Add coins
 - **[8]** Add ruby
 - **[9]** Add keys and locks
+- **[10]** Add GUI
 
 ## Open Issues ##
 
-- **[10]** Add GUI
-
+- **[11]** Add guards

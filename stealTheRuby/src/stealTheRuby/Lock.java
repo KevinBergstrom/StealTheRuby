@@ -13,18 +13,13 @@ public class Lock extends Item{
 		super(x, y, true);
 		
 		color = col;
-		
-		Image newImage = ResourceManager.getImage(Item.LOCKIMG_RSC).getScaledCopy(32, 32);
-		newImage.setFilter(Image.FILTER_NEAREST);
-		newImage.setImageColor(col.r, col.g, col.b);
-		addImageWithBoundingBox(newImage);
+		setImageWithColor(Item.LOCKIMG_RSC,32,32,col);
 	}
 	
 	@Override
 	public boolean unlock(Color c, StateBasedGame game) {
 		if (c.r == color.r && c.g == color.g && c.b == color.b) {
 			removeThis(game);
-			System.out.println("removed it");
 			return true;
 		}else {
 			return false;

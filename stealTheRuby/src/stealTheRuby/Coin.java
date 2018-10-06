@@ -1,24 +1,23 @@
 package stealTheRuby;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
-
-import jig.ResourceManager;
-import jig.Vector;
 
 public class Coin extends Item{
 
+	final int type = 1;
+	
 	public Coin(float x, float y) {	
 		super(x, y, false);
-		Image newImage = ResourceManager.getImage(Item.COINIMG_RSC).getScaledCopy(32, 32);
-		newImage.setFilter(Image.FILTER_NEAREST);
-		addImageWithBoundingBox(newImage);
+		setImage(Item.COINIMG_RSC,32,32);
 	}
 	
 	@Override
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addCoins(1);
+		
+		addCollectAnim(getX(),getY(),51,550,type,game);
+		
 		removeThis(game);
 	}
 	
