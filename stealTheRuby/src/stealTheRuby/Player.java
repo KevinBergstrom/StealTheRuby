@@ -75,6 +75,10 @@ public class Player extends Entity{
 		coins = coins + n;
 	}
 	
+	public void addRuby() {
+		hasRuby = true;
+	}
+	
 	public void collideWithItems(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());

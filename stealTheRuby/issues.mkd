@@ -7,10 +7,10 @@
 - **[5]** Add map collision
 - **[6]** Splash state
 - **[7]** Add coins
+- **[8]** Add ruby
 
 ## Open Issues ##
 
-- **[8]** Add ruby
 - **[9]** Add keys
 - **[10]** Add locks
 - **[11]** Add GUI

@@ -4,13 +4,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.ResourceManager;
-import jig.Vector;
 
-public class Coin extends Item{
+public class Ruby extends Item{
 
-	public Coin(float x, float y) {	
+	public Ruby(float x, float y) {
 		super(x, y);
-		Image newImage = ResourceManager.getImage(Map.COINIMG_RSC).getScaledCopy(32, 32);
+		Image newImage = ResourceManager.getImage(Map.SMALLRUBYIMG_RSC).getScaledCopy(32, 32);
 		newImage.setFilter(Image.FILTER_NEAREST);
 		addImageWithBoundingBox(newImage);
 	}
@@ -18,12 +17,8 @@ public class Coin extends Item{
 	@Override
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
-		mg.player.addCoins(1);
+		mg.player.addRuby();
 		removeThis(game);
 	}
-	
-	
-	
-	
-	
+
 }

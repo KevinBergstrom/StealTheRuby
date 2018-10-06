@@ -13,12 +13,14 @@ public class Map {
 	public static final String GRASSIMG_RSC = "stealTheRuby/resource/grassTile.png";
 	public static final String STEELIMG_RSC = "stealTheRuby/resource/steelTile.png";
 	public static final String COINIMG_RSC = "stealTheRuby/resource/coin.png";
+	public static final String SMALLRUBYIMG_RSC = "stealTheRuby/resource/smallRuby.png";
 	
 	public void loadTextures() {
 		
 		ResourceManager.loadImage(GRASSIMG_RSC);
 		ResourceManager.loadImage(STEELIMG_RSC);
 		ResourceManager.loadImage(COINIMG_RSC);
+		ResourceManager.loadImage(SMALLRUBYIMG_RSC);
 		
 	}
 	
@@ -74,7 +76,7 @@ public class Map {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -108,6 +110,8 @@ public class Map {
 
 					}else if(ilevel[y][x]==1) {
 						items[x][y] = new Coin(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
+					}else if(ilevel[y][x]==2) {
+						items[x][y] = new Ruby(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
 					}
 			}
 		}
