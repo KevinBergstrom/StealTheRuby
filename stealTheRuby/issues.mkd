@@ -8,10 +8,9 @@
 - **[6]** Splash state
 - **[7]** Add coins
 - **[8]** Add ruby
+- **[9]** Add keys and locks
 
 ## Open Issues ##
 
-- **[9]** Add keys
-- **[10]** Add locks
-- **[11]** Add GUI
+- **[10]** Add GUI
 

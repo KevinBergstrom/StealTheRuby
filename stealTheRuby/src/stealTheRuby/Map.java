@@ -1,5 +1,6 @@
 package stealTheRuby;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -12,15 +13,11 @@ public class Map {
 
 	public static final String GRASSIMG_RSC = "stealTheRuby/resource/grassTile.png";
 	public static final String STEELIMG_RSC = "stealTheRuby/resource/steelTile.png";
-	public static final String COINIMG_RSC = "stealTheRuby/resource/coin.png";
-	public static final String SMALLRUBYIMG_RSC = "stealTheRuby/resource/smallRuby.png";
 	
 	public void loadTextures() {
 		
 		ResourceManager.loadImage(GRASSIMG_RSC);
 		ResourceManager.loadImage(STEELIMG_RSC);
-		ResourceManager.loadImage(COINIMG_RSC);
-		ResourceManager.loadImage(SMALLRUBYIMG_RSC);
 		
 	}
 	
@@ -72,13 +69,13 @@ public class Map {
 				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -112,6 +109,12 @@ public class Map {
 						items[x][y] = new Coin(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
 					}else if(ilevel[y][x]==2) {
 						items[x][y] = new Ruby(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
+					}else if(ilevel[y][x]==3) {
+						items[x][y] = new Key(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2,
+								new Color(0,0,255));
+					}else if(ilevel[y][x]==4) {
+						items[x][y] = new Lock(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2,
+								new Color(0,0,255));
 					}
 			}
 		}
