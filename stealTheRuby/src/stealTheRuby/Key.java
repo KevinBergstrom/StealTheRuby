@@ -23,7 +23,7 @@ public class Key extends Item{
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addItem(this);
-		System.out.println("got it");
+		
 		addCollectAnim(getX(),getY(),400,520,type,game);
 	
 		removeThis(game);

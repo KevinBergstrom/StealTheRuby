@@ -32,6 +32,8 @@ public class PlayingState extends BasicGameState{
 	private float timer;
 	private int seconds;
 	private int minutes;
+	private float scrollCooldown;
+	private float scrollTimer;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -43,6 +45,8 @@ public class PlayingState extends BasicGameState{
 		timer = 0;
 		seconds = 0;
 		minutes = 0;
+		scrollCooldown = 300;
+		scrollTimer = 0;
 		
 	}
 
@@ -61,6 +65,7 @@ public class PlayingState extends BasicGameState{
 		}
 		rubyCase.render(g);
 		itemGUI.render(g);
+		renderInventory(game, g);
 		
 		Image infoGUI = ResourceManager.getImage(INFOGUIIMG_RSC);
 		infoGUI.setFilter(Image.FILTER_NEAREST);
@@ -93,6 +98,18 @@ public class PlayingState extends BasicGameState{
 		}
 		
 	}
+	
+	public void renderInventory(StateBasedGame game, Graphics g) {
+		MainGame mg = (MainGame)game;
+		Item[] items = mg.player.getSelectedItems();
+		for(int i = 0;i<items.length;i++) {
+			if(items[i]!=null) {
+				items[i].setPosition(315+(i*84), 519);
+				items[i].render(g);
+				
+			}
+		}
+	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -119,6 +136,10 @@ public class PlayingState extends BasicGameState{
 			seconds = 59;
 		}
 		
+		if(scrollTimer>0) {
+			scrollTimer-=delta;
+		}
+		
 		mg.player.setVelocity(new Vector(0, 0));
 
 		//player controls
@@ -131,6 +152,16 @@ public class PlayingState extends BasicGameState{
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(-1.0f, 0.0f)));
 		} else if (input.isKeyDown(Input.KEY_D)) {
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(1.0f, 0.0f)));
+		}
+		
+		if(scrollTimer<=0) {
+			if (input.isKeyDown(Input.KEY_E)) {
+				mg.player.itemScroll(true);
+				scrollTimer = scrollCooldown;
+			}else if (input.isKeyDown(Input.KEY_Q)) {
+				mg.player.itemScroll(false);
+				scrollTimer = scrollCooldown;
+			}
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
