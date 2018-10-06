@@ -39,6 +39,8 @@ public class MainGame extends StateBasedGame {
 	
 		ResourceManager.loadImage(TESTIMG_RSC);
 		
+		Item.loadTextures();
+		
 		player = new Player(100,100,32,32);
 		
 		map = new Map(25, 19, 32, 32);

@@ -8,8 +8,8 @@ import jig.ResourceManager;
 public class Ruby extends Item{
 
 	public Ruby(float x, float y) {
-		super(x, y);
-		Image newImage = ResourceManager.getImage(Map.SMALLRUBYIMG_RSC).getScaledCopy(32, 32);
+		super(x, y, false);
+		Image newImage = ResourceManager.getImage(Item.SMALLRUBYIMG_RSC).getScaledCopy(32, 32);
 		newImage.setFilter(Image.FILTER_NEAREST);
 		addImageWithBoundingBox(newImage);
 	}

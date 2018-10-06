@@ -79,6 +79,11 @@ public class Player extends Entity{
 		hasRuby = true;
 	}
 	
+	public void addItem(Item t) {
+		inventory.add(t);
+		//update gui?
+	}
+	
 	public void collideWithItems(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
@@ -86,6 +91,84 @@ public class Player extends Entity{
 		
 		if(p!=null && collides(p) != null) {
 			p.pickup(mg);
+		}
+		solidItemCollide(mg.map);
+	}
+	
+	public void solidItemCollide(Map map) {
+		float leeway = speed*30;
+		
+		Vector gridPos = map.getGridPos(this.getX(), this.getY());
+		
+		Item p1 = map.getItemAtPoint((int)gridPos.getX()-1,(int)gridPos.getY());
+		Item p2 = map.getItemAtPoint((int)gridPos.getX()+1,(int)gridPos.getY());
+		Item p3 = map.getItemAtPoint((int)gridPos.getX(),(int)gridPos.getY()-1);
+		Item p4 = map.getItemAtPoint((int)gridPos.getX(),(int)gridPos.getY()+1);
+		Item p5 = map.getItemAtPoint((int)gridPos.getX()-1,(int)gridPos.getY()-1);
+		Item p6 = map.getItemAtPoint((int)gridPos.getX()+1,(int)gridPos.getY()+1);
+		Item p7 = map.getItemAtPoint((int)gridPos.getX()-1,(int)gridPos.getY()+1);
+		Item p8 = map.getItemAtPoint((int)gridPos.getX()+1,(int)gridPos.getY()-1);
+		
+		
+		if(p1!=null) {
+			if(p1.getSolid() && collides(p1) != null) {
+				this.setX(p1.getCoarseGrainedMaxX() + this.sizex/2);
+			}
+		}
+		if(p2!=null) {
+			if(p2.getSolid() && collides(p2) != null) {
+				this.setX(p2.getCoarseGrainedMinX() - this.sizex/2);
+			}
+		}
+		if(p3!=null) {
+			if(p3.getSolid() && collides(p3) != null) {
+				this.setY(p3.getCoarseGrainedMaxY() + this.sizey/2);
+			}
+		}
+		if(p4!=null) {
+			if(p4.getSolid() && collides(p4) != null) {
+				this.setY(p4.getCoarseGrainedMinY() - this.sizey/2);
+			}
+		}
+		if(p5!=null) {
+			if(p5.getSolid() && collides(p5) != null) {
+				if(p5.getCoarseGrainedMaxY()-getCoarseGrainedMinY()>leeway) {
+					this.setX(p5.getCoarseGrainedMaxX() + this.sizex/2);
+				}
+				if(p5.getCoarseGrainedMaxX()-getCoarseGrainedMinX()>leeway) {
+					this.setY(p5.getCoarseGrainedMaxY() + this.sizey/2);
+				}
+			}
+		}
+		if(p6!=null) {
+			if(p6.getSolid() && collides(p6) != null) {
+				if(getCoarseGrainedMaxY()-p6.getCoarseGrainedMinY()>leeway) {
+					this.setX(p6.getCoarseGrainedMinX() - this.sizex/2);
+				}
+				if(getCoarseGrainedMaxX()-p6.getCoarseGrainedMinX()>leeway) {
+					this.setY(p6.getCoarseGrainedMinY() - this.sizey/2);
+				}
+			}
+		}
+		if(p7!=null) {
+			if(p7.getSolid() && collides(p7) != null) {
+				if(getCoarseGrainedMaxY()-p7.getCoarseGrainedMinY()>leeway) {
+					this.setX(p7.getCoarseGrainedMaxX() + this.sizex/2);
+				}
+				if(p7.getCoarseGrainedMaxX()-getCoarseGrainedMinX()>leeway) {
+					this.setY(p7.getCoarseGrainedMinY() - this.sizey/2);
+				}
+			}
+		}
+		if(p8!=null) {
+			if(p8.getSolid() && collides(p8) != null) {
+				if(p8.getCoarseGrainedMaxY()-getCoarseGrainedMinY()>leeway) {
+					this.setX(p8.getCoarseGrainedMinX() - this.sizex/2);
+				}
+				if(getCoarseGrainedMaxX()-p8.getCoarseGrainedMinX()>leeway) {
+					this.setY(p8.getCoarseGrainedMaxY() + this.sizey/2);
+				}
+			}
 		}
 	}
 	
