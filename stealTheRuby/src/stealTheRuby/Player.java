@@ -18,6 +18,7 @@ public class Player extends Entity{
 	
 	private int coins;
 	private boolean hasRuby;
+	private int itemSelected;
 	
 	private ArrayList<Item> inventory;
 	
@@ -28,6 +29,7 @@ public class Player extends Entity{
 		addImageWithBoundingBox(newImage);
 		
 		velocity = new Vector(0.0f, 0.0f);
+		itemSelected = 0;
 		
 		sizex = sx;
 		sizey = sy;
@@ -82,6 +84,36 @@ public class Player extends Entity{
 	public void addItem(Item t) {
 		inventory.add(t);
 		//update gui?
+	}
+	
+	public void useItem(StateBasedGame game) {
+		if(itemSelected>inventory.size()) {
+			itemSelected = 0;
+		}
+		if(itemSelected<inventory.size()) {
+			if(inventory.get(itemSelected) != null) {
+				inventory.get(itemSelected).use(game);
+			}
+		}
+	}
+	
+	public void removeItem() {
+		inventory.remove(itemSelected);
+		//update gui?
+	}
+	
+	public void itemScroll(boolean forward) {
+		if(forward) {
+			itemSelected++;
+			if(itemSelected>inventory.size()) {
+				itemSelected = 0;
+			}
+		}else {
+			itemSelected--;
+			if(itemSelected<0) {
+				itemSelected = inventory.size();
+			}
+		}
 	}
 	
 	public void collideWithItems(StateBasedGame game) {

@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import jig.Vector;
 
 public class PlayingState extends BasicGameState{
-
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO Auto-generated method stub
@@ -50,6 +50,10 @@ public class PlayingState extends BasicGameState{
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(-1.0f, 0.0f)));
 		} else if (input.isKeyDown(Input.KEY_D)) {
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(1.0f, 0.0f)));
+		}
+		
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			mg.player.useItem(game);
 		}
 		
 		//update everything

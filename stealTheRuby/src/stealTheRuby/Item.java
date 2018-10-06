@@ -1,5 +1,6 @@
 package stealTheRuby;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
@@ -54,6 +55,10 @@ public class Item extends Entity{
 	
 	public void setSolid(boolean sol) {
 		solid = sol;
+	}
+	
+	public boolean unlock(Color c, StateBasedGame game) {
+		return false;
 	}
 	
 }

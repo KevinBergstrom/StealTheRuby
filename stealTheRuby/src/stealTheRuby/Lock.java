@@ -20,9 +20,11 @@ public class Lock extends Item{
 		addImageWithBoundingBox(newImage);
 	}
 	
+	@Override
 	public boolean unlock(Color c, StateBasedGame game) {
 		if (c.r == color.r && c.g == color.g && c.b == color.b) {
 			removeThis(game);
+			System.out.println("removed it");
 			return true;
 		}else {
 			return false;
