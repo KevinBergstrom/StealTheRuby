@@ -55,6 +55,7 @@ public class PlayingState extends BasicGameState{
 		//update everything
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight);
+		mg.player.collideWithItems(mg);
 		mg.player.collideWithMap(mg.map);
 		
 	}

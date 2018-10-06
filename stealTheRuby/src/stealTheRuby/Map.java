@@ -113,6 +113,16 @@ public class Map {
 		}
 	}
 	
+	public void removeItem(int tileX, int tileY) {
+		if(tileX<0 || tileX > tilesX-1) {
+			return;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return;
+		}
+		items[tileX][tileY] = null;
+	}
+	
 	public Vector getGridPos(float x, float y) {
 		int gridX = (int) Math.floor(x/(tileSizeX));
 		int gridY = (int) Math.floor(y/(tileSizeY));
@@ -128,6 +138,17 @@ public class Map {
 			return null;
 		}
 		return geometry[tileX][tileY];
+	}
+	
+	public Item getItemAtPoint(int tileX, int tileY) {
+		
+		if(tileX<0 || tileX > tilesX-1) {
+			return null;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return null;
+		}
+		return items[tileX][tileY];
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {

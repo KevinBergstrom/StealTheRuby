@@ -1,7 +1,7 @@
 package stealTheRuby;
 
 import org.newdawn.slick.Image;
-
+import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
 import jig.ResourceManager;
@@ -58,6 +58,18 @@ public class Player extends Entity{
 	
 	public void addCoins(int n) {
 		coins = coins + n;
+	}
+	
+	public void collideWithItems(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
+		Item p = mg.map.getItemAtPoint((int)gridPos.getX(),(int)gridPos.getY());
+		
+		if(p!=null && collides(p) != null) {
+			p.pickup(mg);
+			mg.map.removeItem((int)gridPos.getX(), (int)gridPos.getY());
+		}
+		
 	}
 	
 	public void collideWithMap(Map map) {
