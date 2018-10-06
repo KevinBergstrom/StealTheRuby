@@ -19,6 +19,7 @@ public class Player extends Entity{
 	private int coins;
 	private boolean hasRuby;
 	private int itemSelected;
+	private int lives;
 	
 	private ArrayList<Item> inventory;
 	
@@ -40,6 +41,7 @@ public class Player extends Entity{
 		
 		coins = 0;
 		hasRuby = false;
+		lives = 3;
 		
 		inventory = new ArrayList<Item>();
 		
@@ -72,6 +74,18 @@ public class Player extends Entity{
 		}else if(this.getCoarseGrainedMaxY()>y2){
 			this.setPosition(this.getX(), y2-(sizey/2));
 		}
+	}
+	
+	public int getLives() {
+		return lives;
+	}
+	
+	public void subLives() {
+		lives--;
+	}
+	
+	public int getCoins() {
+		return coins;
 	}
 	
 	public void addCoins(int n) {

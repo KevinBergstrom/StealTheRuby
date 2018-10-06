@@ -1,7 +1,5 @@
 package stealTheRuby;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -31,6 +29,9 @@ public class PlayingState extends BasicGameState{
 	private Tile rubyCase;
 	private Tile bigRuby;
 	private Tile itemGUI;
+	private float timer;
+	private int seconds;
+	private int minutes;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -39,6 +40,9 @@ public class PlayingState extends BasicGameState{
 		rubyCase = new Tile(52,460,74,76,false,RUBYCASEIMG_RSC);
 		bigRuby = new Tile(52,467,64,64,false,SplashState.BIGRUBYIMG_RSC);
 		itemGUI = new Tile(399,519,280,64,true,ITEMGUIIMG_RSC);
+		timer = 0;
+		seconds = 0;
+		minutes = 0;
 		
 	}
 
@@ -63,6 +67,27 @@ public class PlayingState extends BasicGameState{
 		g.drawImage(infoGUI,
 				0, 499, mg.ScreenWidth, mg.ScreenHeight,0, 0,800,101 );
 		
+		//TODO update these
+		g.drawString("Level: TESTING LEVEL", 17, 513);
+		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
+		g.drawString("Lives: " + mg.player.getLives(), 17, 574);
+		
+		String secondsText = "";
+		String minutesText = "";
+		
+		if(seconds<10) {
+			secondsText = "0"+seconds;
+		}else {
+			secondsText = ""+seconds;
+		}
+		if(minutes<10) {
+			minutesText = "0"+minutes;
+		}else {
+			minutesText = ""+minutes;
+		}
+		
+		g.drawString(minutesText+":"+secondsText, 570, 555);
+		
 		for(int i = 0;i<mg.collectAnims.size();i++) {
 			mg.collectAnims.get(i).render(g);
 		}
@@ -79,6 +104,20 @@ public class PlayingState extends BasicGameState{
 		
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
+		
+		timer += delta;
+		if(timer>1000) {
+			seconds++;
+			timer = 0;
+		}
+		if(seconds>60) {
+			minutes++;
+			seconds = 0;
+		}
+		if(minutes>99) {
+			minutes = 99;
+			seconds = 59;
+		}
 		
 		mg.player.setVelocity(new Vector(0, 0));
 

@@ -26,7 +26,7 @@ public class ProjectileImage extends Entity{
 		startY = sy;
 		endX = ex;
 		endY = ey;
-		speed = 0.4f;
+		speed = 0.7f;
 		finished = false;
 		
 		//create a path vector
