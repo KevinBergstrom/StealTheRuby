@@ -174,6 +174,8 @@ public class PlayingState extends BasicGameState{
 		mg.player.collideWithItems(mg);
 		mg.player.collideWithMap(mg.map);
 		
+		mg.map.updateGuards(delta);
+		
 		for(int i = 0;i<mg.collectAnims.size();i++) {
 			ProjectileImage next = mg.collectAnims.get(i);
 			next.update(delta);

@@ -1,5 +1,7 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,6 +28,7 @@ public class Map {
 	private int tileSizeY;
 	private Tile[][] geometry;
 	private Item[][] items;
+	private ArrayList<Guard> guards;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
@@ -34,6 +37,8 @@ public class Map {
 		tileSizeY = tsy;
 		geometry = new Tile[sx][sy];
 		items = new Item[sx][sy];
+		guards = new ArrayList<Guard>();
+		
 		loadTextures();
 		testLevel();
 		
@@ -59,6 +64,22 @@ public class Map {
 				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1}};
 		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(tlevel[y][x]==0) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								true ,STEELIMG_RSC);
+					}else if(tlevel[y][x]==1) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								false ,GRASSIMG_RSC);
+					}
+			}
+		}
+		
 		int[][] ilevel = 
 			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -77,22 +98,6 @@ public class Map {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		
-		for(int x = 0;x<tilesX;x++) {
-			for(int y = 0;y<tilesY;y++) {
-					if(tlevel[y][x]==0) {
-						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
-								y*tileSizeY + tileSizeY/2,
-								tileSizeX, tileSizeY,
-								true ,STEELIMG_RSC);
-					}else if(tlevel[y][x]==1) {
-						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
-								y*tileSizeY + tileSizeY/2,
-								tileSizeX, tileSizeY,
-								false ,GRASSIMG_RSC);
-					}
-			}
-		}
 		
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
@@ -120,6 +125,76 @@ public class Map {
 					}else if(ilevel[y][x]==8) {
 						items[x][y] = new Lock(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2,
 								new Color(255,0,0));
+					}
+			}
+		}
+		
+		int[][] plevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,17,16,15,14,13,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,19,18,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,9,10,11,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,2,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,3,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,4,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int maxPathSize = tilesX*tilesY;
+		Vector[] testPath = new Vector[maxPathSize];
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(plevel[y][x]>0) {
+						testPath[plevel[y][x]-1]= new Vector(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2);
+					}
+			}
+		}
+		
+		ArrayList<Vector> newPath = new ArrayList<Vector>();
+		
+		for(int i = 0;i<maxPathSize;i++) {
+			if(testPath[i]!= null) {
+				newPath.add(testPath[i]);
+			}
+		}
+		
+		
+		int[][] glevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(glevel[y][x]==1) {
+						
+						Guard newGuard = new Guard(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY);
+						newGuard.setPatrolPath(newPath);
+						guards.add(newGuard);
 					}
 			}
 		}
@@ -163,6 +238,12 @@ public class Map {
 		return items[tileX][tileY];
 	}
 	
+	public void updateGuards(int delta) {
+		for(int i = 0;i<guards.size();i++) {
+			guards.get(i).update(delta);
+		}
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
@@ -171,6 +252,9 @@ public class Map {
 				}
 				if(items[x][y]!=null) {
 					items[x][y].render(g);
+				}
+				for(int i = 0;i<guards.size();i++) {
+					guards.get(i).render(g);
 				}
 			}
 		}
