@@ -125,6 +125,9 @@ public class Player extends Entity{
 		if(itemSelected<inventory.size()) {
 			if(inventory.get(itemSelected) != null) {
 				inventory.get(itemSelected).use(game);
+				if(itemSelected>=inventory.size()&&inventory.size()>0) {
+					itemSelected = inventory.size()-1;
+				}
 			}
 		}
 	}

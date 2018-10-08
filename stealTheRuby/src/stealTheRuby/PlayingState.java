@@ -168,6 +168,11 @@ public class PlayingState extends BasicGameState{
 			mg.player.useItem(game);
 		}
 		
+		if (input.isKeyDown(Input.KEY_ENTER)) {
+			//TODO testing
+			mg.map.testGuardFollowPath(mg.player.getX(), mg.player.getY());
+		}
+		
 		//update everything
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight-100);

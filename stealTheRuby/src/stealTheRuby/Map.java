@@ -1,6 +1,7 @@
 package stealTheRuby;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -29,6 +30,7 @@ public class Map {
 	private Tile[][] geometry;
 	private Item[][] items;
 	private ArrayList<Guard> guards;
+	private DijkstraNode[][] graph;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
@@ -38,10 +40,116 @@ public class Map {
 		geometry = new Tile[sx][sy];
 		items = new Item[sx][sy];
 		guards = new ArrayList<Guard>();
+		graph = new DijkstraNode[sx][sy];
 		
 		loadTextures();
 		testLevel();
+		populateDijkstraGraph();
 		
+	}
+	
+	public void testGuardFollowPath(float x, float y) {
+		//TODO testing
+		for(int i = 0;i<guards.size();i++) {
+			ArrayList<Vector> newPath = dijkstraPath(guards.get(i).getX(),guards.get(i).getY(),x,y);
+			guards.get(i).setFollowPath(newPath);
+			guards.get(i).alert();
+		}
+	}
+	
+	public ArrayList<Vector> dijkstraPath(float startX, float startY, float endX, float endY){
+		ArrayList<Vector> shortestPath = new ArrayList<Vector>();
+		//initialize graph
+		DijkstraNode.initializeGraph(graph, tilesX, tilesY);
+		updateDijkstraGraph();
+		//get start node
+		Vector gridPos = getGridPos(startX, startY); 
+		DijkstraNode startNode = graph[(int)gridPos.getX()][(int)gridPos.getY()];
+		startNode.cost = 0;
+		//create queue
+		PriorityQueue<DijkstraNode> nodes = new PriorityQueue<DijkstraNode>();
+		//add the start node
+		nodes.add(startNode);
+		//while unexplored nodes
+		while(!nodes.isEmpty()) {
+			DijkstraNode curNode = nodes.poll();
+			curNode.visited = true;
+			//for each neighbor
+			
+			for(int i = 0;i<curNode.neighbors.size();i++) {
+				DijkstraNode next = curNode.neighbors.get(i);
+				//if you can get to it
+				if(next.passable) {
+					
+					if(next.cost>curNode.cost+1) {
+						next.cost = curNode.cost+1;
+						next.predecessor = curNode;
+						nodes.add(next);
+					}
+				}
+			}
+		}
+		
+		//get end node
+		Vector endGridPos = getGridPos(endX, endY); 
+		DijkstraNode endNode = graph[(int)endGridPos.getX()][(int)endGridPos.getY()];
+		
+		DijkstraNode prev = endNode;
+		
+		ArrayList<DijkstraNode> backPath = new ArrayList<DijkstraNode>();
+		//create a backwards list of the shortest path
+		while(prev!=null) {
+			backPath.add(prev);
+			prev = prev.predecessor;
+		}
+		
+		//reverse the backwards list
+		for(int i = backPath.size()-1;i>=0;i--) {
+			shortestPath.add(backPath.get(i).getPosition());
+		}
+		
+		return shortestPath;
+	}
+	
+	public void populateDijkstraGraph() {
+		//generate nodes
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					graph[x][y] = new DijkstraNode(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2);
+			}
+		}
+		//connect to neighbors
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					ArrayList<DijkstraNode> neighbors = new ArrayList<DijkstraNode>();
+					if(x>0) {
+						neighbors.add(graph[x-1][y]);
+					}
+					if(x<tilesX-1) {
+						neighbors.add(graph[x+1][y]);
+					}
+					if(y>0) {
+						neighbors.add(graph[x][y-1]);
+					}
+					if(y<tilesY-1) {
+						neighbors.add(graph[x][y+1]);
+					}
+					graph[x][y].neighbors = neighbors;
+			}
+		}
+	}
+	
+	public void updateDijkstraGraph() {
+		//sweep the map and update passable nodes
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+				if(geometry[x][y].getSolid() || (items[x][y]!=null && items[x][y].getSolid())) {
+					graph[x][y].passable = false;
+				}else {
+					graph[x][y].passable = true;
+				}
+			}
+		}
 	}
 	
 	public void testLevel() {
@@ -135,12 +243,12 @@ public class Map {
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,0,17,16,15,14,13,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,19,18,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,1,0,9,10,11,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,2,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,3,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,4,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,9,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,4,0,0,0,0,5,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -253,11 +361,13 @@ public class Map {
 				if(items[x][y]!=null) {
 					items[x][y].render(g);
 				}
-				for(int i = 0;i<guards.size();i++) {
-					guards.get(i).render(g);
-				}
 			}
 		}
+		for(int i = 0;i<guards.size();i++) {
+			guards.get(i).render(g);
+			guards.get(i).renderPath(g);
+		}
+		
 	}
 	
 }
