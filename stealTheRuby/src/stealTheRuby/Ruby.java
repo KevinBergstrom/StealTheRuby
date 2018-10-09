@@ -16,6 +16,7 @@ public class Ruby extends Item{
 	public void pickup(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		mg.player.addRuby();
+		mg.map.prepareGetaway();
 		
 		addCollectAnim(getX(),getY(),53,464,type,game);
 		
