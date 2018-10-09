@@ -33,6 +33,8 @@ public class Map {
 	private DijkstraNode[][] graph;
 	private float alertTimer;
 	
+	private Vehicle getaway;
+	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
 		tilesY = sy;
@@ -43,6 +45,7 @@ public class Map {
 		guards = new ArrayList<Guard>();
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
+		getaway = null;
 		
 		loadTextures();
 		testLevel();
@@ -52,6 +55,12 @@ public class Map {
 	
 	public void alert(float seconds) {
 		alertTimer = 1000*seconds;
+	}
+	
+	public void prepareGetaway() {
+		if(getaway!=null) {
+			getaway.setSolid(false);
+		}
 	}
 	
 	public void testGuardFollowPath(float x, float y) {
@@ -217,7 +226,7 @@ public class Map {
 			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,0,0,0,0,5,0,0,0,0,0,-1,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -234,8 +243,9 @@ public class Map {
 		
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
-					if(ilevel[y][x]==0) {
-
+					if(ilevel[y][x]==-1) {
+						getaway = new Vehicle(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, true);
+						items[x][y] = getaway;
 					}else if(ilevel[y][x]==1) {
 						items[x][y] = new Coin(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2);
 					}else if(ilevel[y][x]==2) {
@@ -376,6 +386,9 @@ public class Map {
 		
 		if(alertTimer>0) {
 			alertTimer -= delta;
+			if(alertTimer==0) {
+				alertTimer=-1;
+			}
 		}else if(alertTimer<0) {
 			alertTimer = 0;
 			sendGuardsBackToPatrol();

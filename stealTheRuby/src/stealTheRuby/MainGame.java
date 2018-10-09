@@ -45,7 +45,8 @@ public class MainGame extends StateBasedGame {
 		
 		Item.loadTextures();
 		
-		player = new Player(100,100,32,32);
+		player = new Player(590,116,32,32);
+		//TODO move later
 		map = new Map(25, 16, 32, 32);
 		
 		collectAnims = new ArrayList<ProjectileImage>();

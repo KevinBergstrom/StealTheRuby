@@ -11,12 +11,13 @@
 - **[9]** Add keys and locks
 - **[10]** Add GUI
 - **[11]** Add guards
+- **[12]** Add getaway vehicle
 
 ## Open Issues ##
 
-- **[12]** Add getaway vehicle
 - **[13]** Add results screen
-- **[14]** Add guard vision
-- **[15]** Add gameover screen
-- **[16]** Add multiple levels
+- **[14]** Add loading state
+- **[15]** Add guard vision
+- **[16]** Add gameover screen
+- **[17]** Add multiple levels
 
