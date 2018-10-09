@@ -1,5 +1,8 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,6 +29,9 @@ public class Map {
 	private int tileSizeY;
 	private Tile[][] geometry;
 	private Item[][] items;
+	private ArrayList<Guard> guards;
+	private DijkstraNode[][] graph;
+	private float alertTimer;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
@@ -34,9 +40,141 @@ public class Map {
 		tileSizeY = tsy;
 		geometry = new Tile[sx][sy];
 		items = new Item[sx][sy];
+		guards = new ArrayList<Guard>();
+		graph = new DijkstraNode[sx][sy];
+		alertTimer = 0;
+		
 		loadTextures();
 		testLevel();
+		populateDijkstraGraph();
 		
+	}
+	
+	public void alert(float seconds) {
+		alertTimer = 1000*seconds;
+	}
+	
+	public void testGuardFollowPath(float x, float y) {
+		//TODO testing
+		for(int i = 0;i<guards.size();i++) {
+			ArrayList<Vector> newPath = dijkstraPath(guards.get(i).getX(),guards.get(i).getY(),x,y);
+			guards.get(i).setFollowPath(newPath);
+			guards.get(i).chase();
+		}
+	}
+	
+	public void chasePlayer(Guard guard, Player player) {
+		ArrayList<Vector> newPath = dijkstraPath(guard.getX(),guard.getY(),player.getX(),player.getY());
+		guard.setFollowPath(newPath);
+		guard.chase();
+	}
+	
+	public void sendGuardsBackToPatrol() {
+		for(int i = 0;i<guards.size();i++) {
+			Guard curGuard = guards.get(i);
+			ArrayList<Vector> path = curGuard.getPatrolPath();
+			if(!path.isEmpty()) {
+				int point = curGuard.getPatrolPoint();
+				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),path.get(point).getX(),path.get(point).getY());
+				curGuard.setFollowPath(newPath);
+			}
+			curGuard.returnToPatrolPath();
+		}
+	}
+	
+	public ArrayList<Vector> dijkstraPath(float startX, float startY, float endX, float endY){
+		ArrayList<Vector> shortestPath = new ArrayList<Vector>();
+		//initialize graph
+		DijkstraNode.initializeGraph(graph, tilesX, tilesY);
+		updateDijkstraGraph();
+		//get start node
+		Vector gridPos = getGridPos(startX, startY); 
+		DijkstraNode startNode = graph[(int)gridPos.getX()][(int)gridPos.getY()];
+		startNode.cost = 0;
+		//create queue
+		PriorityQueue<DijkstraNode> nodes = new PriorityQueue<DijkstraNode>();
+		//add the start node
+		nodes.add(startNode);
+		//while unexplored nodes
+		while(!nodes.isEmpty()) {
+			DijkstraNode curNode = nodes.poll();
+			curNode.visited = true;
+			//for each neighbor
+			
+			for(int i = 0;i<curNode.neighbors.size();i++) {
+				DijkstraNode next = curNode.neighbors.get(i);
+				//if you can get to it
+				if(next.passable) {
+					
+					if(next.cost>curNode.cost+1) {
+						next.cost = curNode.cost+1;
+						next.predecessor = curNode;
+						nodes.add(next);
+					}
+				}
+			}
+		}
+		
+		//get end node
+		Vector endGridPos = getGridPos(endX, endY); 
+		DijkstraNode endNode = graph[(int)endGridPos.getX()][(int)endGridPos.getY()];
+		
+		DijkstraNode prev = endNode;
+		
+		ArrayList<DijkstraNode> backPath = new ArrayList<DijkstraNode>();
+		//create a backwards list of the shortest path
+		while(prev!=null) {
+			backPath.add(prev);
+			prev = prev.predecessor;
+		}
+		
+		//reverse the backwards list
+		for(int i = backPath.size()-1;i>=0;i--) {
+			shortestPath.add(backPath.get(i).getPosition());
+		}
+		
+		return shortestPath;
+	}
+	
+	public void populateDijkstraGraph() {
+		//generate nodes
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					graph[x][y] = new DijkstraNode(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2);
+			}
+		}
+		//connect to neighbors
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					ArrayList<DijkstraNode> neighbors = new ArrayList<DijkstraNode>();
+					if(x>0) {
+						neighbors.add(graph[x-1][y]);
+					}
+					if(x<tilesX-1) {
+						neighbors.add(graph[x+1][y]);
+					}
+					if(y>0) {
+						neighbors.add(graph[x][y-1]);
+					}
+					if(y<tilesY-1) {
+						neighbors.add(graph[x][y+1]);
+					}
+					graph[x][y].neighbors = neighbors;
+			}
+		}
+	}
+	
+	public void updateDijkstraGraph() {
+		//sweep the map and update passable nodes
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+				if(geometry[x][y].getSolid() || (items[x][y]!=null && items[x][y].getSolid())) {
+					graph[x][y].passable = false;
+				}else {
+					graph[x][y].passable = true;
+				}
+			}
+		}
 	}
 	
 	public void testLevel() {
@@ -50,7 +188,7 @@ public class Map {
 				{1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
 				{1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
@@ -58,6 +196,22 @@ public class Map {
 				{1,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
 				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1}};
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(tlevel[y][x]==0) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								true ,STEELIMG_RSC);
+					}else if(tlevel[y][x]==1) {
+						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
+								y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY,
+								false ,GRASSIMG_RSC);
+					}
+			}
+		}
 		
 		int[][] ilevel = 
 			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -77,22 +231,6 @@ public class Map {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		
-		for(int x = 0;x<tilesX;x++) {
-			for(int y = 0;y<tilesY;y++) {
-					if(tlevel[y][x]==0) {
-						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
-								y*tileSizeY + tileSizeY/2,
-								tileSizeX, tileSizeY,
-								true ,STEELIMG_RSC);
-					}else if(tlevel[y][x]==1) {
-						geometry[x][y] = new Tile(x*tileSizeX + tileSizeX/2,
-								y*tileSizeY + tileSizeY/2,
-								tileSizeX, tileSizeY,
-								false ,GRASSIMG_RSC);
-					}
-			}
-		}
 		
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
@@ -120,6 +258,76 @@ public class Map {
 					}else if(ilevel[y][x]==8) {
 						items[x][y] = new Lock(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2,
 								new Color(255,0,0));
+					}
+			}
+		}
+		
+		int[][] plevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,9,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,4,0,0,0,0,5,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int maxPathSize = tilesX*tilesY;
+		Vector[] testPath = new Vector[maxPathSize];
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(plevel[y][x]>0) {
+						testPath[plevel[y][x]-1]= new Vector(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2);
+					}
+			}
+		}
+		
+		ArrayList<Vector> newPath = new ArrayList<Vector>();
+		
+		for(int i = 0;i<maxPathSize;i++) {
+			if(testPath[i]!= null) {
+				newPath.add(testPath[i]);
+			}
+		}
+		
+		
+		int[][] glevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		for(int x = 0;x<tilesX;x++) {
+			for(int y = 0;y<tilesY;y++) {
+					if(glevel[y][x]==1) {
+						
+						Guard newGuard = new Guard(x*tileSizeX + tileSizeX/2,y*tileSizeY + tileSizeY/2,
+								tileSizeX, tileSizeY);
+						newGuard.setPatrolPath(newPath);
+						guards.add(newGuard);
 					}
 			}
 		}
@@ -163,6 +371,28 @@ public class Map {
 		return items[tileX][tileY];
 	}
 	
+	public void updateGuards(int delta, StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		
+		if(alertTimer>0) {
+			alertTimer -= delta;
+		}else if(alertTimer<0) {
+			alertTimer = 0;
+			sendGuardsBackToPatrol();
+		}
+		
+		for(int i = 0;i<guards.size();i++) {
+			Guard curGuard = guards.get(i);
+			curGuard.update(delta);
+			if(curGuard.getState()==3) {
+				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),mg.player.getX(),mg.player.getY());
+				curGuard.setFollowPath(newPath);
+				curGuard.chase();
+			}
+			
+		}
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
@@ -174,6 +404,11 @@ public class Map {
 				}
 			}
 		}
+		for(int i = 0;i<guards.size();i++) {
+			guards.get(i).render(g);
+			guards.get(i).renderPath(g);
+		}
+		
 	}
 	
 }
