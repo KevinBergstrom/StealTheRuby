@@ -15,8 +15,8 @@ public class Guard extends Entity{
 	private float speed;
 	private int sizex;
 	private int sizey;
-	private boolean alerted;
-	private boolean patroling;
+	
+	private int state;
 	
 	private int patrolPoint;
 	private ArrayList<Vector> patrolPath;
@@ -36,9 +36,13 @@ public class Guard extends Entity{
 		sizex = sx;
 		sizey = sy;
 		
-		speed = 0.1f;
-		alerted = false;
-		patroling = true;
+		speed = 0.08f;
+		
+		state = 0;
+		//0 = patroling
+		//1 = chasing
+		//2 = returning to patrol
+		//3 = chasing and ready for path update
 		
 		patrolPoint = 0;
 		patrolPath = new ArrayList<Vector>();
@@ -48,14 +52,29 @@ public class Guard extends Entity{
 	}
 	
 	public void patrol() {
-		//TODO need a way to walk back to the patrol route
-		alerted = false;
-		patroling = true;
+		state = 0;
 	}
 	
-	public void alert() {
-		alerted = true;
-		patroling = false;
+	public void chase() {
+		state = 1;
+	}
+	
+	public void returnToPatrolPath() {
+		if(state == 1 || state == 3) {
+			state = 2;
+		}
+	}
+	
+	public ArrayList<Vector> getPatrolPath() {
+		return patrolPath;
+	}
+	
+	public int getPatrolPoint() {
+		return patrolPoint;
+	}
+	
+	public int getState() {
+		return state;
 	}
 	
 	public void setPatrolPath(ArrayList<Vector> points) {
@@ -64,7 +83,11 @@ public class Guard extends Entity{
 	}
 	
 	public void setFollowPath(ArrayList<Vector> points) {
-		followPoint = 0;
+		if(points.size()>1) {
+			followPoint = 1;
+		}else {
+			followPoint = 0;
+		}
 		followPath = points;
 	}
 	
@@ -82,6 +105,7 @@ public class Guard extends Entity{
 		Vector dif = new Vector(nextPoint.getX()-getX(),nextPoint.getY()-getY());
 		
 		if(dif.length()<=leeway) {
+			//reached a new point
 			patrolPoint++;
 			if(patrolPoint>=patrolPath.size()) {
 				patrolPoint = 0;
@@ -99,15 +123,26 @@ public class Guard extends Entity{
 		if(followPath.isEmpty()) {
 			return;
 		}
+		
 		Vector nextPoint = followPath.get(followPoint);
 		Vector dif = new Vector(nextPoint.getX()-getX(),nextPoint.getY()-getY());
 		
 		if(dif.length()<=leeway) {
+			//reached a new point
 			followPoint++;
 			if(followPoint>=followPath.size()) {
 				followPoint = 0;
+				if(state == 2) {
+					//found way back to patrol
+					state = 0;
+					//patrolPoint = 0;
+				}
 			}
 			setPosition(nextPoint.getX(),nextPoint.getY());
+			if(state == 1) {
+				//ready to receive new path
+				state = 3;
+			}
 		}else {
 			velVec = new Vector(dif.getX()/dif.length(),dif.getY()/dif.length());
 		}
@@ -116,20 +151,32 @@ public class Guard extends Entity{
 	
 	public void renderPath(Graphics g) {
 		//for testing purposes
-		for(int i = 0;i<followPath.size();i++) {
-			Vector point = followPath.get(i);
-			Image pimg = ResourceManager.getImage(MainGame.TESTIMG_RSC);
-			pimg.setFilter(Image.FILTER_NEAREST);
-			g.drawImage(pimg,
-					point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
+		if(state>0) {
+			for(int i = 0;i<followPath.size();i++) {
+				Vector point = followPath.get(i);
+				Image pimg = ResourceManager.getImage(MainGame.TESTIMG_RSC);
+				pimg.setFilter(Image.FILTER_NEAREST);
+				g.drawImage(pimg,
+						point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
+			}
+		}else {
+			for(int i = 0;i<patrolPath.size();i++) {
+				Vector point = patrolPath.get(i);
+				Image pimg = ResourceManager.getImage(MainGame.TESTIMG_RSC);
+				pimg.setFilter(Image.FILTER_NEAREST);
+				g.drawImage(pimg,
+						point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
+			}
 		}
 	}
 	
 	public void update(final int delta) {
-		if(alerted) {
-			followPath();
-		}else if(patroling){
+		if(state == 0) {
 			followPatrolPath();
+		}else if(state == 1){
+			followPath();
+		}else if(state == 2) {
+			followPath();
 		}
 		translate(velocity.scale(delta*speed));
 		

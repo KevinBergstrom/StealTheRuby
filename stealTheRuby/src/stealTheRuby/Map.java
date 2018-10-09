@@ -31,6 +31,7 @@ public class Map {
 	private Item[][] items;
 	private ArrayList<Guard> guards;
 	private DijkstraNode[][] graph;
+	private float alertTimer;
 	
 	public Map(int sx, int sy, int tsx, int tsy) {
 		tilesX = sx;
@@ -41,6 +42,7 @@ public class Map {
 		items = new Item[sx][sy];
 		guards = new ArrayList<Guard>();
 		graph = new DijkstraNode[sx][sy];
+		alertTimer = 0;
 		
 		loadTextures();
 		testLevel();
@@ -48,12 +50,35 @@ public class Map {
 		
 	}
 	
+	public void alert(float seconds) {
+		alertTimer = 1000*seconds;
+	}
+	
 	public void testGuardFollowPath(float x, float y) {
 		//TODO testing
 		for(int i = 0;i<guards.size();i++) {
 			ArrayList<Vector> newPath = dijkstraPath(guards.get(i).getX(),guards.get(i).getY(),x,y);
 			guards.get(i).setFollowPath(newPath);
-			guards.get(i).alert();
+			guards.get(i).chase();
+		}
+	}
+	
+	public void chasePlayer(Guard guard, Player player) {
+		ArrayList<Vector> newPath = dijkstraPath(guard.getX(),guard.getY(),player.getX(),player.getY());
+		guard.setFollowPath(newPath);
+		guard.chase();
+	}
+	
+	public void sendGuardsBackToPatrol() {
+		for(int i = 0;i<guards.size();i++) {
+			Guard curGuard = guards.get(i);
+			ArrayList<Vector> path = curGuard.getPatrolPath();
+			if(!path.isEmpty()) {
+				int point = curGuard.getPatrolPoint();
+				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),path.get(point).getX(),path.get(point).getY());
+				curGuard.setFollowPath(newPath);
+			}
+			curGuard.returnToPatrolPath();
 		}
 	}
 	
@@ -163,7 +188,7 @@ public class Map {
 				{1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
 				{1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1},
 				{1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
@@ -284,11 +309,11 @@ public class Map {
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			   {0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -346,9 +371,25 @@ public class Map {
 		return items[tileX][tileY];
 	}
 	
-	public void updateGuards(int delta) {
+	public void updateGuards(int delta, StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		
+		if(alertTimer>0) {
+			alertTimer -= delta;
+		}else if(alertTimer<0) {
+			alertTimer = 0;
+			sendGuardsBackToPatrol();
+		}
+		
 		for(int i = 0;i<guards.size();i++) {
-			guards.get(i).update(delta);
+			Guard curGuard = guards.get(i);
+			curGuard.update(delta);
+			if(curGuard.getState()==3) {
+				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),mg.player.getX(),mg.player.getY());
+				curGuard.setFollowPath(newPath);
+				curGuard.chase();
+			}
+			
 		}
 	}
 	

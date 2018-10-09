@@ -10,7 +10,13 @@
 - **[8]** Add ruby
 - **[9]** Add keys and locks
 - **[10]** Add GUI
+- **[11]** Add guards
 
 ## Open Issues ##
 
-- **[11]** Add guards
+- **[12]** Add getaway vehicle
+- **[13]** Add results screen
+- **[14]** Add guard vision
+- **[15]** Add gameover screen
+- **[16]** Add multiple levels
+
