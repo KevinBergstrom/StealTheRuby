@@ -12,16 +12,6 @@ import jig.ResourceManager;
 import jig.Vector;
 
 public class Map {
-
-	public static final String GRASSIMG_RSC = "stealTheRuby/resource/grassTile.png";
-	public static final String STEELIMG_RSC = "stealTheRuby/resource/steelTile.png";
-	
-	public void loadTextures() {
-		
-		ResourceManager.loadImage(GRASSIMG_RSC);
-		ResourceManager.loadImage(STEELIMG_RSC);
-		
-	}
 	
 	private int tilesX;
 	private int tilesY;
@@ -47,8 +37,6 @@ public class Map {
 		alertTimer = 0;
 		getaway = null;
 		
-		loadTextures();
-		//testLevel();
 		populateDijkstraGraph();
 		
 	}

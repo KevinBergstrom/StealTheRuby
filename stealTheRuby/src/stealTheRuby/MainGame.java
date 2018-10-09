@@ -44,7 +44,7 @@ public class MainGame extends StateBasedGame {
 		ResourceManager.loadImage(TESTIMG_RSC);
 		
 		Item.loadTextures();
-		
+		Levels.loadTextures();
 		player = new Player(590,116,32,32);
 		//TODO move later
 		map = new Map(25, 16, 32, 32);
