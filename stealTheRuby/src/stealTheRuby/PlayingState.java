@@ -48,6 +48,9 @@ public class PlayingState extends BasicGameState{
 		scrollCooldown = 300;
 		scrollTimer = 0;
 		
+		//TODO testing
+		Levels.loadLevel(1, game);
+		
 	}
 
 	@Override

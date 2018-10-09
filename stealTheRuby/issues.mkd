@@ -12,12 +12,12 @@
 - **[10]** Add GUI
 - **[11]** Add guards
 - **[12]** Add getaway vehicle
+- **[13]** Add multiple levels
 
 ## Open Issues ##
 
-- **[13]** Add results screen
 - **[14]** Add loading state
-- **[15]** Add guard vision
-- **[16]** Add gameover screen
-- **[17]** Add multiple levels
+- **[15]** Add results screen
+- **[16]** Add guard vision
+- **[17]** Add gameover screen
 

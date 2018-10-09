@@ -28,10 +28,12 @@ public class Item extends Entity{
 	
 	private boolean solid;
 	private Image image;
+	private String tex;
 	
 	public Item(float x, float y, boolean sol) {
 		super(x,y);
 		solid = sol;
+		tex = null;
 	}
 	
 	public void pickup(StateBasedGame game) {
@@ -47,6 +49,7 @@ public class Item extends Entity{
 		newImage.setFilter(Image.FILTER_NEAREST);
 		addImageWithBoundingBox(newImage);
 		image = newImage;
+		tex = texture;
 	}
 	
 	public void setImageWithColor(String texture, int sizeX,int sizeY, Color col) {
@@ -56,7 +59,12 @@ public class Item extends Entity{
 		newImage.setImageColor(col.r, col.g, col.b);
 		addImageWithBoundingBox(newImage);
 		image = newImage;
+		tex = texture;
 		
+	}
+	
+	public String getTexture() {
+		return tex;
 	}
 	
 	public Image getImage() {
