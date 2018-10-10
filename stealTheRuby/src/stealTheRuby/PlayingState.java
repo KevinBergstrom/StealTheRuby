@@ -34,6 +34,8 @@ public class PlayingState extends BasicGameState{
 	private int minutes;
 	private float scrollCooldown;
 	private float scrollTimer;
+	private boolean spotted;
+	private int attempts;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -47,6 +49,8 @@ public class PlayingState extends BasicGameState{
 		minutes = 0;
 		scrollCooldown = 300;
 		scrollTimer = 0;
+		spotted = false;
+		attempts = 1;
 		
 		//TODO testing
 		Levels.loadLevel(1, game);
@@ -56,6 +60,8 @@ public class PlayingState extends BasicGameState{
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		bigRuby.setSolid(false);
+		spotted = false;
+		attempts = 1;
 	}
 
 	@Override
@@ -209,10 +215,19 @@ public class PlayingState extends BasicGameState{
 		}
 		
 		if(mg.player.getEscaped()) {
-			//TODO score stuff
+			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
 		
+	}
+	
+	public void updatePlayerScore(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		mg.totalCoins += mg.player.getCoins();
+		mg.player.minutesScore = minutes;
+		mg.player.secondsScore = seconds;
+		mg.player.spottedScore = spotted;
+		mg.player.attemptsScore = attempts;
 	}
 	
 	//public 

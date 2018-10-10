@@ -29,6 +29,7 @@ public class MainGame extends StateBasedGame {
 	public final int ScreenHeight;
 	public int currentLevel;
 	public int score;
+	public int totalCoins;
 	
 	public MainGame(String title, int width, int height) {
 		super (title);
@@ -58,6 +59,7 @@ public class MainGame extends StateBasedGame {
 		collectAnims = new ArrayList<ProjectileImage>();
 		currentLevel = 0;
 		score = 0;
+		totalCoins = 0;
 		
 	}
 	

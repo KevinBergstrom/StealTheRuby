@@ -21,10 +21,14 @@ public class Player extends Entity{
 	private int itemSelected;
 	private int lives;
 	
+	public int minutesScore;
+	public int secondsScore;
+	public boolean spottedScore;
+	public int attemptsScore;
+	
 	private boolean escaped;
 	
 	private ArrayList<Item> inventory;
-	
 	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
