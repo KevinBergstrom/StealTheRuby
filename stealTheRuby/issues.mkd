@@ -14,10 +14,11 @@
 - **[12]** Add getaway vehicle
 - **[13]** Add multiple levels
 - **[14]** Add loading state
+- **[15]** Add results screen
 
 ## Open Issues ##
 
-- **[15]** Add results screen
 - **[16]** Add guard vision
 - **[17]** Add gameover screen
+- **[18]** Make bigger font
 

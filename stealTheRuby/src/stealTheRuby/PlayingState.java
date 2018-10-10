@@ -34,6 +34,8 @@ public class PlayingState extends BasicGameState{
 	private int minutes;
 	private float scrollCooldown;
 	private float scrollTimer;
+	private boolean spotted;
+	private int attempts;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -47,10 +49,19 @@ public class PlayingState extends BasicGameState{
 		minutes = 0;
 		scrollCooldown = 300;
 		scrollTimer = 0;
+		spotted = false;
+		attempts = 1;
 		
 		//TODO testing
 		Levels.loadLevel(1, game);
 		
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		bigRuby.setSolid(false);
+		spotted = false;
+		attempts = 1;
 	}
 
 	@Override
@@ -76,7 +87,7 @@ public class PlayingState extends BasicGameState{
 				0, 499, mg.ScreenWidth, mg.ScreenHeight,0, 0,800,101 );
 		
 		//TODO update these
-		g.drawString("Level: TESTING LEVEL", 17, 513);
+		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
 		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
 		g.drawString("Lives: " + mg.player.getLives(), 17, 574);
 		
@@ -145,6 +156,11 @@ public class PlayingState extends BasicGameState{
 		
 		mg.player.setVelocity(new Vector(0, 0));
 
+		//cheats
+		if (input.isKeyDown(Input.KEY_F12)) {
+			mg.player.setEscaped(true);
+		}
+		
 		//player controls
 		if (input.isKeyDown(Input.KEY_W)) {
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(0.0f, -1.0f)));
@@ -198,7 +214,23 @@ public class PlayingState extends BasicGameState{
 			}
 		}
 		
+		if(mg.player.getEscaped()) {
+			updatePlayerScore(game);
+			mg.enterState(MainGame.RESULTSSTATE);
+		}
+		
 	}
+	
+	public void updatePlayerScore(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		mg.totalCoins += mg.player.getCoins();
+		mg.player.minutesScore = minutes;
+		mg.player.secondsScore = seconds;
+		mg.player.spottedScore = spotted;
+		mg.player.attemptsScore = attempts;
+	}
+	
+	//public 
 
 	@Override
 	public int getID() {

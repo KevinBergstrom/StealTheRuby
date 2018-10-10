@@ -21,8 +21,14 @@ public class Player extends Entity{
 	private int itemSelected;
 	private int lives;
 	
-	private ArrayList<Item> inventory;
+	public int minutesScore;
+	public int secondsScore;
+	public boolean spottedScore;
+	public int attemptsScore;
 	
+	private boolean escaped;
+	
+	private ArrayList<Item> inventory;
 	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
@@ -42,9 +48,18 @@ public class Player extends Entity{
 		coins = 0;
 		hasRuby = false;
 		lives = 3;
+		escaped = false;
 		
 		inventory = new ArrayList<Item>();
 		
+	}
+	
+	public void setEscaped(boolean b) {
+		escaped = b;
+	}
+	
+	public boolean getEscaped() {
+		return escaped;
 	}
 	
 	public void setVelocity(final Vector v) {
@@ -59,6 +74,9 @@ public class Player extends Entity{
 		//TODO update when more things added
 		coins = 0;
 		hasRuby = false;
+		itemSelected = 0;
+		escaped = false;
+		inventory.clear();
 	}
 	
 	public void keepInBounds(float x1,float x2,float y1,float y2) {

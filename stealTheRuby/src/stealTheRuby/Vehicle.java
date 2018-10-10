@@ -30,7 +30,7 @@ public class Vehicle extends Item{
 		
 		if(!getSolid()) {
 			//TODO win
-			System.exit(0);
+			mg.player.setEscaped(true);
 		}
 		
 	}
