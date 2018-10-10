@@ -86,6 +86,7 @@ public class Levels {
 			 int[][] ilevel, ArrayList<Guard> guards) {
 		
 		MainGame mg = (MainGame)game;
+		mg.map.clearLevel();
 		int tilesX = mg.map.getTilesX();
 		int tilesY = mg.map.getTilesY();
 		int tileSizeX = mg.map.getTileSizeX();

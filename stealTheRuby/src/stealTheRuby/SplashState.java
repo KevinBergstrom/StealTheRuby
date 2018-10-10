@@ -172,7 +172,7 @@ public class SplashState extends BasicGameState{
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(readyToProgress) {
-				mg.enterState(MainGame.PLAYINGSTATE);
+				mg.enterState(MainGame.LOADINGSTATE);
 			}
 		}else {
 			readyToProgress = true;

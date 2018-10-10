@@ -41,6 +41,14 @@ public class Map {
 		
 	}
 	
+	public void clearLevel() {
+		geometry = new Tile[tilesX][tilesY];
+		items = new Item[tilesX][tilesY];
+		guards.clear();
+		alertTimer = 0;
+		getaway = null;
+	}
+	
 	public int getTilesX() {
 		return tilesX;
 	}

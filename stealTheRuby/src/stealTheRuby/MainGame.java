@@ -15,6 +15,7 @@ public class MainGame extends StateBasedGame {
 
 	public static final int SPLASHSTATE = 0;
 	public static final int PLAYINGSTATE = 1;
+	public static final int LOADINGSTATE =2;
 	
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	
@@ -25,6 +26,7 @@ public class MainGame extends StateBasedGame {
 	
 	public final int ScreenWidth;
 	public final int ScreenHeight;
+	public int currentLevel;
 	
 	public MainGame(String title, int width, int height) {
 		super (title);
@@ -40,6 +42,7 @@ public class MainGame extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		addState(new SplashState());
 		addState(new PlayingState());
+		addState(new LoadingState());
 	
 		ResourceManager.loadImage(TESTIMG_RSC);
 		
@@ -50,6 +53,7 @@ public class MainGame extends StateBasedGame {
 		map = new Map(25, 16, 32, 32);
 		
 		collectAnims = new ArrayList<ProjectileImage>();
+		currentLevel = 0;
 		
 	}
 	
