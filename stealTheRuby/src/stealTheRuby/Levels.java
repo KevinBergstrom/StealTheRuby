@@ -87,6 +87,7 @@ public class Levels {
 		
 		MainGame mg = (MainGame)game;
 		mg.map.clearLevel();
+		mg.map.setMapName(levelName);
 		int tilesX = mg.map.getTilesX();
 		int tilesY = mg.map.getTilesY();
 		int tileSizeX = mg.map.getTileSizeX();
@@ -196,7 +197,7 @@ public class Levels {
 	
 	private static void level2(StateBasedGame game) {
 		
-		String levelName = "TESTING LEVEL2";
+		String levelName = "TESTING LEVEL 2";
 		
 		MainGame mg = (MainGame)game;
 		int tileSizeX = mg.map.getTileSizeX();

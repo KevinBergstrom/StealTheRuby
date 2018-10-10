@@ -29,6 +29,7 @@ public class LoadingState extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		loadLevel(game);
+		mg.player.reset();
 		mg.enterState(MainGame.PLAYINGSTATE);
 	}
 	

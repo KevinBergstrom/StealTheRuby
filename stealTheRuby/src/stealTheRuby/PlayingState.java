@@ -52,6 +52,11 @@ public class PlayingState extends BasicGameState{
 		Levels.loadLevel(1, game);
 		
 	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		bigRuby.setSolid(false);
+	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -76,7 +81,7 @@ public class PlayingState extends BasicGameState{
 				0, 499, mg.ScreenWidth, mg.ScreenHeight,0, 0,800,101 );
 		
 		//TODO update these
-		g.drawString("Level: TESTING LEVEL", 17, 513);
+		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
 		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
 		g.drawString("Lives: " + mg.player.getLives(), 17, 574);
 		
@@ -145,6 +150,11 @@ public class PlayingState extends BasicGameState{
 		
 		mg.player.setVelocity(new Vector(0, 0));
 
+		//cheats
+		if (input.isKeyDown(Input.KEY_F12)) {
+			mg.player.setEscaped(true);
+		}
+		
 		//player controls
 		if (input.isKeyDown(Input.KEY_W)) {
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(0.0f, -1.0f)));
@@ -198,7 +208,14 @@ public class PlayingState extends BasicGameState{
 			}
 		}
 		
+		if(mg.player.getEscaped()) {
+			//TODO score stuff
+			mg.enterState(MainGame.RESULTSSTATE);
+		}
+		
 	}
+	
+	//public 
 
 	@Override
 	public int getID() {

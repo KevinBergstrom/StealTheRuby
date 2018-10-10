@@ -22,6 +22,7 @@ public class Map {
 	private ArrayList<Guard> guards;
 	private DijkstraNode[][] graph;
 	private float alertTimer;
+	private String mapName;
 	
 	private Vehicle getaway;
 	
@@ -36,6 +37,7 @@ public class Map {
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
 		getaway = null;
+		mapName = "DEFAULT";
 		
 		populateDijkstraGraph();
 		
@@ -47,6 +49,14 @@ public class Map {
 		guards.clear();
 		alertTimer = 0;
 		getaway = null;
+	}
+	
+	public void setMapName(String s) {
+		mapName = s;
+	}
+	
+	public String getMapName() {
+		return mapName;
 	}
 	
 	public int getTilesX() {
