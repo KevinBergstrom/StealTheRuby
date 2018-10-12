@@ -20,11 +20,12 @@
 - **[18]** Add alert indicator
 - **[19]** Fix item usage
 - **[20]** Add win screen
+- **[21]** Fix time reset bug
 
 ## Open Issues ##
 
-- **[21]** Add security cameras
-- **[22]** Add emp grenade
-- **[23]** Make bigger font
-- **[24]** Fix png errors
+- **[22]** Add security cameras
+- **[23]** Add emp grenade
+- **[24]** Make bigger font
+- **[25]** Fix png errors
 

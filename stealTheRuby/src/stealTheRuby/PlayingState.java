@@ -59,17 +59,15 @@ public class PlayingState extends BasicGameState{
 		unseenTitle = new Tile(400,576,176,27,false,UNSEENIMG_RSC);
 		calmTitle = new Tile(400,576,176,27,false,CALMIMG_RSC);
 		alertTitle = new Tile(400,576,176,27,false,ALERTIMG_RSC);
-		timer = 0;
-		seconds = 0;
-		minutes = 0;
-		spotted = false;
-		attempts = 1;
 		
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		bigRuby.setSolid(false);
+		timer = 0;
+		seconds = 0;
+		minutes = 0;
 		spotted = false;
 		attempts = 1;
 		itemScrollDebounce = false;
@@ -276,6 +274,7 @@ public class PlayingState extends BasicGameState{
 		mg.player.secondsScore = seconds;
 		mg.player.spottedScore = spotted;
 		mg.player.attemptsScore = attempts;
+		
 	}
 	
 	//public 
