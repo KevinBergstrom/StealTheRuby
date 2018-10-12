@@ -18,6 +18,7 @@ public class MainGame extends StateBasedGame {
 	public static final int LOADINGSTATE = 2;
 	public static final int RESULTSSTATE = 3;
 	public static final int GAMEOVERSTATE = 4;
+	public static final int WINSTATE = 5;
 	
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	public static final String VISIONCONEIMG_RSC = "stealTheRuby/resource/visionCone.png";
@@ -50,6 +51,7 @@ public class MainGame extends StateBasedGame {
 		addState(new LoadingState());
 		addState(new ResultsState());
 		addState(new GameOverState());
+		addState(new WinState());
 	
 		ResourceManager.loadImage(TESTIMG_RSC);
 		ResourceManager.loadImage(VISIONCONEIMG_RSC);

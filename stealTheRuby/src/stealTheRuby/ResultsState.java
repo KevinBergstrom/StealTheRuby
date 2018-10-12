@@ -214,10 +214,10 @@ public class ResultsState extends BasicGameState{
 				skipToEnd();
 				readyToProgress = false;
 			}else if(readyToProgress) {
-				//TODO fast forward with correct scoring
 				if(mg.currentLevel==Levels.lastLevel) {
-					//TODO completed last level
+					//win
 					mg.score += score;
+					game.enterState(MainGame.WINSTATE);
 				}else {
 					//there are still more levels
 					mg.score += score;

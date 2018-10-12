@@ -19,13 +19,12 @@
 - **[17]** Add gameover screen
 - **[18]** Add alert indicator
 - **[19]** Fix item usage
+- **[20]** Add win screen
 
 ## Open Issues ##
 
-- **[20]** Add win screen
 - **[21]** Add security cameras
 - **[22]** Add emp grenade
 - **[23]** Make bigger font
 - **[24]** Fix png errors
-- **[25]** Enhance win screen
 
