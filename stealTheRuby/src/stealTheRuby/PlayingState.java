@@ -18,6 +18,9 @@ public class PlayingState extends BasicGameState{
 	public static final String RUBYCASEIMG_RSC = "stealTheRuby/resource/rubyCase.png";
 	public static final String INFOGUIIMG_RSC = "stealTheRuby/resource/testGUI.png";
 	public static final String ITEMGUIIMG_RSC = "stealTheRuby/resource/testInv.png";
+	public static final String UNSEENIMG_RSC = "stealTheRuby/resource/unseenTitle.png";
+	public static final String CALMIMG_RSC = "stealTheRuby/resource/calmTitle.png";
+	public static final String ALERTIMG_RSC = "stealTheRuby/resource/alertTitle.png";
 	
 	
 	public void loadTextures() {
@@ -25,12 +28,18 @@ public class PlayingState extends BasicGameState{
 		ResourceManager.loadImage(RUBYCASEIMG_RSC);
 		ResourceManager.loadImage(INFOGUIIMG_RSC);
 		ResourceManager.loadImage(ITEMGUIIMG_RSC);
+		ResourceManager.loadImage(UNSEENIMG_RSC);
+		ResourceManager.loadImage(CALMIMG_RSC);
+		ResourceManager.loadImage(ALERTIMG_RSC);
 		
 	}
 	
 	private Tile rubyCase;
 	private Tile bigRuby;
 	private Tile itemGUI;
+	private Tile unseenTitle;
+	private Tile calmTitle;
+	private Tile alertTitle;
 	private float timer;
 	private int seconds;
 	private int minutes;
@@ -46,6 +55,9 @@ public class PlayingState extends BasicGameState{
 		rubyCase = new Tile(52,460,74,76,false,RUBYCASEIMG_RSC);
 		bigRuby = new Tile(52,467,64,64,false,SplashState.BIGRUBYIMG_RSC);
 		itemGUI = new Tile(399,519,280,64,true,ITEMGUIIMG_RSC);
+		unseenTitle = new Tile(400,576,176,27,false,UNSEENIMG_RSC);
+		calmTitle = new Tile(400,576,176,27,false,CALMIMG_RSC);
+		alertTitle = new Tile(400,576,176,27,false,ALERTIMG_RSC);
 		timer = 0;
 		seconds = 0;
 		minutes = 0;
@@ -78,12 +90,20 @@ public class PlayingState extends BasicGameState{
 		}
 		rubyCase.render(g);
 		itemGUI.render(g);
-		renderInventory(game, g);
+	 	renderInventory(game, g);
 		
 		Image infoGUI = ResourceManager.getImage(INFOGUIIMG_RSC);
 		infoGUI.setFilter(Image.FILTER_NEAREST);
 		g.drawImage(infoGUI,
 				0, 499, mg.ScreenWidth, mg.ScreenHeight,0, 0,800,101 );
+		
+		if(!spotted) {
+			unseenTitle.render(g);
+		}else if(mg.map.getAlertTimer()>0) {
+			alertTitle.render(g);
+		}else {
+			calmTitle.render(g);
+		}
 		
 		//TODO update these
 		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
@@ -211,7 +231,9 @@ public class PlayingState extends BasicGameState{
 			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
-		if(mg.map.collideWithGuards(mg.player)) {
+		
+		int guardCollide = mg.map.collideWithGuards(mg.player);
+		if(guardCollide==2) {
 			//player got caught
 			mg.player.subLives();
 			
@@ -223,6 +245,8 @@ public class PlayingState extends BasicGameState{
 				reloadLevel(game);
 				mg.player.reset();
 			}
+		}else if(guardCollide==1) {
+			spotted = true;
 		}
 		
 	}

@@ -17,10 +17,10 @@
 - **[15]** Add results screen
 - **[16]** Add guard vision
 - **[17]** Add gameover screen
+- **[18]** Add alert indicator
 
 ## Open Issues ##
 
-- **[18]** Add alert indicator
 - **[19]** Fix item usage
 - **[20]** Add security cameras
 - **[21]** Add emp grenade
