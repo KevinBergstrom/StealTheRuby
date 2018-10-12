@@ -172,6 +172,11 @@ public class SplashState extends BasicGameState{
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(readyToProgress) {
+				mg.score = 0;
+				mg.currentLevel = 0;
+				mg.totalCoins = 0;
+				mg.player.setLives(3);
+				mg.player.reset();
 				mg.enterState(MainGame.LOADINGSTATE);
 			}
 		}else {

@@ -47,7 +47,7 @@ public class ResultsState extends BasicGameState{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		loadTextures();
 		images = new ArrayList<Tile>();
-		coinScore = 1000;
+		coinScore = 100;
 	}
 
 	@Override
@@ -67,7 +67,6 @@ public class ResultsState extends BasicGameState{
 		coinsGot = mg.player.getCoins();
 		spotted = mg.player.spottedScore;
 		attempts = mg.player.attemptsScore;
-		attempts = 1;
 	}
 	
 	@Override
@@ -107,11 +106,11 @@ public class ResultsState extends BasicGameState{
 		timeStr = ""+minutesText+":"+secondsText;
 		
 		if(minutesTaken == 0) {
-			score += 20000;
+			score += 2000;
 		}else if(minutesTaken < 2) {
-			score += 7500;
+			score += 750;
 		}else if(minutesTaken < 5) {
-			score += 5000;
+			score += 500;
 		}
 		
 	}
@@ -125,7 +124,7 @@ public class ResultsState extends BasicGameState{
 	
 	public void scoreSpotted() {
 		if(!spotted) {
-			score += 20000;
+			score += 2000;
 			spottedStr = "No";
 		}else {
 			spottedStr = "Yes";
@@ -133,7 +132,7 @@ public class ResultsState extends BasicGameState{
 	}
 	
 	public void scoreAttempt() {
-		score += 5000;
+		score += 500;
 		//TODO update bike image color so its doesn't look black
 		images.add(new Tile(147*2 + ivalue*96,186*2,96,64,false,Item.BIKEIMG_RSC));
 		attempts--;
@@ -141,7 +140,7 @@ public class ResultsState extends BasicGameState{
 	}
 	
 	public void scoreRuby() {
-		score += 5000;
+		score += 500;
 		images.add(new Tile(97*2,220*2,64,64,false,Item.SMALLRUBYIMG_RSC));
 	}
 	

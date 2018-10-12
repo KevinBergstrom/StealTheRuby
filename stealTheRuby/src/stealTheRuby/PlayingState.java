@@ -1,7 +1,5 @@
 package stealTheRuby;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,6 +7,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import jig.ResourceManager;
 import jig.Vector;
@@ -53,9 +53,6 @@ public class PlayingState extends BasicGameState{
 		scrollTimer = 0;
 		spotted = false;
 		attempts = 1;
-		
-		//TODO testing
-		Levels.loadLevel(1, game);
 		
 	}
 	
@@ -196,9 +193,6 @@ public class PlayingState extends BasicGameState{
 		mg.player.collideWithMap(mg.map);
 		
 		mg.map.updateGuards(delta, game);
-		if(mg.map.collideWithGuards(mg.player)) {
-			//player got caught
-		}
 		
 		for(int i = 0;i<mg.collectAnims.size();i++) {
 			ProjectileImage next = mg.collectAnims.get(i);
@@ -217,6 +211,32 @@ public class PlayingState extends BasicGameState{
 			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
+		if(mg.map.collideWithGuards(mg.player)) {
+			//player got caught
+			mg.player.subLives();
+			
+			if(mg.player.getLives()<=0) {
+				//GAME OVER
+				//TODO update score
+				game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
+			}else {
+				reloadLevel(game);
+				mg.player.reset();
+			}
+		}
+		
+	}
+	
+	public void reloadLevel(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		Levels.loadLevel(mg.currentLevel, game);
+		timer = 0;
+		seconds = 0;
+		minutes = 0;
+		scrollCooldown = 300;
+		spotted = false;
+		attempts++;
+		bigRuby.setSolid(false);
 		
 	}
 	

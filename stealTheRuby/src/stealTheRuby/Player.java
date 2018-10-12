@@ -102,6 +102,10 @@ public class Player extends Entity{
 		lives--;
 	}
 	
+	public void setLives(int l) {
+		lives = l;
+	}
+	
 	public int getCoins() {
 		return coins;
 	}

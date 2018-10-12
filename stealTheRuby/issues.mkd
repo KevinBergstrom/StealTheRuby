@@ -16,10 +16,14 @@
 - **[14]** Add loading state
 - **[15]** Add results screen
 - **[16]** Add guard vision
+- **[17]** Add gameover screen
 
 ## Open Issues ##
 
-- **[17]** Add gameover screen
-- **[18]** Make bigger font
-- **[18]** Fix png errors
+- **[18]** Add alert indicator
+- **[19]** Fix item usage
+- **[20]** Add security cameras
+- **[21]** Add emp grenade
+- **[22]** Make bigger font
+- **[23]** Fix png errors
 
