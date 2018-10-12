@@ -7,6 +7,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import jig.ResourceManager;
 import jig.Vector;
@@ -215,6 +217,8 @@ public class PlayingState extends BasicGameState{
 			
 			if(mg.player.getLives()<=0) {
 				//GAME OVER
+				//TODO update score
+				game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
 			}else {
 				reloadLevel(game);
 				mg.player.reset();
