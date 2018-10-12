@@ -179,8 +179,7 @@ public class SplashState extends BasicGameState{
 				mg.totalCoins = 0;
 				mg.player.setLives(3);
 				mg.player.reset();
-				//mg.enterState(MainGame.LOADINGSTATE);//TODO testing
-				game.enterState(MainGame.WINSTATE, new EmptyTransition() , new VerticalSplitTransition());
+				mg.enterState(MainGame.LOADINGSTATE);
 			}
 		}else {
 			readyToProgress = true;

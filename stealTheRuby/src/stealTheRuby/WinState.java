@@ -37,18 +37,24 @@ public class WinState extends BasicGameState{
 	private float difRad;
 	private int solids;
 	private Tile shake;
+	private ArrayList<String> credits;
+	private float scrollSpeed;
+	private float creditDist;
+	private float creditsOffset;
+	private boolean creditsFinished;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		MainGame mg = (MainGame)game;
 		loadTextures();
 		rubies = new ArrayList<Tile>();
+		credits = new ArrayList<String>();
+		populateCredits();
+		scrollSpeed = 0.03f;
+		creditDist = 100;
 		centerX = 267*2;
 		centerY = 164*2;
-		//populate ruby array
-		//TODO testing
 		int levels = Levels.lastLevel;
-		
 		for(int i = 0;i<levels;i++) {
 			rubies.add(new Tile(-32,-32,32,32,false,Item.SMALLRUBYIMG_RSC));
 		}
@@ -57,12 +63,29 @@ public class WinState extends BasicGameState{
 		
 		shake = new Tile(centerX,175*2,70*2,100*2,false,SHAKEIMG_RSC);
 	}
+	
+	public void populateCredits() {
+		credits.add("Steal The Ruby");
+		credits.add("Credits");
+		credits.add("Programming Lead\n-Kevin Bergstrom");
+		credits.add("Art Lead\n-Kevin Bergstrom");
+		credits.add("Creative Lead\n-Kevin Bergstrom");
+		credits.add("Testing\n-Kevin Bergstrom");
+		credits.add("Level Design\n-Kevin Bergstrom");
+		credits.add("Engine\n-jig");
+		credits.add("Skeleton Code\n-Scott Wallace");
+		credits.add("Class\n-CS 447");
+		credits.add("Thanks for playing!");
+		credits.add("See you in my next game!");
+	}
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		timer = 0;
 		state = 0;
 		rubyDistance = 120;
+		creditsOffset = 0;
+		creditsFinished = false;
 		solids = 0;
 		for(int i = 0;i<rubies.size();i++) {
 			rubies.get(i).setSolid(false);
@@ -90,6 +113,21 @@ public class WinState extends BasicGameState{
 			shake.render(g);
 		}
 		
+		if(!creditsFinished) {
+			for(int i = 0;i<credits.size();i++) {
+				float yPosition =mg.ScreenHeight - creditsOffset + (i*creditDist);
+				if(yPosition>-30 && yPosition<mg.ScreenHeight+30) {
+					g.drawString(""+credits.get(i), 32, yPosition);
+				}else {
+					
+				}
+			}
+		}
+		
+		if(!creditsFinished && mg.ScreenHeight - creditsOffset + (credits.size()*creditDist)<0) {
+			creditsFinished = true;
+		}
+		
 	}
 	
 	public Vector angleToVector(float rad) {
@@ -101,7 +139,13 @@ public class WinState extends BasicGameState{
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
 		
-		timer+= delta;
+		if(state!=3) {
+			timer+= delta;
+		}
+		
+		if(!creditsFinished) {
+			creditsOffset += scrollSpeed*delta;
+		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			if(readyToProgress) {
@@ -126,6 +170,19 @@ public class WinState extends BasicGameState{
 				state = 1;
 			}
 		}else if(state == 1) {
+			
+			for(int i = 0;i<rubies.size();i++) {
+				Tile curRuby = rubies.get(i);
+				Vector difPos = angleToVector(difRad*i + (timer/1000));
+				curRuby.setPosition(centerX + difPos.getX()*rubyDistance, centerY + difPos.getY()*rubyDistance );
+				
+			}
+			if(creditsFinished) {
+					state = 2;
+			}else {
+				rubyDistance = rubyDistance +(float) Math.sin(timer/500);
+			}
+		}else if(state == 2) {
 			for(int i = 0;i<rubies.size();i++) {
 				Tile curRuby = rubies.get(i);
 				Vector difPos = angleToVector(difRad*i + (timer/1000));
@@ -135,7 +192,7 @@ public class WinState extends BasicGameState{
 			rubyDistance = rubyDistance - 0.05f*delta;
 			if(rubyDistance<0) {
 				rubyDistance = 0;
-				state = 2;
+				state = 3;
 				shake.setSolid(true);
 				for(int i = 0;i<rubies.size();i++) {
 					rubies.get(i).setSolid(false);
