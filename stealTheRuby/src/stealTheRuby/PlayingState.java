@@ -1,5 +1,7 @@
 package stealTheRuby;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -187,12 +189,6 @@ public class PlayingState extends BasicGameState{
 			mg.player.useItem(game);
 		}
 		
-		if (input.isKeyDown(Input.KEY_ENTER)) {
-			//TODO testing
-			mg.map.testGuardFollowPath(mg.player.getX(), mg.player.getY());
-			mg.map.alert(10);
-		}
-		
 		//update everything
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight-100);
@@ -200,6 +196,9 @@ public class PlayingState extends BasicGameState{
 		mg.player.collideWithMap(mg.map);
 		
 		mg.map.updateGuards(delta, game);
+		if(mg.map.collideWithGuards(mg.player)) {
+			//player got caught
+		}
 		
 		for(int i = 0;i<mg.collectAnims.size();i++) {
 			ProjectileImage next = mg.collectAnims.get(i);

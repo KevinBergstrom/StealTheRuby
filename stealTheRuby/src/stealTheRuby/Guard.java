@@ -19,6 +19,8 @@ public class Guard extends Entity{
 	private int sizey;
 	
 	private int state;
+	private float patrolSpeed;
+	private float chaseSpeed;
 	
 	private int patrolPoint;
 	private ArrayList<Vector> patrolPath;
@@ -42,6 +44,8 @@ public class Guard extends Entity{
 		sizey = sy;
 		
 		speed = 0.08f;
+		patrolSpeed = 0.08f;
+		chaseSpeed = 0.09f;
 		
 		state = 0;
 		//0 = patroling
@@ -64,19 +68,31 @@ public class Guard extends Entity{
 		visionCone.getImage().setRotation((float) (Math.atan2(v.getY(), v.getX())*180/Math.PI)-90);
 	}
 	
+	public boolean collideWithVisionCone(Entity a) {
+		if(a.collides(visionCone)!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public void patrol() {
 		state = 0;
-		//TODO update visionCone color
+		visionCone.getImage().setImageColor(0, 0, 255);
+		speed = patrolSpeed;
 	}
 	
 	public void chase() {
 		state = 1;
 		//TODO update visionCone color
+		visionCone.getImage().setImageColor(255, 0, 0);
+		speed = chaseSpeed;
 	}
 	
 	public void returnToPatrolPath() {
 		if(state == 1 || state == 3) {
 			state = 2;
+			visionCone.getImage().setImageColor(0, 0, 255);
 		}
 	}
 	
@@ -149,7 +165,7 @@ public class Guard extends Entity{
 				followPoint = 0;
 				if(state == 2) {
 					//found way back to patrol
-					state = 0;
+					patrol();
 					//patrolPoint = 0;
 				}
 			}
