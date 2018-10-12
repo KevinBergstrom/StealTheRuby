@@ -7,6 +7,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import jig.ResourceManager;
 
@@ -177,7 +179,8 @@ public class SplashState extends BasicGameState{
 				mg.totalCoins = 0;
 				mg.player.setLives(3);
 				mg.player.reset();
-				mg.enterState(MainGame.LOADINGSTATE);
+				//mg.enterState(MainGame.LOADINGSTATE);//TODO testing
+				game.enterState(MainGame.WINSTATE, new EmptyTransition() , new VerticalSplitTransition());
 			}
 		}else {
 			readyToProgress = true;

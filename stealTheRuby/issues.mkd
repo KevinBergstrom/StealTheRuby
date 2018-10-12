@@ -27,5 +27,4 @@
 - **[22]** Add emp grenade
 - **[23]** Make bigger font
 - **[24]** Fix png errors
-- **[25]** Enhance win screen
 

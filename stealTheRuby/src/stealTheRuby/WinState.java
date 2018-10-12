@@ -1,0 +1,154 @@
+package stealTheRuby;
+
+import java.util.ArrayList;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
+
+import jig.ResourceManager;
+import jig.Vector;
+
+public class WinState extends BasicGameState{
+
+	public static final String WINIMG_RSC = "stealTheRuby/resource/winScreen.png";
+	public static final String SHAKEIMG_RSC = "stealTheRuby/resource/strawberryShake.png";
+	
+	
+	public void loadTextures() {
+		
+		ResourceManager.loadImage(WINIMG_RSC);
+		ResourceManager.loadImage(SHAKEIMG_RSC);
+	}
+	
+	private boolean readyToProgress;
+	private int state;
+	private ArrayList<Tile> rubies;
+	private float timer;
+	private float rubyDistance;
+	private float centerX;
+	private float centerY;
+	private float difRad;
+	private int solids;
+	private Tile shake;
+	
+	@Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		MainGame mg = (MainGame)game;
+		loadTextures();
+		rubies = new ArrayList<Tile>();
+		centerX = 267*2;
+		centerY = 164*2;
+		//populate ruby array
+		//TODO testing
+		int levels = Levels.lastLevel;
+		
+		for(int i = 0;i<levels;i++) {
+			rubies.add(new Tile(-32,-32,32,32,false,Item.SMALLRUBYIMG_RSC));
+		}
+		
+		difRad = (float)(2*Math.PI)/levels;
+		
+		shake = new Tile(centerX,175*2,70*2,100*2,false,SHAKEIMG_RSC);
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		timer = 0;
+		state = 0;
+		rubyDistance = 120;
+		solids = 0;
+		for(int i = 0;i<rubies.size();i++) {
+			rubies.get(i).setSolid(false);
+		}
+		shake.setSolid(false);
+	}
+	
+	@Override
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		MainGame mg = (MainGame)game;
+		Image winBG = ResourceManager.getImage(WINIMG_RSC);
+		winBG.setFilter(Image.FILTER_NEAREST);
+		g.drawImage(winBG,
+				0, 0, mg.ScreenWidth, mg.ScreenHeight,0, 0,400,300 );
+		
+		g.drawString(""+mg.score, 244*2, 264*2);
+		
+		for(int i = 0;i<rubies.size();i++) {
+			if(rubies.get(i).getSolid()) {
+				rubies.get(i).render(g);
+			}
+		}
+		
+		if(shake.getSolid()) {
+			shake.render(g);
+		}
+		
+	}
+	
+	public Vector angleToVector(float rad) {
+		return new Vector((float)Math.cos(rad),(float)Math.sin(rad));
+	}
+
+	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		Input input = container.getInput();
+		MainGame mg = (MainGame)game;
+		
+		timer+= delta;
+		
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			if(readyToProgress) {
+				//go to splash state
+				game.enterState(MainGame.SPLASHSTATE, new EmptyTransition(), new BlobbyTransition() );
+			}
+		}else {
+			readyToProgress = true;
+		}
+		
+		if(state == 0) {
+			for(int i = 0;i<rubies.size();i++) {
+				Tile curRuby = rubies.get(i);
+				Vector difPos = angleToVector(difRad*i + (timer/1000));
+				curRuby.setPosition(centerX + difPos.getX()*rubyDistance, centerY + difPos.getY()*rubyDistance );
+				if(!curRuby.getSolid() && difPos.getX()>0 && difPos.getX()<0.5 && difPos.getY()<0) {
+					curRuby.setSolid(true);
+					solids++;
+				}
+			}
+			if(solids>=rubies.size()) {
+				state = 1;
+			}
+		}else if(state == 1) {
+			for(int i = 0;i<rubies.size();i++) {
+				Tile curRuby = rubies.get(i);
+				Vector difPos = angleToVector(difRad*i + (timer/1000));
+				curRuby.setPosition(centerX + difPos.getX()*rubyDistance, centerY + difPos.getY()*rubyDistance );
+				
+			}
+			rubyDistance = rubyDistance - 0.05f*delta;
+			if(rubyDistance<0) {
+				rubyDistance = 0;
+				state = 2;
+				shake.setSolid(true);
+				for(int i = 0;i<rubies.size();i++) {
+					rubies.get(i).setSolid(false);
+				}
+			}
+		}
+
+		
+	}
+
+	@Override
+	public int getID() {
+		return MainGame.WINSTATE;
+	}
+
+}
