@@ -18,12 +18,14 @@
 - **[16]** Add guard vision
 - **[17]** Add gameover screen
 - **[18]** Add alert indicator
+- **[19]** Fix item usage
 
 ## Open Issues ##
 
-- **[19]** Fix item usage
-- **[20]** Add security cameras
-- **[21]** Add emp grenade
-- **[22]** Make bigger font
-- **[23]** Fix png errors
+- **[20]** Add win screen
+- **[21]** Add security cameras
+- **[22]** Add emp grenade
+- **[23]** Make bigger font
+- **[24]** Fix png errors
+- **[25]** Enhance win screen
 
