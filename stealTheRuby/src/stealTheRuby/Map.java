@@ -90,6 +90,10 @@ public class Map {
 		alertTimer = 1000*seconds;
 	}
 	
+	public float getAlertTimer() {
+		return alertTimer;
+	}
+	
 	public void prepareGetaway() {
 		if(getaway!=null) {
 			getaway.setSolid(false);
@@ -119,18 +123,20 @@ public class Map {
 		guard.chase();
 	}
 	
-	public boolean collideWithGuards(Player p) {
+	public int collideWithGuards(Player p) {
+		int ret = 0;
 		for(int i = 0;i<guards.size();i++) {
 			Guard curGuard = guards.get(i);
 			if(p.collides(curGuard)!=null) {
-				return true;
+				return 2;
 			}
 			if(curGuard.collideWithVisionCone(p)) {
 				chasePlayer(curGuard,p);
 				alert(alertSeconds);
+				ret = 1;
 			}
 		}
-		return false;
+		return ret;
 	}
 	
 	public void sendGuardsBackToPatrol() {
