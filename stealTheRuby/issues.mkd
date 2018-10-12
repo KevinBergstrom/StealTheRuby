@@ -21,4 +21,5 @@
 - **[16]** Add guard vision
 - **[17]** Add gameover screen
 - **[18]** Make bigger font
+- **[18]** Fix png errors
 

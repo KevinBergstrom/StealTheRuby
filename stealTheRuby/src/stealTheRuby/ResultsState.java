@@ -67,7 +67,7 @@ public class ResultsState extends BasicGameState{
 		coinsGot = mg.player.getCoins();
 		spotted = mg.player.spottedScore;
 		attempts = mg.player.attemptsScore;
-		attempts = 3;
+		attempts = 1;
 	}
 	
 	@Override

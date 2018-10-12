@@ -2,6 +2,7 @@ package stealTheRuby;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -12,6 +13,7 @@ import jig.Vector;
 public class Guard extends Entity{
 
 	private Vector velocity;
+	private Vector facing;
 	private float speed;
 	private int sizex;
 	private int sizey;
@@ -24,6 +26,8 @@ public class Guard extends Entity{
 	private int followPoint;
 	private ArrayList<Vector> followPath;
 	
+	private Item visionCone;
+	
 	public Guard(final float x, final float y, int sx, int sy) {
 		super(x,y);
 		Image newImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
@@ -32,6 +36,7 @@ public class Guard extends Entity{
 		addImageWithBoundingBox(newImage);
 		
 		velocity = new Vector(0.0f, 0.0f);
+		facing = new Vector(0.0f, 1.0f);
 		
 		sizex = sx;
 		sizey = sy;
@@ -49,14 +54,24 @@ public class Guard extends Entity{
 		
 		followPoint = 0;
 		followPath = new ArrayList<Vector>();
+		
+		visionCone = new Item(-100,-100,false);
+		visionCone.setImageWithColor(MainGame.VISIONCONEIMG_RSC, 32,64, new Color(0,0,255));
+	}
+	
+	public void updateVisionCone(Vector v){
+		visionCone.setPosition(v.getX()*16 + this.getX(), v.getY()*16 + this.getY());
+		visionCone.getImage().setRotation((float) (Math.atan2(v.getY(), v.getX())*180/Math.PI)-90);
 	}
 	
 	public void patrol() {
 		state = 0;
+		//TODO update visionCone color
 	}
 	
 	public void chase() {
 		state = 1;
+		//TODO update visionCone color
 	}
 	
 	public void returnToPatrolPath() {
@@ -168,6 +183,7 @@ public class Guard extends Entity{
 						point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
 			}
 		}
+		visionCone.render(g);
 	}
 	
 	public void update(final int delta) {
@@ -178,6 +194,10 @@ public class Guard extends Entity{
 		}else if(state == 2) {
 			followPath();
 		}
+		if(velocity.getX()!=0 || velocity.getY()!=0) {
+			facing = velocity;
+		}
+		updateVisionCone(facing);
 		translate(velocity.scale(delta*speed));
 		
 	}
