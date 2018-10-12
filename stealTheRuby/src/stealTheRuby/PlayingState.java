@@ -43,10 +43,11 @@ public class PlayingState extends BasicGameState{
 	private float timer;
 	private int seconds;
 	private int minutes;
-	private float scrollCooldown;
-	private float scrollTimer;
 	private boolean spotted;
 	private int attempts;
+	
+	private boolean itemScrollDebounce;
+	private boolean itemUseDebounce;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -61,8 +62,6 @@ public class PlayingState extends BasicGameState{
 		timer = 0;
 		seconds = 0;
 		minutes = 0;
-		scrollCooldown = 300;
-		scrollTimer = 0;
 		spotted = false;
 		attempts = 1;
 		
@@ -73,6 +72,8 @@ public class PlayingState extends BasicGameState{
 		bigRuby.setSolid(false);
 		spotted = false;
 		attempts = 1;
+		itemScrollDebounce = false;
+		itemUseDebounce = false;
 	}
 
 	@Override
@@ -169,10 +170,6 @@ public class PlayingState extends BasicGameState{
 			seconds = 59;
 		}
 		
-		if(scrollTimer>0) {
-			scrollTimer-=delta;
-		}
-		
 		mg.player.setVelocity(new Vector(0, 0));
 
 		//cheats
@@ -192,18 +189,27 @@ public class PlayingState extends BasicGameState{
 			mg.player.setVelocity(mg.player.getVelocity().add(new Vector(1.0f, 0.0f)));
 		}
 		
-		if(scrollTimer<=0) {
-			if (input.isKeyDown(Input.KEY_E)) {
+		if (input.isKeyDown(Input.KEY_E)) {
+			if(!itemScrollDebounce) {
 				mg.player.itemScroll(true);
-				scrollTimer = scrollCooldown;
-			}else if (input.isKeyDown(Input.KEY_Q)) {
-				mg.player.itemScroll(false);
-				scrollTimer = scrollCooldown;
+				itemScrollDebounce = true;
 			}
+		}else if (input.isKeyDown(Input.KEY_Q)) {
+			if(!itemScrollDebounce) {
+				mg.player.itemScroll(false);
+				itemScrollDebounce = true;
+			}
+		}else{
+			itemScrollDebounce = false;
 		}
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-			mg.player.useItem(game);
+			if(!itemUseDebounce) {
+				mg.player.useItem(game);
+				itemUseDebounce = true;
+			}
+		}else {
+			itemUseDebounce = false;
 		}
 		
 		//update everything
@@ -257,7 +263,6 @@ public class PlayingState extends BasicGameState{
 		timer = 0;
 		seconds = 0;
 		minutes = 0;
-		scrollCooldown = 300;
 		spotted = false;
 		attempts++;
 		bigRuby.setSolid(false);
