@@ -19,6 +19,7 @@ public class MainGame extends StateBasedGame {
 	public static final int RESULTSSTATE = 3;
 	
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
+	public static final String VISIONCONEIMG_RSC = "stealTheRuby/resource/visionCone.png";
 	
 	Player player;
 	Map map;
@@ -49,6 +50,7 @@ public class MainGame extends StateBasedGame {
 		addState(new ResultsState());
 	
 		ResourceManager.loadImage(TESTIMG_RSC);
+		ResourceManager.loadImage(VISIONCONEIMG_RSC);
 		
 		Item.loadTextures();
 		Levels.loadTextures();

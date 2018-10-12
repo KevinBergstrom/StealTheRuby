@@ -15,10 +15,11 @@
 - **[13]** Add multiple levels
 - **[14]** Add loading state
 - **[15]** Add results screen
+- **[16]** Add guard vision
 
 ## Open Issues ##
 
-- **[16]** Add guard vision
 - **[17]** Add gameover screen
 - **[18]** Make bigger font
+- **[18]** Fix png errors
 

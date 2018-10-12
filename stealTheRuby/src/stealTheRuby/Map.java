@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import jig.Entity;
 import jig.ResourceManager;
 import jig.Vector;
 
@@ -22,6 +23,7 @@ public class Map {
 	private ArrayList<Guard> guards;
 	private DijkstraNode[][] graph;
 	private float alertTimer;
+	private float alertSeconds;
 	private String mapName;
 	
 	private Vehicle getaway;
@@ -36,6 +38,7 @@ public class Map {
 		guards = new ArrayList<Guard>();
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
+		alertSeconds = 20;
 		getaway = null;
 		mapName = "DEFAULT";
 		
@@ -114,6 +117,20 @@ public class Map {
 		ArrayList<Vector> newPath = dijkstraPath(guard.getX(),guard.getY(),player.getX(),player.getY());
 		guard.setFollowPath(newPath);
 		guard.chase();
+	}
+	
+	public boolean collideWithGuards(Player p) {
+		for(int i = 0;i<guards.size();i++) {
+			Guard curGuard = guards.get(i);
+			if(p.collides(curGuard)!=null) {
+				return true;
+			}
+			if(curGuard.collideWithVisionCone(p)) {
+				chasePlayer(curGuard,p);
+				alert(alertSeconds);
+			}
+		}
+		return false;
 	}
 	
 	public void sendGuardsBackToPatrol() {
