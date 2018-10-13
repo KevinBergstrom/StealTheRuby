@@ -20,6 +20,7 @@ public class Map {
 	private int tileSizeY;
 	private Tile[][] geometry;
 	private Item[][] items;
+	private Trap[][] traps;
 	private ArrayList<Guard> guards;
 	private DijkstraNode[][] graph;
 	private float alertTimer;
@@ -35,6 +36,7 @@ public class Map {
 		tileSizeY = tsy;
 		geometry = new Tile[sx][sy];
 		items = new Item[sx][sy];
+		traps = new Trap[sx][sy];
 		guards = new ArrayList<Guard>();
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
@@ -49,6 +51,7 @@ public class Map {
 	public void clearLevel() {
 		geometry = new Tile[tilesX][tilesY];
 		items = new Item[tilesX][tilesY];
+		traps = new Trap[tilesX][tilesY];
 		guards.clear();
 		alertTimer = 0;
 		getaway = null;
@@ -84,6 +87,10 @@ public class Map {
 	
 	public void setItem(int x, int y, Item i) {
 		items[x][y] = i;
+	}
+	
+	public void setTrap(int x, int y, Trap i) {
+		traps[x][y] = i;
 	}
 	
 	public void alert(float seconds) {
@@ -258,6 +265,16 @@ public class Map {
 		items[tileX][tileY] = null;
 	}
 	
+	public void removeTrap(int tileX, int tileY) {
+		if(tileX<0 || tileX > tilesX-1) {
+			return;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return;
+		}
+		traps[tileX][tileY] = null;
+	}
+	
 	public Vector getGridPos(float x, float y) {
 		int gridX = (int) Math.floor(x/(tileSizeX));
 		int gridY = (int) Math.floor(y/(tileSizeY));
@@ -286,6 +303,17 @@ public class Map {
 		return items[tileX][tileY];
 	}
 	
+	public Trap getTrapAtPoint(int tileX, int tileY) {
+		
+		if(tileX<0 || tileX > tilesX-1) {
+			return null;
+		}
+		if(tileY<0 || tileY > tilesY-1) {
+			return null;
+		}
+		return traps[tileX][tileY];
+	}
+	
 	public void updateGuards(int delta, StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		
@@ -306,6 +334,11 @@ public class Map {
 				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),mg.player.getX(),mg.player.getY());
 				curGuard.setFollowPath(newPath);
 				curGuard.chase();
+			}
+			Vector gpos = getGridPos(curGuard.getX(),curGuard.getY());
+			Trap gridTrap = getTrapAtPoint((int)gpos.getX(),(int)gpos.getY());
+			if(gridTrap!=null && gridTrap.getPlayerOwned() && curGuard.collides(gridTrap)!=null) {
+				gridTrap.springTrap(game, curGuard);
 			}
 			
 		}

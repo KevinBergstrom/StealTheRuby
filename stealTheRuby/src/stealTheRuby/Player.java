@@ -184,6 +184,17 @@ public class Player extends Entity{
 		solidItemCollide(mg.map);
 	}
 	
+	public void collideWithTraps(StateBasedGame game) {
+		MainGame mg = (MainGame)game;
+		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
+		Trap p = mg.map.getTrapAtPoint((int)gridPos.getX(),(int)gridPos.getY());
+		
+		if(p!=null && !p.getPlayerOwned() && collides(p) != null) {
+			p.springTrap(game, this);
+		}
+
+	}
+	
 	public void solidItemCollide(Map map) {
 		float leeway = speed*30;
 		
