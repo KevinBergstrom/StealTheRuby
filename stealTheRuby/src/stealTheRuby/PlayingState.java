@@ -241,6 +241,7 @@ public class PlayingState extends BasicGameState{
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
 		if(mg.map.getFrozen()<=0) {
+			mg.map.collideWithCameras(mg.player);
 			int guardCollide = mg.map.collideWithGuards(mg.player);
 			if(guardCollide==2) {
 				//player got caught
@@ -257,6 +258,7 @@ public class PlayingState extends BasicGameState{
 			}else if(guardCollide==1) {
 				spotted = true;
 			}
+			
 		}
 		
 	}

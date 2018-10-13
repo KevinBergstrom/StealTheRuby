@@ -93,9 +93,21 @@ public class Levels {
 		return null;
 	}
 	
-	private static SecurityCamera cameraDepot(float x, float y, int type) {
+	private static SecurityCamera cameraDepot(float x, float y, int type, int tileSizeX, int tileSizeY) {
 		if(type==1) {
-			return new SecurityCamera(x, y,8,14,0.05f,0,360,32);
+			return new SecurityCamera(x-(tileSizeX/2), y+(tileSizeY/2),8,14,0.05f,180,270,16);
+		}else if(type==2) {
+			return new SecurityCamera(x+(tileSizeX/2), y-(tileSizeY/2),8,14,0.05f,0,90,16);
+		}else if(type==3) {
+			return new SecurityCamera(x+(tileSizeX/2), y+(tileSizeY/2),8,14,0.05f,90,180,16);
+		}else if(type==4) {
+			return new SecurityCamera(x-(tileSizeX/2), y-(tileSizeY/2),8,14,0.05f,270,360,16);
+		}else if(type==5) {
+			return new SecurityCamera(x, y,8,14,0.05f,0,180,16);
+		}else if(type==6) {
+			return new SecurityCamera(x, y,8,14,0.05f,270,90,16);
+		}else if(type==7) {
+			return new SecurityCamera(x, y,8,14,0.05f,0,360,16);
 		}
 		return null;
 	}
@@ -142,7 +154,7 @@ public class Levels {
 				//generate cameras
 				int curCamera = cameralevel[y][x];
 				if(curCamera>0) {
-					SecurityCamera newCamera = cameraDepot(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, curCamera);
+					SecurityCamera newCamera = cameraDepot(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, curCamera, tileSizeX, tileSizeY);
 					mg.map.addSecurityCamera(newCamera);
 				}
 				
@@ -234,7 +246,7 @@ public class Levels {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -347,7 +359,7 @@ public class Levels {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},

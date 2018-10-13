@@ -24,10 +24,10 @@
 - **[22]** Add Trap system
 - **[23]** Add fruit peel
 - **[24]** Add stopwatch
+- **[25]** Add security cameras
 
 ## Open Issues ##
 
-- **[25]** Add security cameras
 - **[26]** Add electronics jammer
 - **[27]** Add item names
 - **[28]** Streamline artstyle

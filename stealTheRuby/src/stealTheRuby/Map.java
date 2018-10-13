@@ -148,6 +148,17 @@ public class Map {
 		guard.chase();
 	}
 	
+	public void alertPosition(Entity e) {
+		for(int i = 0;i<guards.size();i++) {
+			Guard guard = guards.get(i);
+			if(guard.getState()!=1 && guard.getState()!=3) {
+				ArrayList<Vector> newPath = dijkstraPath(guard.getX(),guard.getY(),e.getX(),e.getY());
+				guard.setFollowPath(newPath);
+				guard.investigate();
+			}
+		}
+	}
+	
 	public int collideWithGuards(Player p) {
 		int ret = 0;
 		for(int i = 0;i<guards.size();i++) {
@@ -158,6 +169,21 @@ public class Map {
 				}
 				if(curGuard.collideWithVisionCone(p)) {
 					chasePlayer(curGuard,p);
+					alert(alertSeconds);
+					ret = 1;
+				}
+			}
+		}
+		return ret;
+	}
+	
+	public int collideWithCameras(Player p) {
+		int ret = 0;
+		for(int i = 0;i<cameras.size();i++) {
+			SecurityCamera curCamera = cameras.get(i);
+			if(curCamera.getFrozen()<=0) {
+				if(curCamera.collideWithVisionCone(p)) {
+					alertPosition(p);
 					alert(alertSeconds);
 					ret = 1;
 				}
@@ -358,6 +384,17 @@ public class Map {
 					curGuard.setFollowPath(newPath);
 					curGuard.chase();
 				}
+				
+				if(curGuard.getState()==4) {
+					ArrayList<Vector> path = curGuard.getPatrolPath();
+					if(!path.isEmpty()) {
+						int point = curGuard.getPatrolPoint();
+						ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),path.get(point).getX(),path.get(point).getY());
+						curGuard.setFollowPath(newPath);
+					}
+					curGuard.returnToPatrolPath();
+				}
+				
 				Vector gpos = getGridPos(curGuard.getX(),curGuard.getY());
 				Trap gridTrap = getTrapAtPoint((int)gpos.getX(),(int)gpos.getY());
 				if(gridTrap!=null && gridTrap.getPlayerOwned() && curGuard.collides(gridTrap)!=null) {
@@ -388,13 +425,20 @@ public class Map {
 			}
 		}
 		for(int i = 0;i<guards.size();i++) {
-			guards.get(i).render(g);
-			guards.get(i).renderCone(g);
-			guards.get(i).renderPath(g);
+			Guard curGuard = guards.get(i);
+			curGuard.render(g);
+			if(curGuard.getFrozen()<=0) {
+				curGuard.renderCone(g);
+			}
+			//TODO testing
+			curGuard.renderPath(g);
 		}
 		for(int i = 0;i<cameras.size();i++) {
-			cameras.get(i).renderCone(g);
-			cameras.get(i).render(g);
+			SecurityCamera curCamera = cameras.get(i);
+			if(curCamera.getFrozen()<=0) {
+				curCamera.renderCone(g);
+			}
+			curCamera.render(g);
 		}
 		
 	}

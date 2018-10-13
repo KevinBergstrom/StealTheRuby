@@ -19,6 +19,7 @@ public class SecurityCamera extends Entity{
 	private float moveSpeed;
 	private Image image;
 	private int state;
+	private float timer;
 	
 	private Item visionCone;
 	
@@ -35,6 +36,7 @@ public class SecurityCamera extends Entity{
 		moveSpeed = speed;
 		frozen = 0;
 		state = 0;
+		timer = 0;
 		
 		Image newImage = ResourceManager.getImage(MainGame.SECURITYCAMERAIMG_RSC).getScaledCopy(sx, sy);
 		newImage.setFilter(Image.FILTER_NEAREST);
@@ -47,6 +49,10 @@ public class SecurityCamera extends Entity{
 	
 	public void incapacitate(float seconds) {
 		frozen = seconds*1000;
+	}
+	
+	public float getFrozen() {
+		return frozen;
 	}
 	
 	public void updateVisionCone(Vector v){
@@ -62,8 +68,25 @@ public class SecurityCamera extends Entity{
 		return new Vector((float)Math.cos(rad),(float)Math.sin(rad));
 	}
 	
+	public void faceEntity(Entity a) {
+		facing = new Vector(a.getX()-getX(),a.getY()-getY());
+		angle = (float)(Math.atan2(facing.getY(), facing.getX())*(180/Math.PI))-90;
+	}
+	
 	public void renderCone(Graphics g) {
 		visionCone.render(g);
+	}
+	
+	public boolean collideWithVisionCone(Entity a) {
+		if(a.collides(visionCone)!=null) {
+			//TODO look at entity a?
+			faceEntity(a);
+			visionCone.getImage().setImageColor(255, 0, 0);
+			return true;
+		}else {
+			visionCone.getImage().setImageColor(0, 0, 255);
+			return false;
+		}
 	}
 	
 	public void update(final int delta) {
@@ -77,27 +100,41 @@ public class SecurityCamera extends Entity{
 					if(angle<startAngle) {
 						angle=startAngle;
 						state = 1;
+						timer = 1000;
 					}
 				}else {
 					angle+=moveSpeed*delta;
 					if(angle>startAngle) {
 						angle=startAngle;
 						state = 1;
+						timer = 1000;
 					}
 				}
 			}else if(state==1) {
+				timer-=delta;
+				if(timer<0) {
+					state = 2;
+				}
+			}else if(state==2) {
 				if(angle>endAngle) {
 					angle-=moveSpeed*delta;
 					if(angle<endAngle) {
 						angle=endAngle;
-						state = 0;
+						state = 3;
+						timer = 1000;
 					}
 				}else {
 					angle+=moveSpeed*delta;
 					if(angle>endAngle) {
 						angle=endAngle;
-						state = 0;
+						state = 3;
+						timer = 1000;
 					}
+				}
+			}else if(state==3) {
+				timer-=delta;
+				if(timer<0) {
+					state = 0;
 				}
 			}
 			updateCameraAngle();
