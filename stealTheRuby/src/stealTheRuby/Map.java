@@ -115,6 +115,10 @@ public class Map {
 		return alertTimer;
 	}
 	
+	public ArrayList<SecurityCamera> getCameras(){
+		return cameras;
+	}
+	
 	public void prepareGetaway() {
 		if(getaway!=null) {
 			getaway.setSolid(false);
