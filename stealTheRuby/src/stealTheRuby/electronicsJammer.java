@@ -13,6 +13,7 @@ public class electronicsJammer extends Item{
 	public electronicsJammer(float x, float y, boolean sol) {
 		super(x, y, sol);
 		setImage(Item.JAMMERIMG_RSC,32,32);
+		setName("Jammer");
 	}
 	
 	@Override

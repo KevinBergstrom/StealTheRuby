@@ -9,6 +9,7 @@ public class Stopwatch extends Item{
 	public Stopwatch(float x, float y, boolean sol) {
 		super(x, y, sol);
 		setImage(Item.STOPWATCHIMG_RSC,32,32);
+		setName("Stopwatch");
 	}
 	
 	@Override

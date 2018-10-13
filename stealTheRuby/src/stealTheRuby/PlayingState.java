@@ -104,6 +104,12 @@ public class PlayingState extends BasicGameState{
 			calmTitle.render(g);
 		}
 		
+		Item[] items = mg.player.getSelectedItems();
+		if(items[1]!=null) {
+			g.drawString(""+items[1].getName(), 550, 526);
+		}
+		
+		
 		//TODO update these
 		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
 		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
@@ -138,7 +144,6 @@ public class PlayingState extends BasicGameState{
 			if(items[i]!=null) {
 				items[i].setPosition(315+(i*84), 519);
 				items[i].render(g);
-				
 			}
 		}
 	}
