@@ -29,6 +29,7 @@ public class Guard extends Entity{
 	private ArrayList<Vector> followPath;
 	
 	private Item visionCone;
+	private float frozen;
 	
 	public Guard(final float x, final float y, int sx, int sy) {
 		super(x,y);
@@ -61,6 +62,15 @@ public class Guard extends Entity{
 		
 		visionCone = new Item(-100,-100,false);
 		visionCone.setImageWithColor(MainGame.VISIONCONEIMG_RSC, 32,64, new Color(0,0,255));
+		frozen = 0;
+	}
+	
+	public void incapacitate(float seconds) {
+		frozen = seconds*1000;
+	}
+	
+	public float getFrozen() {
+		return frozen;
 	}
 	
 	public void updateVisionCone(Vector v){
@@ -214,7 +224,11 @@ public class Guard extends Entity{
 			facing = velocity;
 		}
 		updateVisionCone(facing);
-		translate(velocity.scale(delta*speed));
+		if(frozen>0) {
+			frozen-=delta;
+		}else {
+			translate(velocity.scale(delta*speed));
+		}
 		
 	}
 	

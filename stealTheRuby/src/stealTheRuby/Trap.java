@@ -10,6 +10,14 @@ import jig.Vector;
 
 public class Trap extends Entity{
 
+	public static final String PEELIMG_RSC = "stealTheRuby/resource/fruitPeel.png";
+	
+	public static void loadTextures() {
+		
+		ResourceManager.loadImage(PEELIMG_RSC);
+		
+	}
+	
 	private boolean playerOwned;
 	private Image image;
 	private String tex;

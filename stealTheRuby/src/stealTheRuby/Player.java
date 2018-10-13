@@ -26,6 +26,8 @@ public class Player extends Entity{
 	public boolean spottedScore;
 	public int attemptsScore;
 	
+	public float frozen;
+	
 	private boolean escaped;
 	
 	private ArrayList<Item> inventory;
@@ -49,6 +51,7 @@ public class Player extends Entity{
 		hasRuby = false;
 		lives = 3;
 		escaped = false;
+		frozen = 0;
 		
 		inventory = new ArrayList<Item>();
 		
@@ -70,6 +73,10 @@ public class Player extends Entity{
 		return velocity;
 	}
 	
+	public void incapacitate(float seconds) {
+		frozen = seconds*1000;
+	}
+	
 	public void reset() {
 		//TODO update when more things added
 		coins = 0;
@@ -77,6 +84,7 @@ public class Player extends Entity{
 		itemSelected = 0;
 		escaped = false;
 		inventory.clear();
+		frozen = 0;
 	}
 	
 	public void keepInBounds(float x1,float x2,float y1,float y2) {
@@ -188,7 +196,7 @@ public class Player extends Entity{
 		MainGame mg = (MainGame)game;
 		Vector gridPos = mg.map.getGridPos(this.getX(), this.getY());
 		Trap p = mg.map.getTrapAtPoint((int)gridPos.getX(),(int)gridPos.getY());
-		
+
 		if(p!=null && !p.getPlayerOwned() && collides(p) != null) {
 			p.springTrap(game, this);
 		}
@@ -351,7 +359,11 @@ public class Player extends Entity{
 	}
 	
 	public void update(final int delta) {
-		translate(velocity.scale(delta*speed));
+		if(frozen>0) {
+			frozen-=delta;
+		}else {
+			translate(velocity.scale(delta*speed));
+		}
 		
 	}
 }

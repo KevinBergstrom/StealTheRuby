@@ -57,6 +57,7 @@ public class MainGame extends StateBasedGame {
 		ResourceManager.loadImage(VISIONCONEIMG_RSC);
 		
 		Item.loadTextures();
+		Trap.loadTextures();
 		Levels.loadTextures();
 		player = new Player(590,116,32,32);
 		//TODO move later

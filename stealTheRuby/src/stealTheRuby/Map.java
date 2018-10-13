@@ -134,13 +134,15 @@ public class Map {
 		int ret = 0;
 		for(int i = 0;i<guards.size();i++) {
 			Guard curGuard = guards.get(i);
-			if(p.collides(curGuard)!=null) {
-				return 2;
-			}
-			if(curGuard.collideWithVisionCone(p)) {
-				chasePlayer(curGuard,p);
-				alert(alertSeconds);
-				ret = 1;
+			if(curGuard.getFrozen()<=0) {
+				if(p.collides(curGuard)!=null) {
+					return 2;
+				}
+				if(curGuard.collideWithVisionCone(p)) {
+					chasePlayer(curGuard,p);
+					alert(alertSeconds);
+					ret = 1;
+				}
 			}
 		}
 		return ret;
@@ -352,6 +354,9 @@ public class Map {
 				}
 				if(items[x][y]!=null) {
 					items[x][y].render(g);
+				}
+				if(traps[x][y]!=null) {
+					traps[x][y].render(g);
 				}
 			}
 		}
