@@ -26,6 +26,7 @@ public class Map {
 	private float alertTimer;
 	private float alertSeconds;
 	private String mapName;
+	private float frozen;
 	
 	private Vehicle getaway;
 	
@@ -41,6 +42,7 @@ public class Map {
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
 		alertSeconds = 20;
+		frozen = 0;
 		getaway = null;
 		mapName = "DEFAULT";
 		
@@ -54,7 +56,16 @@ public class Map {
 		traps = new Trap[tilesX][tilesY];
 		guards.clear();
 		alertTimer = 0;
+		frozen = 0;
 		getaway = null;
+	}
+	
+	public void freeze(float seconds) {
+		frozen = seconds*1000;
+	}
+	
+	public float getFrozen() {
+		return frozen;
 	}
 	
 	public void setMapName(String s) {
@@ -319,30 +330,34 @@ public class Map {
 	public void updateGuards(int delta, StateBasedGame game) {
 		MainGame mg = (MainGame)game;
 		
-		if(alertTimer>0) {
-			alertTimer -= delta;
-			if(alertTimer==0) {
-				alertTimer=-1;
-			}
-		}else if(alertTimer<0) {
-			alertTimer = 0;
-			sendGuardsBackToPatrol();
-		}
-		
-		for(int i = 0;i<guards.size();i++) {
-			Guard curGuard = guards.get(i);
-			curGuard.update(delta);
-			if(curGuard.getState()==3) {
-				ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),mg.player.getX(),mg.player.getY());
-				curGuard.setFollowPath(newPath);
-				curGuard.chase();
-			}
-			Vector gpos = getGridPos(curGuard.getX(),curGuard.getY());
-			Trap gridTrap = getTrapAtPoint((int)gpos.getX(),(int)gpos.getY());
-			if(gridTrap!=null && gridTrap.getPlayerOwned() && curGuard.collides(gridTrap)!=null) {
-				gridTrap.springTrap(game, curGuard);
+		if(frozen>0) {
+			frozen-=delta;
+		}else {
+			if(alertTimer>0) {
+				alertTimer -= delta;
+				if(alertTimer==0) {
+					alertTimer=-1;
+				}
+			}else if(alertTimer<0) {
+				alertTimer = 0;
+				sendGuardsBackToPatrol();
 			}
 			
+			for(int i = 0;i<guards.size();i++) {
+				Guard curGuard = guards.get(i);
+				curGuard.update(delta);
+				if(curGuard.getState()==3) {
+					ArrayList<Vector> newPath = dijkstraPath(curGuard.getX(),curGuard.getY(),mg.player.getX(),mg.player.getY());
+					curGuard.setFollowPath(newPath);
+					curGuard.chase();
+				}
+				Vector gpos = getGridPos(curGuard.getX(),curGuard.getY());
+				Trap gridTrap = getTrapAtPoint((int)gpos.getX(),(int)gpos.getY());
+				if(gridTrap!=null && gridTrap.getPlayerOwned() && curGuard.collides(gridTrap)!=null) {
+					gridTrap.springTrap(game, curGuard);
+				}
+				
+			}
 		}
 	}
 	
