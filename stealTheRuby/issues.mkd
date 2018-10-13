@@ -21,11 +21,19 @@
 - **[19]** Fix item usage
 - **[20]** Add win screen
 - **[21]** Fix time reset bug
+- **[22]** Add Trap system
 
 ## Open Issues ##
 
-- **[22]** Add security cameras
-- **[23]** Add emp grenade
-- **[24]** Make bigger font
-- **[25]** Fix png errors
+- **[23]** Add fruit peel
+- **[24]** Add security cameras
+- **[25]** Add electronics jammer
+- **[26]** Add stopwatch
+- **[27]** Add item names
+- **[28]** Streamline artstyle
+- **[29]** Fix png errors
+- **[30]** Make bigger font
+- **[31]** Add final levels
+- **[32]** Add cheats
+
 
