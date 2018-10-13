@@ -93,8 +93,15 @@ public class Levels {
 		return null;
 	}
 	
+	private static SecurityCamera cameraDepot(float x, float y, int type) {
+		if(type==1) {
+			return new SecurityCamera(x, y,8,14,0.05f,0,360,32);
+		}
+		return null;
+	}
+	
 	private static void setLevel(StateBasedGame game, String levelName, int[][] tlevel, 
-			 int[][] ilevel, int[][] traplevel, ArrayList<Guard> guards) {
+			 int[][] ilevel, int[][] traplevel, int[][] cameralevel, ArrayList<Guard> guards) {
 		
 		MainGame mg = (MainGame)game;
 		mg.map.clearLevel();
@@ -131,6 +138,14 @@ public class Levels {
 					Trap newTrap = trapDepot(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, curTrap);
 					mg.map.setTrap(x,y,newTrap);
 				}
+				
+				//generate cameras
+				int curCamera = cameralevel[y][x];
+				if(curCamera>0) {
+					SecurityCamera newCamera = cameraDepot(x*tileSizeX + tileSizeX/2, y*tileSizeY + tileSizeY/2, curCamera);
+					mg.map.addSecurityCamera(newCamera);
+				}
+				
 			}
 		}
 		
@@ -187,6 +202,7 @@ public class Levels {
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 			
+			//traps
 			int[][] traplevel = 
 				   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -206,6 +222,27 @@ public class Levels {
 					   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 			
+			//cameras
+			int[][] cameralevel = 
+				   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+					{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+			
+			//guards
 			ArrayList<Guard> guards = new ArrayList<Guard>();
 			
 			Guard g1 = new Guard(7*tileSizeX + tileSizeX/2,4*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
@@ -228,7 +265,7 @@ public class Levels {
 			g2.setPatrolPath(p2);
 			guards.add(g2);
 			
-			setLevel(game, levelName, tlevel, ilevel, traplevel, guards);
+			setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 		}
 		
 	
@@ -299,6 +336,26 @@ public class Levels {
 				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
 		ArrayList<Guard> guards = new ArrayList<Guard>();
 		
 		Guard g1 = new Guard(3*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
@@ -317,6 +374,6 @@ public class Levels {
 		g1.setPatrolPath(p1);
 		guards.add(g1);
 		
-		setLevel(game, levelName, tlevel, ilevel, traplevel, guards);
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 	}
 }

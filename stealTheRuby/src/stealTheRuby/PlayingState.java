@@ -154,18 +154,20 @@ public class PlayingState extends BasicGameState{
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
 		
-		timer += delta;
-		if(timer>1000) {
-			seconds++;
-			timer = 0;
-		}
-		if(seconds>60) {
-			minutes++;
-			seconds = 0;
-		}
-		if(minutes>99) {
-			minutes = 99;
-			seconds = 59;
+		if(mg.map.getFrozen()<=0) {
+			timer += delta;
+			if(timer>1000) {
+				seconds++;
+				timer = 0;
+			}
+			if(seconds>60) {
+				minutes++;
+				seconds = 0;
+			}
+			if(minutes>99) {
+				minutes = 99;
+				seconds = 59;
+			}
 		}
 		
 		mg.player.setVelocity(new Vector(0, 0));

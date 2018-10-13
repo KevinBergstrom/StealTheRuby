@@ -22,6 +22,7 @@ public class Map {
 	private Item[][] items;
 	private Trap[][] traps;
 	private ArrayList<Guard> guards;
+	private ArrayList<SecurityCamera> cameras;
 	private DijkstraNode[][] graph;
 	private float alertTimer;
 	private float alertSeconds;
@@ -39,6 +40,7 @@ public class Map {
 		items = new Item[sx][sy];
 		traps = new Trap[sx][sy];
 		guards = new ArrayList<Guard>();
+		cameras = new ArrayList<SecurityCamera>();
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
 		alertSeconds = 20;
@@ -55,6 +57,7 @@ public class Map {
 		items = new Item[tilesX][tilesY];
 		traps = new Trap[tilesX][tilesY];
 		guards.clear();
+		cameras.clear();
 		alertTimer = 0;
 		frozen = 0;
 		getaway = null;
@@ -124,6 +127,10 @@ public class Map {
 	
 	public void addGuard(Guard g) {
 		guards.add(g);
+	}
+	
+	public void addSecurityCamera(SecurityCamera c) {
+		cameras.add(c);
 	}
 	
 	public void testGuardFollowPath(float x, float y) {
@@ -358,6 +365,11 @@ public class Map {
 				}
 				
 			}
+
+			for(int i = 0;i<cameras.size();i++) {
+				SecurityCamera curCamera = cameras.get(i);
+				curCamera.update(delta);
+			}
 		}
 	}
 	
@@ -377,7 +389,12 @@ public class Map {
 		}
 		for(int i = 0;i<guards.size();i++) {
 			guards.get(i).render(g);
+			guards.get(i).renderCone(g);
 			guards.get(i).renderPath(g);
+		}
+		for(int i = 0;i<cameras.size();i++) {
+			cameras.get(i).renderCone(g);
+			cameras.get(i).render(g);
 		}
 		
 	}

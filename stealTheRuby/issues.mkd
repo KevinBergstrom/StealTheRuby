@@ -34,6 +34,6 @@
 - **[29]** Fix png errors
 - **[30]** Make bigger font
 - **[31]** Add final levels
-- **[32]** Add cheats
+- **[32]** Add cheats/debug mode
 
 

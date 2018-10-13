@@ -209,6 +209,9 @@ public class Guard extends Entity{
 						point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
 			}
 		}
+	}
+	
+	public void renderCone(Graphics g) {
 		visionCone.render(g);
 	}
 	
