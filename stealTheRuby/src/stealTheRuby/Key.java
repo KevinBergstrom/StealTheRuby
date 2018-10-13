@@ -17,6 +17,7 @@ public class Key extends Item{
 		
 		color = col;
 		setImageWithColor(Item.KEYIMG_RSC,32,32, col);
+		setName("Key");
 	}
 	
 	@Override

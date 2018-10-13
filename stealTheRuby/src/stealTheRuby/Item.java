@@ -33,11 +33,13 @@ public class Item extends Entity{
 	private boolean solid;
 	private Image image;
 	private String tex;
+	private String name;
 	
 	public Item(float x, float y, boolean sol) {
 		super(x,y);
 		solid = sol;
 		tex = null;
+		name = "";
 	}
 	
 	public void pickup(StateBasedGame game) {
@@ -46,6 +48,14 @@ public class Item extends Entity{
 	
 	public void use(StateBasedGame game) {
 		
+	}
+	
+	public void setName(String s) {
+		name = s;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public void setImage(String texture, int sizeX,int sizeY) {

@@ -26,10 +26,10 @@
 - **[24]** Add stopwatch
 - **[25]** Add security cameras
 - **[26]** Add electronics jammer
+- **[27]** Add item names
 
 ## Open Issues ##
 
-- **[27]** Add item names
 - **[28]** Streamline artstyle
 - **[29]** Fix png errors
 - **[30]** Make bigger font

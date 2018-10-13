@@ -11,6 +11,7 @@ public class fruit extends Item{
 	public fruit(float x, float y, boolean sol) {
 		super(x, y, sol);
 		setImage(Trap.PEELIMG_RSC,32,32);
+		setName("Fruit");
 	}
 	
 	@Override
