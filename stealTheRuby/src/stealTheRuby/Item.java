@@ -15,6 +15,7 @@ public class Item extends Entity{
 	public static final String KEYIMG_RSC = "stealTheRuby/resource/key.png";
 	public static final String LOCKIMG_RSC = "stealTheRuby/resource/lock.png";
 	public static final String BIKEIMG_RSC = "stealTheRuby/resource/testBike.png";
+	public static final String STOPWATCHIMG_RSC = "stealTheRuby/resource/stopWatch.png";
 	
 	public static void loadTextures() {
 		
@@ -23,6 +24,7 @@ public class Item extends Entity{
 		ResourceManager.loadImage(KEYIMG_RSC);
 		ResourceManager.loadImage(LOCKIMG_RSC);
 		ResourceManager.loadImage(BIKEIMG_RSC);
+		ResourceManager.loadImage(STOPWATCHIMG_RSC);
 		
 	}
 	

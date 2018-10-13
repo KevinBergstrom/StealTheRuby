@@ -219,16 +219,18 @@ public class PlayingState extends BasicGameState{
 		
 		mg.map.updateGuards(delta, game);
 		
-		for(int i = 0;i<mg.collectAnims.size();i++) {
-			ProjectileImage next = mg.collectAnims.get(i);
-			next.update(delta);
-			if(next.getFinished()) {
-				if(next.getType()==2) {
-					//ruby
-					bigRuby.setSolid(true);
+		if(mg.map.getFrozen()<=0) {
+			for(int i = 0;i<mg.collectAnims.size();i++) {
+				ProjectileImage next = mg.collectAnims.get(i);
+				next.update(delta);
+				if(next.getFinished()) {
+					if(next.getType()==2) {
+						//ruby
+						bigRuby.setSolid(true);
+					}
+					mg.collectAnims.remove(i);
+					i--;
 				}
-				mg.collectAnims.remove(i);
-				i--;
 			}
 		}
 		
@@ -236,22 +238,23 @@ public class PlayingState extends BasicGameState{
 			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
-		
-		int guardCollide = mg.map.collideWithGuards(mg.player);
-		if(guardCollide==2) {
-			//player got caught
-			mg.player.subLives();
-			
-			if(mg.player.getLives()<=0) {
-				//GAME OVER
-				//TODO update score
-				game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
-			}else {
-				reloadLevel(game);
-				mg.player.reset();
+		if(mg.map.getFrozen()<=0) {
+			int guardCollide = mg.map.collideWithGuards(mg.player);
+			if(guardCollide==2) {
+				//player got caught
+				mg.player.subLives();
+				
+				if(mg.player.getLives()<=0) {
+					//GAME OVER
+					//TODO update score
+					game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
+				}else {
+					reloadLevel(game);
+					mg.player.reset();
+				}
+			}else if(guardCollide==1) {
+				spotted = true;
 			}
-		}else if(guardCollide==1) {
-			spotted = true;
 		}
 		
 	}
