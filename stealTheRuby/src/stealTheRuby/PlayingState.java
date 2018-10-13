@@ -154,18 +154,20 @@ public class PlayingState extends BasicGameState{
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
 		
-		timer += delta;
-		if(timer>1000) {
-			seconds++;
-			timer = 0;
-		}
-		if(seconds>60) {
-			minutes++;
-			seconds = 0;
-		}
-		if(minutes>99) {
-			minutes = 99;
-			seconds = 59;
+		if(mg.map.getFrozen()<=0) {
+			timer += delta;
+			if(timer>1000) {
+				seconds++;
+				timer = 0;
+			}
+			if(seconds>60) {
+				minutes++;
+				seconds = 0;
+			}
+			if(minutes>99) {
+				minutes = 99;
+				seconds = 59;
+			}
 		}
 		
 		mg.player.setVelocity(new Vector(0, 0));
@@ -239,6 +241,7 @@ public class PlayingState extends BasicGameState{
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
 		if(mg.map.getFrozen()<=0) {
+			mg.map.collideWithCameras(mg.player);
 			int guardCollide = mg.map.collideWithGuards(mg.player);
 			if(guardCollide==2) {
 				//player got caught
@@ -255,6 +258,7 @@ public class PlayingState extends BasicGameState{
 			}else if(guardCollide==1) {
 				spotted = true;
 			}
+			
 		}
 		
 	}

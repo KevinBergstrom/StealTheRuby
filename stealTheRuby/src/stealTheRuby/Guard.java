@@ -94,13 +94,18 @@ public class Guard extends Entity{
 	
 	public void chase() {
 		state = 1;
-		//TODO update visionCone color
+		visionCone.getImage().setImageColor(255, 0, 0);
+		speed = chaseSpeed;
+	}
+	
+	public void investigate() {
+		state = -1;
 		visionCone.getImage().setImageColor(255, 0, 0);
 		speed = chaseSpeed;
 	}
 	
 	public void returnToPatrolPath() {
-		if(state == 1 || state == 3) {
+		if(state == 1 || state == 3 || state == -1 || state == 4) {
 			state = 2;
 			visionCone.getImage().setImageColor(0, 0, 255);
 		}
@@ -177,6 +182,8 @@ public class Guard extends Entity{
 					//found way back to patrol
 					patrol();
 					//patrolPoint = 0;
+				}else if(state == -1) {
+					state = 4;
 				}
 			}
 			setPosition(nextPoint.getX(),nextPoint.getY());
@@ -209,11 +216,16 @@ public class Guard extends Entity{
 						point.getX()-10, point.getY()-10, point.getX()+10, point.getY()+10,0, 0,20,20 );
 			}
 		}
+	}
+	
+	public void renderCone(Graphics g) {
 		visionCone.render(g);
 	}
 	
 	public void update(final int delta) {
-		if(state == 0) {
+		if(state == -1) {
+			followPath();
+		}else if(state == 0) {
 			followPatrolPath();
 		}else if(state == 1){
 			followPath();
