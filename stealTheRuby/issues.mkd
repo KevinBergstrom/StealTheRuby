@@ -31,10 +31,11 @@
 
 ## Open Issues ##
 
-- **[29]** Streamline artstyle
-- **[30]** Fix png errors
-- **[31]** Make bigger font
+- **[29]** Animation performance
+- **[30]** Update gui
+- **[31]** Fix png errors
 - **[32]** Add final levels
-- **[33]** Add cheats/debug mode
+- **[33]** Game balance
+- **[34]** Add cheats/debug mode
 
 

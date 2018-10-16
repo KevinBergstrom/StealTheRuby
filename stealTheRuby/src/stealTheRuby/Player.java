@@ -2,6 +2,7 @@ package stealTheRuby;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
@@ -33,11 +34,10 @@ public class Player extends Entity{
 	
 	private ArrayList<Item> inventory;
 	
-	private SpriteSheet sprites;
-	private Image curImage;
-	private float spriteTimer;
 	private int spriteDir;
-	private int spriteState;
+	
+	private Animation[] moveAnims;
+	private Animation curAnim;
 	
 	
 	
@@ -48,8 +48,34 @@ public class Player extends Entity{
 		
 		Image newImage = ResourceManager.getImage(MainGame.PLAYERSPRITESIMG_RSC).getScaledCopy(sx*4, sy*3);
 		newImage.setFilter(Image.FILTER_NEAREST);
-		sprites = new SpriteSheet(newImage,sx,sy);
-		updateSprite(0, 0);
+		moveAnims = new Animation[8];
+		
+		//add an invisible bounding box
+		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
+		boundImage.setAlpha(0);
+		addImageWithBoundingBox(boundImage);
+		
+		//walking anims
+		for(int i = 0;i<4;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.PLAYERSPRITESIMG_RSC, 32, 32), i, 0, i, 1, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
+		
+		curAnim = moveAnims[0];
+		addAnimation(curAnim);
+		
+		//frozen anims
+		for(int i = 4;i<8;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.PLAYERSPRITESIMG_RSC, 32, 32), i-4, 2, i-4, 2, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
+		
 		
 		velocity = new Vector(0.0f, 0.0f);
 		itemSelected = 0;
@@ -63,8 +89,6 @@ public class Player extends Entity{
 		escaped = false;
 		frozen = 0;
 		spriteDir = 0;
-		spriteState = 0;
-		spriteTimer = 300;
 		
 		inventory = new ArrayList<Item>();
 		
@@ -115,14 +139,6 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void updateSprite(int tileX, int tileY) {
-		if(curImage!=null) {
-			removeImage(curImage);
-		}
-		curImage = sprites.getSubImage(tileX*sizex, tileY*sizey, sizex, sizey);
-		this.addImageWithBoundingBox(curImage);
-	}
-	
 	public void updatePlayerSprite(Vector v, int delta, float frozen) {
 		int newDir = spriteDir;
 		if(v.getY()>0) {
@@ -139,32 +155,36 @@ public class Player extends Entity{
 		
 		//player is frozen
 		if(frozen>0) {
-			spriteTimer=300;
-			spriteState = 2;
-		}
-		
-		//player is standing still
-		if(newDir==-1) {
-			spriteTimer=300;
-			spriteState = 0;
-		}else {
-			spriteDir = newDir;
-		}
-		
-		spriteTimer-=delta;
-		if(spriteTimer<0) {
-				
-			spriteTimer = 300;
-			if(spriteState==0) {
-				spriteState = 1;
-			}else {
-				spriteState = 0;
+			if(!curAnim.isStopped()) {
+				removeAnimation(curAnim);
+				curAnim = moveAnims[newDir+4];
+				System.out.println(this.getNumAnimations());
+				addAnimation(curAnim);
+				curAnim.restart();
+				curAnim.stop();
 			}
-		}
-		//set sprite
-		updateSprite(spriteDir,spriteState);
-		
-		
+		}else {
+			//player is standing still
+			if(newDir==-1) {
+				if(!curAnim.isStopped()) {
+					curAnim.restart();
+					curAnim.stop();
+				}
+			}else {
+				//same direction
+				if(newDir == spriteDir) {
+					if(curAnim.isStopped()) {
+						curAnim.restart();
+					}
+				}else {
+					//new direction
+					removeAnimation(curAnim);
+					curAnim = moveAnims[newDir];
+					addAnimation(curAnim);
+				}
+				spriteDir = newDir;
+			}
+		}		
 	}
 	
 	public int getLives() {

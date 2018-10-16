@@ -105,32 +105,32 @@ public class Guard extends Entity{
 			newDir = -1;
 		}
 		
-		//player is frozen
-		if(frozen>0) {
-			spriteTimer=300;
-			spriteState = 2;
-		}
-		
-		//player is standing still
+		//guard is standing still
 		if(newDir==-1) {
-			spriteTimer=300;
+			spriteTimer = 300;
 			spriteState = 0;
 		}else {
 			spriteDir = newDir;
 		}
 		
-		spriteTimer-=delta;
-		if(spriteTimer<0) {
-				
-			spriteTimer = 300;
-			if(spriteState==0) {
-				spriteState = 1;
-			}else {
-				spriteState = 0;
+		//guard is frozen
+		if(frozen>0) {
+			spriteState = 2;
+			updateSprite(spriteDir,spriteState);
+		}else {
+			spriteTimer-=delta;
+			if(spriteTimer<0) {
+					
+				spriteTimer = 300;
+				if(spriteState==0) {
+					spriteState = 1;
+				}else {
+					spriteState = 0;
+				}
 			}
+			//set sprite
+			updateSprite(spriteDir,spriteState);
 		}
-		//set sprite
-		updateSprite(spriteDir,spriteState);
 		
 		
 	}
@@ -298,7 +298,7 @@ public class Guard extends Entity{
 			facing = velocity;
 		}
 		updateVisionCone(facing);
-		updatePlayerSprite(facing, delta, frozen);
+		//updatePlayerSprite(facing, delta, frozen);
 		if(frozen>0) {
 			frozen-=delta;
 		}else {
