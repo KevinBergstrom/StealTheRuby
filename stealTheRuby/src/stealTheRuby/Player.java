@@ -3,6 +3,7 @@ package stealTheRuby;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
@@ -32,17 +33,26 @@ public class Player extends Entity{
 	
 	private ArrayList<Item> inventory;
 	
+	private SpriteSheet sprites;
+	private Image curImage;
+	private float spriteTimer;
+	private int spriteDir;
+	private int spriteState;
+	
+	
+	
 	public Player(final float x, final float y, int sx, int sy) {
 		super(x,y);
-		Image newImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
+		sizex = sx;
+		sizey = sy;
+		
+		Image newImage = ResourceManager.getImage(MainGame.PLAYERSPRITESIMG_RSC).getScaledCopy(sx*4, sy*3);
 		newImage.setFilter(Image.FILTER_NEAREST);
-		addImageWithBoundingBox(newImage);
+		sprites = new SpriteSheet(newImage,sx,sy);
+		updateSprite(0, 0);
 		
 		velocity = new Vector(0.0f, 0.0f);
 		itemSelected = 0;
-		
-		sizex = sx;
-		sizey = sy;
 		
 		//only -0.3 to 0.3 speeds are safe
 		speed = 0.1f;
@@ -52,6 +62,9 @@ public class Player extends Entity{
 		lives = 3;
 		escaped = false;
 		frozen = 0;
+		spriteDir = 0;
+		spriteState = 0;
+		spriteTimer = 300;
 		
 		inventory = new ArrayList<Item>();
 		
@@ -100,6 +113,58 @@ public class Player extends Entity{
 		}else if(this.getCoarseGrainedMaxY()>y2){
 			this.setPosition(this.getX(), y2-(sizey/2));
 		}
+	}
+	
+	public void updateSprite(int tileX, int tileY) {
+		if(curImage!=null) {
+			removeImage(curImage);
+		}
+		curImage = sprites.getSubImage(tileX*sizex, tileY*sizey, sizex, sizey);
+		this.addImageWithBoundingBox(curImage);
+	}
+	
+	public void updatePlayerSprite(Vector v, int delta, float frozen) {
+		int newDir = spriteDir;
+		if(v.getY()>0) {
+			newDir = 1;
+		}else if(v.getY()<0) {
+			newDir = 3;
+		}else if(v.getX()>0) {
+			newDir = 0;
+		}else if(v.getX()<0) {
+			newDir = 2;
+		}else{
+			newDir = -1;
+		}
+		
+		//player is frozen
+		if(frozen>0) {
+			spriteTimer=300;
+			spriteState = 2;
+		}
+		
+		//player is standing still
+		if(newDir==-1) {
+			spriteTimer=300;
+			spriteState = 0;
+		}else {
+			spriteDir = newDir;
+		}
+		
+		spriteTimer-=delta;
+		if(spriteTimer<0) {
+				
+			spriteTimer = 300;
+			if(spriteState==0) {
+				spriteState = 1;
+			}else {
+				spriteState = 0;
+			}
+		}
+		//set sprite
+		updateSprite(spriteDir,spriteState);
+		
+		
 	}
 	
 	public int getLives() {
@@ -164,7 +229,11 @@ public class Player extends Entity{
 	
 	public void removeItem() {
 		inventory.remove(itemSelected);
-		//update gui?
+	}
+	
+	public float distanceTo(Entity e) {
+		Vector dist = new Vector(getX()-e.getX(),getY()-e.getY());
+		return dist.length();
 	}
 	
 	public void itemScroll(boolean forward) {
@@ -359,6 +428,7 @@ public class Player extends Entity{
 	}
 	
 	public void update(final int delta) {
+		updatePlayerSprite(velocity, delta, frozen);
 		if(frozen>0) {
 			frozen-=delta;
 		}else {

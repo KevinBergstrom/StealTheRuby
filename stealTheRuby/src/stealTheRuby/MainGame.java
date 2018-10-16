@@ -23,6 +23,8 @@ public class MainGame extends StateBasedGame {
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	public static final String VISIONCONEIMG_RSC = "stealTheRuby/resource/visionCone.png";
 	public static final String SECURITYCAMERAIMG_RSC = "stealTheRuby/resource/securityCamera.png";
+	public static final String PLAYERSPRITESIMG_RSC = "stealTheRuby/resource/playerSpriteSheet.png";
+	public static final String GUARDSPRITESIMG_RSC = "stealTheRuby/resource/guardSpriteSheet.png";
 	
 	Player player;
 	Map map;
@@ -57,6 +59,8 @@ public class MainGame extends StateBasedGame {
 		ResourceManager.loadImage(TESTIMG_RSC);
 		ResourceManager.loadImage(VISIONCONEIMG_RSC);
 		ResourceManager.loadImage(SECURITYCAMERAIMG_RSC);
+		ResourceManager.loadImage(PLAYERSPRITESIMG_RSC);
+		ResourceManager.loadImage(GUARDSPRITESIMG_RSC);
 		
 		Item.loadTextures();
 		Trap.loadTextures();
