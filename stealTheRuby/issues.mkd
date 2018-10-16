@@ -27,10 +27,10 @@
 - **[25]** Add security cameras
 - **[26]** Add electronics jammer
 - **[27]** Add item names
+- **[28]** Add player and guard animations
 
 ## Open Issues ##
 
-- **[28]** Add player and guard animations
 - **[29]** Streamline artstyle
 - **[30]** Fix png errors
 - **[31]** Make bigger font

@@ -229,7 +229,11 @@ public class Player extends Entity{
 	
 	public void removeItem() {
 		inventory.remove(itemSelected);
-		//update gui?
+	}
+	
+	public float distanceTo(Entity e) {
+		Vector dist = new Vector(getX()-e.getX(),getY()-e.getY());
+		return dist.length();
 	}
 	
 	public void itemScroll(boolean forward) {

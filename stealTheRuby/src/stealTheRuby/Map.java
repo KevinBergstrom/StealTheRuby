@@ -169,7 +169,9 @@ public class Map {
 			Guard curGuard = guards.get(i);
 			if(curGuard.getFrozen()<=0) {
 				if(p.collides(curGuard)!=null) {
-					return 2;
+					if(p.distanceTo(curGuard)<=20) {
+						return 2;
+					}
 				}
 				if(curGuard.collideWithVisionCone(p)) {
 					chasePlayer(curGuard,p);
@@ -434,8 +436,8 @@ public class Map {
 			if(curGuard.getFrozen()<=0) {
 				curGuard.renderCone(g);
 			}
-			//TODO testing
-			curGuard.renderPath(g);
+			//TODO DEBUG MODE
+			//curGuard.renderPath(g);
 		}
 		for(int i = 0;i<cameras.size();i++) {
 			SecurityCamera curCamera = cameras.get(i);
