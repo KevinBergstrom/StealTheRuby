@@ -30,10 +30,11 @@
 
 ## Open Issues ##
 
-- **[28]** Streamline artstyle
-- **[29]** Fix png errors
-- **[30]** Make bigger font
-- **[31]** Add final levels
-- **[32]** Add cheats/debug mode
+- **[28]** Add player and guard animations
+- **[29]** Streamline artstyle
+- **[30]** Fix png errors
+- **[31]** Make bigger font
+- **[32]** Add final levels
+- **[33]** Add cheats/debug mode
 
 
