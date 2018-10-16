@@ -46,8 +46,6 @@ public class Player extends Entity{
 		sizex = sx;
 		sizey = sy;
 		
-		Image newImage = ResourceManager.getImage(MainGame.PLAYERSPRITESIMG_RSC).getScaledCopy(sx*4, sy*3);
-		newImage.setFilter(Image.FILTER_NEAREST);
 		moveAnims = new Animation[8];
 		
 		//add an invisible bounding box
@@ -68,9 +66,16 @@ public class Player extends Entity{
 		addAnimation(curAnim);
 		
 		//frozen anims
-		for(int i = 4;i<8;i++) {
+		for(int i = 4;i<6;i++) {
 			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
-					MainGame.PLAYERSPRITESIMG_RSC, 32, 32), i-4, 2, i-4, 2, false, 300,
+					MainGame.PLAYERSPRITESIMG_RSC, 32, 32), 0, 2, 0, 2, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
+		for(int i = 6;i<8;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.PLAYERSPRITESIMG_RSC, 32, 32), 2, 2, 2, 2, false, 300,
 					true);
 			newAnim.setLooping(false);
 			moveAnims[i] = newAnim;
