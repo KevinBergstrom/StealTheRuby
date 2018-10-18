@@ -15,6 +15,16 @@ public class Levels {
 	public static final String BRICKIMG_RSC = "stealTheRuby/resource/brickTile.png";
 	public static final String METALIMG_RSC = "stealTheRuby/resource/metalTile.png";
 	public static final String WOODIMG_RSC = "stealTheRuby/resource/woodTile.png";
+	public static final String SIXTIESIMG_RSC = "stealTheRuby/resource/60sCarpetTile.png";
+	public static final String BLUEIMG_RSC = "stealTheRuby/resource/blueCarpetTile.png";
+	public static final String CARPETIMG_RSC = "stealTheRuby/resource/carpetTile.png";
+	public static final String CHESSIMG_RSC = "stealTheRuby/resource/chessTile.png";
+	public static final String CONCRETEIMG_RSC = "stealTheRuby/resource/concreteTile.png";
+	public static final String CRATEIMG_RSC = "stealTheRuby/resource/crateTile.png";
+	public static final String DARKWOODIMG_RSC = "stealTheRuby/resource/mahoganyTile.png";
+	public static final String PURPLEIMG_RSC = "stealTheRuby/resource/purpleTile.png";
+	public static final String SOLIDIMG_RSC = "stealTheRuby/resource/solidTile.png";
+	public static final String WOODWALLIMG_RSC = "stealTheRuby/resource/woodenWallTile.png";
 	
 	public static void loadTextures() {
 		
@@ -23,6 +33,16 @@ public class Levels {
 		ResourceManager.loadImage(BRICKIMG_RSC);
 		ResourceManager.loadImage(METALIMG_RSC);
 		ResourceManager.loadImage(WOODIMG_RSC);
+		ResourceManager.loadImage(SIXTIESIMG_RSC);
+		ResourceManager.loadImage(BLUEIMG_RSC);
+		ResourceManager.loadImage(CARPETIMG_RSC);
+		ResourceManager.loadImage(CHESSIMG_RSC);
+		ResourceManager.loadImage(CONCRETEIMG_RSC);
+		ResourceManager.loadImage(CRATEIMG_RSC);
+		ResourceManager.loadImage(DARKWOODIMG_RSC);
+		ResourceManager.loadImage(PURPLEIMG_RSC);
+		ResourceManager.loadImage(SOLIDIMG_RSC);
+		ResourceManager.loadImage(WOODWALLIMG_RSC);
 		
 	}
 	
@@ -47,6 +67,29 @@ public class Levels {
 			return new Tile(x,y,tileSizeX, tileSizeY,false ,METALIMG_RSC);
 		}else if(type==4) {
 			return new Tile(x,y,tileSizeX, tileSizeY,false ,WOODIMG_RSC);
+		}else if(type==5) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,SIXTIESIMG_RSC);
+		}else if(type==6) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,BLUEIMG_RSC);
+		}else if(type==7) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,CARPETIMG_RSC);
+		}else if(type==8) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,CHESSIMG_RSC);
+		}else if(type==9) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,CONCRETEIMG_RSC);
+		}else if(type==10) {
+			return new Tile(x,y,tileSizeX, tileSizeY,true ,CRATEIMG_RSC);
+		}else if(type==11) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,DARKWOODIMG_RSC);
+		}else if(type==12) {
+			return new Tile(x,y,tileSizeX, tileSizeY,false ,PURPLEIMG_RSC);
+		}else if(type==13) {
+			return new Tile(x,y,tileSizeX, tileSizeY,true ,SOLIDIMG_RSC);
+		}else if(type==14) {
+			return new Tile(x,y,tileSizeX, tileSizeY,true ,WOODWALLIMG_RSC);
+		}else if(type==15) {
+			return new Tile(x,y,tileSizeX, tileSizeY,true ,GRASSIMG_RSC);
+			//solid grass
 		}
 		
 		return null;
@@ -178,7 +221,7 @@ public class Levels {
 			
 			
 			int[][] tlevel = 
-				   {{1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				   {{1,1,1,1,1,1,1,1,1,1,1,15,1,1,1,1,1,1,1,1,1,1,1,1,1},
 					{1,1,1,2,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,1,1,1},
 					{1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,1,1,1},
 					{1,1,1,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,1,1,1},
