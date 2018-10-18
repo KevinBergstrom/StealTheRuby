@@ -28,10 +28,10 @@
 - **[26]** Add electronics jammer
 - **[27]** Add item names
 - **[28]** Add player and guard animations
+- **[29]** Animation performance
 
 ## Open Issues ##
 
-- **[29]** Animation performance
 - **[30]** Update gui
 - **[31]** Fix png errors
 - **[32]** Add final levels

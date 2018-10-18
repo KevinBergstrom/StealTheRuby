@@ -129,7 +129,6 @@ public class Guard extends Entity{
 			if(!curAnim.isStopped()) {
 				removeAnimation(curAnim);
 				curAnim = moveAnims[newDir+4];
-				System.out.println(this.getNumAnimations());
 				addAnimation(curAnim);
 				curAnim.restart();
 				curAnim.stop();
