@@ -28,13 +28,14 @@
 - **[26]** Add electronics jammer
 - **[27]** Add item names
 - **[28]** Add player and guard animations
+- **[29]** Animation performance
 
 ## Open Issues ##
 
-- **[29]** Streamline artstyle
-- **[30]** Fix png errors
-- **[31]** Make bigger font
+- **[30]** Update gui
+- **[31]** Fix png errors
 - **[32]** Add final levels
-- **[33]** Add cheats/debug mode
+- **[33]** Game balance
+- **[34]** Add cheats/debug mode
 
 

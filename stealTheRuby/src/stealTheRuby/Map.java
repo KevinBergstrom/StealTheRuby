@@ -43,7 +43,7 @@ public class Map {
 		cameras = new ArrayList<SecurityCamera>();
 		graph = new DijkstraNode[sx][sy];
 		alertTimer = 0;
-		alertSeconds = 20;
+		alertSeconds = 10;
 		frozen = 0;
 		getaway = null;
 		mapName = "DEFAULT";

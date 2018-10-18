@@ -2,6 +2,7 @@ package stealTheRuby;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -32,21 +33,49 @@ public class Guard extends Entity{
 	private Item visionCone;
 	private float frozen;
 	
-	private SpriteSheet sprites;
-	private Image curImage;
-	private float spriteTimer;
 	private int spriteDir;
-	private int spriteState;
+	private Animation[] moveAnims;
+	private Animation curAnim;
 	
 	public Guard(final float x, final float y, int sx, int sy) {
 		super(x,y);
 		sizex = sx;
 		sizey = sy;
 		
-		Image newImage = ResourceManager.getImage(MainGame.GUARDSPRITESIMG_RSC).getScaledCopy(sx*4, sy*3);
-		newImage.setFilter(Image.FILTER_NEAREST);
-		sprites = new SpriteSheet(newImage,sx,sy);
-		updateSprite(0, 0);
+		moveAnims = new Animation[8];
+		
+		//add an invisible bounding box
+		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
+		boundImage.setAlpha(0);
+		addImageWithBoundingBox(boundImage);
+		
+		//walking anims
+		for(int i = 0;i<4;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.GUARDSPRITESIMG_RSC, 32, 32), i, 0, i, 1, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
+		
+		curAnim = moveAnims[0];
+		addAnimation(curAnim);
+		
+		//frozen anims
+		for(int i = 4;i<6;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.GUARDSPRITESIMG_RSC, 32, 32), 0, 2, 0, 2, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
+		for(int i = 6;i<8;i++) {
+			Animation newAnim = new Animation(ResourceManager.getSpriteSheet(
+					MainGame.GUARDSPRITESIMG_RSC, 32, 32), 2, 2, 2, 2, false, 300,
+					true);
+			newAnim.setLooping(false);
+			moveAnims[i] = newAnim;
+		}
 		
 		velocity = new Vector(0.0f, 0.0f);
 		facing = new Vector(0.0f, 1.0f);
@@ -71,8 +100,6 @@ public class Guard extends Entity{
 		visionCone.setImageWithColor(MainGame.VISIONCONEIMG_RSC, 32,64, new Color(0,0,255));
 		frozen = 0;
 		spriteDir = 0;
-		spriteState = 0;
-		spriteTimer = 300;
 	}
 	
 	public void incapacitate(float seconds) {
@@ -81,14 +108,6 @@ public class Guard extends Entity{
 	
 	public float getFrozen() {
 		return frozen;
-	}
-	
-	public void updateSprite(int tileX, int tileY) {
-		if(curImage!=null) {
-			removeImage(curImage);
-		}
-		curImage = sprites.getSubImage(tileX*sizex, tileY*sizey, sizex, sizey);
-		this.addImageWithBoundingBox(curImage);
 	}
 	
 	public void updatePlayerSprite(Vector v, int delta, float frozen) {
@@ -107,32 +126,35 @@ public class Guard extends Entity{
 		
 		//player is frozen
 		if(frozen>0) {
-			spriteTimer=300;
-			spriteState = 2;
-		}
-		
-		//player is standing still
-		if(newDir==-1) {
-			spriteTimer=300;
-			spriteState = 0;
-		}else {
-			spriteDir = newDir;
-		}
-		
-		spriteTimer-=delta;
-		if(spriteTimer<0) {
-				
-			spriteTimer = 300;
-			if(spriteState==0) {
-				spriteState = 1;
-			}else {
-				spriteState = 0;
+			if(!curAnim.isStopped()) {
+				removeAnimation(curAnim);
+				curAnim = moveAnims[newDir+4];
+				addAnimation(curAnim);
+				curAnim.restart();
+				curAnim.stop();
 			}
-		}
-		//set sprite
-		updateSprite(spriteDir,spriteState);
-		
-		
+		}else {
+			//player is standing still
+			if(newDir==-1) {
+				if(!curAnim.isStopped()) {
+					curAnim.restart();
+					curAnim.stop();
+				}
+			}else {
+				//same direction
+				if(newDir == spriteDir) {
+					if(curAnim.isStopped()) {
+						curAnim.restart();
+					}
+				}else {
+					//new direction
+					removeAnimation(curAnim);
+					curAnim = moveAnims[newDir];
+					addAnimation(curAnim);
+				}
+				spriteDir = newDir;
+			}
+		}		
 	}
 	
 	public void updateVisionCone(Vector v){
