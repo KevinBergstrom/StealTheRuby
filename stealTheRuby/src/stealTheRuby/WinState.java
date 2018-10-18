@@ -91,6 +91,7 @@ public class WinState extends BasicGameState{
 			rubies.get(i).setSolid(false);
 		}
 		shake.setSolid(false);
+		readyToProgress = false;
 	}
 	
 	@Override
