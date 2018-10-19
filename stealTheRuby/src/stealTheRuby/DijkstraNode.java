@@ -2,8 +2,6 @@ package stealTheRuby;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Graphics;
-
 import jig.Entity;
 
 public class DijkstraNode extends Entity implements Comparable<DijkstraNode>{

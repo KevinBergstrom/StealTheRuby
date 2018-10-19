@@ -8,8 +8,6 @@ import jig.Vector;
 public class ProjectileImage extends Entity{
 
 	private Vector velocity;
-	private float startX;
-	private float startY;
 	private float endX;
 	private float endY;
 	private float speed;
@@ -22,8 +20,6 @@ public class ProjectileImage extends Entity{
 		setImage(item.getImage());
 		
 		type = t;
-		startX = sx;
-		startY = sy;
 		endX = ex;
 		endY = ey;
 		speed = 0.7f;

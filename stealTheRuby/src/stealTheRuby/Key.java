@@ -1,9 +1,7 @@
 package stealTheRuby;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-import jig.ResourceManager;
 import jig.Vector;
 
 public class Key extends Item{

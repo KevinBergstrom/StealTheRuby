@@ -45,7 +45,6 @@ public class WinState extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		MainGame mg = (MainGame)game;
 		loadTextures();
 		rubies = new ArrayList<Tile>();
 		credits = new ArrayList<String>();
@@ -138,7 +137,6 @@ public class WinState extends BasicGameState{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		Input input = container.getInput();
-		MainGame mg = (MainGame)game;
 		
 		if(state!=3) {
 			timer+= delta;

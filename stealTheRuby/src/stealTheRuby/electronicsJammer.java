@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.state.StateBasedGame;
 
-import jig.Vector;
-
 public class electronicsJammer extends Item{
 
 	final int type = 3;
