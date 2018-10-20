@@ -181,6 +181,9 @@ public class PlayingState extends BasicGameState{
 		if (input.isKeyDown(Input.KEY_F12)) {
 			mg.player.setEscaped(true);
 		}
+		if (input.isKeyDown(Input.KEY_F1)) {
+			mg.DEBUG = true;
+		}
 		
 		//player controls
 		if (input.isKeyDown(Input.KEY_W)) {
