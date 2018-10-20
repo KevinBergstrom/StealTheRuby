@@ -47,6 +47,7 @@ public class Levels {
 	}
 	
 	final public static int lastLevel = 4;//TODO update this
+	final public static int totalCoins = 0;//TODO update this
 	
 	public static void loadLevel(int level, StateBasedGame game) {
 		if(level==1) {

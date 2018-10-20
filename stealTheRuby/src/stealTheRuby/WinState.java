@@ -19,12 +19,14 @@ public class WinState extends BasicGameState{
 
 	public static final String WINIMG_RSC = "stealTheRuby/resource/winScreen.png";
 	public static final String SHAKEIMG_RSC = "stealTheRuby/resource/strawberryShake.png";
+	public static final String FOXIMG_RSC = "stealTheRuby/resource/fox.png";
 	
 	
 	public void loadTextures() {
 		
 		ResourceManager.loadImage(WINIMG_RSC);
 		ResourceManager.loadImage(SHAKEIMG_RSC);
+		ResourceManager.loadImage(FOXIMG_RSC);
 	}
 	
 	private boolean readyToProgress;
@@ -128,6 +130,13 @@ public class WinState extends BasicGameState{
 			creditsFinished = true;
 		}
 		
+		if(mg.totalCoins>=Levels.totalCoins) {
+			//secret (shhhhh!)
+			Image foxIMG = ResourceManager.getImage(FOXIMG_RSC);
+			foxIMG.setAlpha((float) (Math.sin(timer/1000)));
+			foxIMG.setFilter(Image.FILTER_NEAREST);
+			g.drawImage(foxIMG, 229*2, 129*2, (229*2)+128, (129*2)+128,0, 0,64,64 );
+		}
 	}
 	
 	public Vector angleToVector(float rad) {
