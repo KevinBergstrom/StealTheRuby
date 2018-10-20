@@ -40,7 +40,7 @@ public class Guard extends Entity{
 		moveAnims = new Animation[8];
 		
 		//add an invisible bounding box
-		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
+		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx-4, sy-4);
 		boundImage.setAlpha(0);
 		addImageWithBoundingBox(boundImage);
 		
