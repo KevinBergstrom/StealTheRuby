@@ -53,23 +53,23 @@ public class Levels {
 	
 	public static void loadLevel(int level, StateBasedGame game) {
 		if(level==1) {
-			level1(game);
-		}else if(level==2) {
-			level2(game);
-		}else if(level==3) {
-			level3(game);
-		}else if(level==4) {
-			level4(game);
-		}else if(level==5) {
-			level5(game);
-		}else if(level==6) {
 			level6(game);
-		}else if(level==7) {
-			level7(game);
-		}else if(level==8) {
+		}else if(level==2) {
 			level8(game);
-		}else if(level==9) {
+		}else if(level==3) {
+			level7(game);
+		}else if(level==4) {
+			level3(game);
+		}else if(level==5) {
+			level4(game);
+		}else if(level==6) {
+			level5(game);
+		}else if(level==7) {
+			level1(game);
+		}else if(level==8) {
 			level9(game);
+		}else if(level==9) {
+			level2(game);
 		}else if(level==10) {
 			level10(game);
 		}
@@ -388,7 +388,6 @@ public class Levels {
 		
 		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 	}
-
 	private static void level9(StateBasedGame game) {
 		
 		String levelName = "Disco";
@@ -1457,7 +1456,6 @@ Guard g8 = new Guard(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2, tileS
 		
 		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 	}
-	
 	private static void level3(StateBasedGame game) {
 		
 		String levelName = "Storehouse";

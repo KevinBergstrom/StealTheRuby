@@ -31,11 +31,11 @@
 - **[29]** Animation performance
 - **[30]** Update gui
 - **[31]** Fix png errors
+- **[32]** Add final levels
 
 ## Open Issues ##
 
-- **[32]** Add final levels
-- **[33]** Game balance
+- **[33]** Final polish
 - **[34]** Add cheats/debug mode
 
 
