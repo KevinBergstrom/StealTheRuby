@@ -70,7 +70,6 @@ public class ResultsState extends BasicGameState{
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		// TODO Auto-generated method stub
 		MainGame mg = (MainGame)game;
 		Image SplashImage = ResourceManager.getImage(RESULTSIMG_RSC);
 		SplashImage.setFilter(Image.FILTER_NEAREST);
@@ -132,7 +131,6 @@ public class ResultsState extends BasicGameState{
 	
 	public void scoreAttempt() {
 		score += 500;
-		//TODO update bike image color so its doesn't look black
 		images.add(new Tile(147*2 + ivalue*96,186*2,96,64,false,Item.BIKEIMG_RSC));
 		attempts--;
 		ivalue++;
@@ -231,7 +229,6 @@ public class ResultsState extends BasicGameState{
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return MainGame.RESULTSSTATE;
 	}
 

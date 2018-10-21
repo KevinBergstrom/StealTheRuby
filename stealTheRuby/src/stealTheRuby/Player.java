@@ -119,7 +119,6 @@ public class Player extends Entity{
 	}
 	
 	public void reset() {
-		//TODO update when more things added
 		coins = 0;
 		hasRuby = false;
 		itemSelected = 0;
@@ -220,7 +219,6 @@ public class Player extends Entity{
 	
 	public void addItem(Item t) {
 		inventory.add(t);
-		//update gui?
 	}
 	
 	public Item[] getSelectedItems() {

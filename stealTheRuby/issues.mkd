@@ -32,10 +32,8 @@
 - **[30]** Update gui
 - **[31]** Fix png errors
 - **[32]** Add final levels
+- **[33]** Final polish
 
 ## Open Issues ##
-
-- **[33]** Final polish
-- **[34]** Add cheats/debug mode
 
 

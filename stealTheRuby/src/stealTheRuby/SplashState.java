@@ -77,7 +77,6 @@ public class SplashState extends BasicGameState{
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		//container.setSoundOn(false);
 		readyToProgress = false;
 		timer = 0;
 	}
@@ -108,7 +107,6 @@ public class SplashState extends BasicGameState{
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		// TODO Auto-generated method stub
 		Input input = container.getInput();
 		MainGame mg = (MainGame)game;
 		

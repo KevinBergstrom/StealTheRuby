@@ -14,10 +14,12 @@ public class fruitPeel extends Trap{
 	@Override
 	public void springTrap(StateBasedGame game, Entity e) {
 		if(!getPlayerOwned()) {
+			//trap not set by player
 			Player p = (Player)e;
 			p.incapacitate(3);
 		}
 		if(getPlayerOwned()) {
+			//trap set by player
 			Guard g = (Guard)e;
 			g.incapacitate(3);
 		}

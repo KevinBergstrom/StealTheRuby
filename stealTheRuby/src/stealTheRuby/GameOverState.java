@@ -30,7 +30,6 @@ public class GameOverState extends BasicGameState {
 	private float rubyTimer;
 	private int state;
 	
-	//private Tile ruby;
 	private ArrayList<Tile> rubies;
 	private Tile bars;
 	private float speed;
@@ -103,7 +102,6 @@ public class GameOverState extends BasicGameState {
 					for(int i = 0;i<missingRubies;i++) {
 						rubies.add(new Tile(mg.ScreenWidth + 64 + i*164,185*2,128,128,false,SplashState.BIGRUBYIMG_RSC));
 					}
-					//ruby.setX(mg.ScreenWidth+128);
 					state = 1;
 				}else {
 					bars.setX(200*2);

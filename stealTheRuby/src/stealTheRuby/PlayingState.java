@@ -46,6 +46,8 @@ public class PlayingState extends BasicGameState{
 	private boolean spotted;
 	private int attempts;
 	
+	private boolean GODMODE;
+	
 	private boolean itemScrollDebounce;
 	private boolean itemUseDebounce;
 	
@@ -59,6 +61,7 @@ public class PlayingState extends BasicGameState{
 		unseenTitle = new Tile(400,576,176,27,false,UNSEENIMG_RSC);
 		calmTitle = new Tile(400,576,176,27,false,CALMIMG_RSC);
 		alertTitle = new Tile(400,576,176,27,false,ALERTIMG_RSC);
+		GODMODE = false;
 		
 	}
 	
@@ -106,11 +109,9 @@ public class PlayingState extends BasicGameState{
 		
 		Item[] items = mg.player.getSelectedItems();
 		if(items[1]!=null) {
-			g.drawString(""+items[1].getName(), 550, 526);
+			g.drawString(""+items[1].getName() + " - Space to use", 550, 526);
 		}
 		
-		
-		//TODO update these
 		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
 		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
 		g.drawString("Lives: " + mg.player.getLives(), 17, 574);
@@ -133,6 +134,13 @@ public class PlayingState extends BasicGameState{
 		
 		for(int i = 0;i<mg.collectAnims.size();i++) {
 			mg.collectAnims.get(i).render(g);
+		}
+		
+		if(MainGame.DEBUG) {
+			g.drawString("DEBUG MODE", 10, 30);
+		}
+		if(GODMODE) {
+			g.drawString("GODMODE", 10, 50);
 		}
 		
 	}
@@ -182,7 +190,10 @@ public class PlayingState extends BasicGameState{
 			mg.player.setEscaped(true);
 		}
 		if (input.isKeyDown(Input.KEY_F1)) {
-			mg.DEBUG = true;
+			MainGame.DEBUG = true;
+		}
+		if (input.isKeyDown(Input.KEY_F2)) {
+			GODMODE = true;
 		}
 		
 		//player controls
@@ -224,8 +235,10 @@ public class PlayingState extends BasicGameState{
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight-100);
 		mg.player.collideWithItems(mg);
-		mg.player.collideWithTraps(mg);
-		mg.player.collideWithMap(mg.map);
+		if(!GODMODE) {
+			mg.player.collideWithTraps(mg);
+			mg.player.collideWithMap(mg.map);
+		}
 		
 		mg.map.updateGuards(delta, game);
 		
@@ -248,26 +261,28 @@ public class PlayingState extends BasicGameState{
 			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
-		if(mg.map.getFrozen()<=0) {
-			mg.map.collideWithCameras(mg.player);
-			int guardCollide = mg.map.collideWithGuards(mg.player);
-			if(guardCollide==2) {
-				//player got caught
-				mg.player.subLives();
-				
-				if(mg.player.getLives()<=0) {
-					//GAME OVER
-					//TODO update score
-					game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
-				}else {
-					reloadLevel(game);
-					mg.player.reset();
+		if(!GODMODE) {
+			if(mg.map.getFrozen()<=0) {
+				mg.map.collideWithCameras(mg.player);
+				int guardCollide = mg.map.collideWithGuards(mg.player);
+				if(guardCollide==2) {
+					//player got caught
+					mg.player.subLives();
+					
+					if(mg.player.getLives()<=0) {
+						//GAME OVER
+						game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
+					}else {
+						reloadLevel(game);
+						mg.player.reset();
+					}
+				}else if(guardCollide==1) {
+					spotted = true;
 				}
-			}else if(guardCollide==1) {
-				spotted = true;
+				
 			}
-			
 		}
+		
 		
 	}
 	

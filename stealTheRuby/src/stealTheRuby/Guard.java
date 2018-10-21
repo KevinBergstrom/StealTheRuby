@@ -128,6 +128,7 @@ public class Guard extends Entity{
 				curAnim.restart();
 				curAnim.stop();
 			}
+			spriteDir = -1;
 		}else {
 			//player is standing still
 			if(newDir==-1) {
