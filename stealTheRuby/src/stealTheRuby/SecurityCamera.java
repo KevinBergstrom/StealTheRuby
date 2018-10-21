@@ -75,7 +75,6 @@ public class SecurityCamera extends Entity{
 	
 	public boolean collideWithVisionCone(Entity a) {
 		if(a.collides(visionCone)!=null) {
-			//TODO look at entity a?
 			faceEntity(a);
 			visionCone.getImage().setImageColor(255, 0, 0);
 			return true;

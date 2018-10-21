@@ -112,8 +112,6 @@ public class PlayingState extends BasicGameState{
 			g.drawString(""+items[1].getName() + " - Space to use", 550, 526);
 		}
 		
-		
-		//TODO update these
 		g.drawString("Level: "+mg.map.getMapName(), 17, 513);
 		g.drawString("Coins: " + mg.player.getCoins(), 17, 543);
 		g.drawString("Lives: " + mg.player.getLives(), 17, 574);

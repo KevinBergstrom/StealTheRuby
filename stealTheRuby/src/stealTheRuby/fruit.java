@@ -27,8 +27,10 @@ public class fruit extends Item{
 	@Override
 	public void use(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
+		//calculate grid position
 		Vector gridPos = mg.map.getGridPos(mg.player.getX(), mg.player.getY());
 		fruitPeel peel = new fruitPeel(gridPos.getX()*mg.map.getTileSizeX() + mg.map.getTileSizeX()/2,gridPos.getY()*mg.map.getTileSizeY() + mg.map.getTileSizeY()/2,true);
+		//set trap
 		mg.map.setTrap((int)gridPos.getX(), (int)gridPos.getY(), peel);
 		mg.player.removeItem();
 	}

@@ -136,7 +136,7 @@ public class Map {
 	}
 	
 	public void testGuardFollowPath(float x, float y) {
-		//TODO testing
+		//for testing purposes
 		for(int i = 0;i<guards.size();i++) {
 			ArrayList<Vector> newPath = dijkstraPath(guards.get(i).getX(),guards.get(i).getY(),x,y);
 			guards.get(i).setFollowPath(newPath);

@@ -27,6 +27,7 @@ public class electronicsJammer extends Item{
 	@Override
 	public void use(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
+		//disable all security cameras on the map
 		ArrayList<SecurityCamera> cameras = mg.map.getCameras();
 		for(int i =0;i<cameras.size();i++) {
 			cameras.get(i).incapacitate(10);

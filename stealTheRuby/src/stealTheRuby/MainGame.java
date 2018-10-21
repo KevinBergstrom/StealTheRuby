@@ -68,7 +68,6 @@ public class MainGame extends StateBasedGame {
 		Trap.loadTextures();
 		Levels.loadTextures();
 		player = new Player(590,116,32,32);
-		//TODO move later
 		map = new Map(25, 16, 32, 32);
 		
 		collectAnims = new ArrayList<ProjectileImage>();

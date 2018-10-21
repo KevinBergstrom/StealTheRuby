@@ -43,11 +43,11 @@ public class Item extends Entity{
 	}
 	
 	public void pickup(StateBasedGame game) {
-		
+		//meant to be overridden
 	}
 	
 	public void use(StateBasedGame game) {
-		
+		//meant to be overridden
 	}
 	
 	public void setName(String s) {

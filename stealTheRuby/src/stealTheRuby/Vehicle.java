@@ -29,7 +29,6 @@ public class Vehicle extends Item{
 		MainGame mg = (MainGame)game;
 		
 		if(!getSolid()) {
-			//TODO win
 			mg.player.setEscaped(true);
 		}
 		

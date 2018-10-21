@@ -31,6 +31,7 @@ public class Key extends Item{
 	@Override
 	public void use(StateBasedGame game) {
 		MainGame mg = (MainGame)game;
+		//try all spots around the player
 		Vector gridPos = mg.map.getGridPos(mg.player.getX(), mg.player.getY());
 		Item p1 = mg.map.getItemAtPoint((int)gridPos.getX(),(int)gridPos.getY()-1);
 		Item p2 = mg.map.getItemAtPoint((int)gridPos.getX()-1,(int)gridPos.getY());
