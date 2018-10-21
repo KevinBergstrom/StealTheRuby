@@ -46,6 +46,8 @@ public class PlayingState extends BasicGameState{
 	private boolean spotted;
 	private int attempts;
 	
+	private boolean GODMODE;
+	
 	private boolean itemScrollDebounce;
 	private boolean itemUseDebounce;
 	
@@ -59,6 +61,7 @@ public class PlayingState extends BasicGameState{
 		unseenTitle = new Tile(400,576,176,27,false,UNSEENIMG_RSC);
 		calmTitle = new Tile(400,576,176,27,false,CALMIMG_RSC);
 		alertTitle = new Tile(400,576,176,27,false,ALERTIMG_RSC);
+		GODMODE = false;
 		
 	}
 	
@@ -135,6 +138,13 @@ public class PlayingState extends BasicGameState{
 			mg.collectAnims.get(i).render(g);
 		}
 		
+		if(mg.DEBUG) {
+			g.drawString("DEBUG MODE", 10, 30);
+		}
+		if(GODMODE) {
+			g.drawString("GODMODE", 10, 50);
+		}
+		
 	}
 	
 	public void renderInventory(StateBasedGame game, Graphics g) {
@@ -184,6 +194,9 @@ public class PlayingState extends BasicGameState{
 		if (input.isKeyDown(Input.KEY_F1)) {
 			mg.DEBUG = true;
 		}
+		if (input.isKeyDown(Input.KEY_F2)) {
+			GODMODE = true;
+		}
 		
 		//player controls
 		if (input.isKeyDown(Input.KEY_W)) {
@@ -224,8 +237,10 @@ public class PlayingState extends BasicGameState{
 		mg.player.update(delta);
 		mg.player.keepInBounds(0, mg.ScreenWidth, 0, mg.ScreenHeight-100);
 		mg.player.collideWithItems(mg);
-		mg.player.collideWithTraps(mg);
-		mg.player.collideWithMap(mg.map);
+		if(!GODMODE) {
+			mg.player.collideWithTraps(mg);
+			mg.player.collideWithMap(mg.map);
+		}
 		
 		mg.map.updateGuards(delta, game);
 		
@@ -248,26 +263,28 @@ public class PlayingState extends BasicGameState{
 			updatePlayerScore(game);
 			mg.enterState(MainGame.RESULTSSTATE);
 		}
-		if(mg.map.getFrozen()<=0) {
-			mg.map.collideWithCameras(mg.player);
-			int guardCollide = mg.map.collideWithGuards(mg.player);
-			if(guardCollide==2) {
-				//player got caught
-				mg.player.subLives();
-				
-				if(mg.player.getLives()<=0) {
-					//GAME OVER
-					//TODO update score
-					game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
-				}else {
-					reloadLevel(game);
-					mg.player.reset();
+		if(!GODMODE) {
+			if(mg.map.getFrozen()<=0) {
+				mg.map.collideWithCameras(mg.player);
+				int guardCollide = mg.map.collideWithGuards(mg.player);
+				if(guardCollide==2) {
+					//player got caught
+					mg.player.subLives();
+					
+					if(mg.player.getLives()<=0) {
+						//GAME OVER
+						game.enterState(MainGame.GAMEOVERSTATE, new EmptyTransition() , new VerticalSplitTransition());
+					}else {
+						reloadLevel(game);
+						mg.player.reset();
+					}
+				}else if(guardCollide==1) {
+					spotted = true;
 				}
-			}else if(guardCollide==1) {
-				spotted = true;
+				
 			}
-			
 		}
+		
 		
 	}
 	
