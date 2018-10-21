@@ -1,0 +1,109 @@
+Name: Kevin Bergstrom
+Email: kevin.bergstrom@wsu.edu
+
+Overview:
+	This is a game called Steal The Ruby. It is a game
+	where the player controls a thief and must maneuver
+	through each level. The goal is to acquire the ruby
+	and then escape on your bike. There may be guards 
+	who will chase the player for a certain amount of 
+	time on contact. There may be security cameras that
+	will alert all guards to the player's position. If
+	the player gets caught by a guard, they will lose
+	a life and have to restart the level. Once a player
+	loses all 3 lives, its gameover. The game contains
+	10 unique levels. After completing all of the levels
+	the player will win. If the player collects all 322
+	coins during the play through, something may happen
+	after completion.
+	
+Lowbar goals:
+	Guard states: Complete
+	Guard field of vision: Complete
+	Dijkstra's algorithm for pathfinding: Complete
+	Multiple levels: Complete
+	Keys and locks: Complete
+	Collision detection: Complete
+	Smooth Movement: Complete
+
+Other goals:
+	Traps: Partially complete
+	Extra items: Complete
+	Security cameras: Complete
+	
+How To Run in Eclipse
+	stealTheRuby->src->stealTheRuby->MainGame.java->
+	RunAs->Java Application
+
+Controls:
+	Space		Use item/Continue
+	W			Move up
+	A			Move left
+	S			Move down
+	D			Move right
+	Q			Item scroll left
+	E			Item scroll right
+
+Cheat Codes:
+note:These cannot be used in menus
+	F1			Enter DEBUG mode
+	F2			Enter GODMODE
+	F12			Clear current level
+
+Licensing terms:
+	Anyone is free to do whatever they want with my game. 
+	But I am not responsible for any derivative works.
+
+External Resources:
+	This project was built on top of Scott Wallace's skeleton code
+	
+	This project uses JIG
+	
+	All images included in this project were created by Kevin Bergstrom:
+	60sCarpetTile.png
+	alertTile.png
+	bigRuby.png
+	blueCarpetTile.png
+	brickTile.png
+	calmTile.png
+	carpetTile.png
+	chessTile.png
+	coin.png
+	concreteTile.png
+	crateTile.png
+	electronicsJammer.png
+	fox.png
+	fruitPeel.png
+	gameOverBars.png
+	gameOverTitle.png
+	grassTile.png
+	guardSpriteSheet.png
+	key.png
+	lock.png
+	mahoganyTile.png
+	metalTile.png
+	playerSpriteSheet.png
+	purpleTile.png
+	resultsScreen.png
+	rockTile.png
+	rubyCase.png
+	securityCamera.png
+	smallRuby.png
+	solidTile.png
+	splashBG.png
+	splashHeli.png
+	splashLight.png
+	splashRat.png
+	splashTitle.png
+	steelTile.png
+	stopWatch.png
+	strawberryShake.png
+	testBike.png
+	testGUI.png
+	testInv.png
+	testTile.png
+	unseenTitle.png
+	visionCone.png
+	winScreen.png
+	woodenWallTile.png
+	woodTile.png

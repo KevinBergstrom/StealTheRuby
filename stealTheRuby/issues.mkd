@@ -1,0 +1,39 @@
+## Resolved Issues ##
+
+- **[1]** Need a skeletal, executable game
+- **[2]** Need a playing state
+- **[3]** Basic player and controls
+- **[4]** Add basic map
+- **[5]** Add map collision
+- **[6]** Splash state
+- **[7]** Add coins
+- **[8]** Add ruby
+- **[9]** Add keys and locks
+- **[10]** Add GUI
+- **[11]** Add guards
+- **[12]** Add getaway vehicle
+- **[13]** Add multiple levels
+- **[14]** Add loading state
+- **[15]** Add results screen
+- **[16]** Add guard vision
+- **[17]** Add gameover screen
+- **[18]** Add alert indicator
+- **[19]** Fix item usage
+- **[20]** Add win screen
+- **[21]** Fix time reset bug
+- **[22]** Add Trap system
+- **[23]** Add fruit peel
+- **[24]** Add stopwatch
+- **[25]** Add security cameras
+- **[26]** Add electronics jammer
+- **[27]** Add item names
+- **[28]** Add player and guard animations
+- **[29]** Animation performance
+- **[30]** Update gui
+- **[31]** Fix png errors
+- **[32]** Add final levels
+- **[33]** Final polish
+
+## Open Issues ##
+
+
