@@ -36,6 +36,5 @@
 ## Open Issues ##
 
 - **[33]** Final polish
-- **[34]** Add cheats/debug mode
 
 

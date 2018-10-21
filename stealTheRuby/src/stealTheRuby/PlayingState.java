@@ -109,7 +109,7 @@ public class PlayingState extends BasicGameState{
 		
 		Item[] items = mg.player.getSelectedItems();
 		if(items[1]!=null) {
-			g.drawString(""+items[1].getName(), 550, 526);
+			g.drawString(""+items[1].getName() + " - Space to use", 550, 526);
 		}
 		
 		
