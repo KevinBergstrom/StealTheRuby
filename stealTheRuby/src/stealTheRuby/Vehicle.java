@@ -12,7 +12,7 @@ public class Vehicle extends Item{
 	public Vehicle(float x, float y, boolean sol) {
 		super(x, y, sol);
 		
-		setImage(Item.BIKEIMG_RSC,48,32);
+		setImage(Item.BIKEIMG_RSC,42,32);
 		velocity = new Vector(0.0f, 0.0f);
 	}
 	
