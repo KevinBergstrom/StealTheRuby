@@ -14,8 +14,6 @@ public class SecurityCamera extends Entity{
 	private float startAngle;
 	private float endAngle;
 	private float angle;
-	private float sizeX;
-	private float sizeY;
 	private float moveSpeed;
 	private Image image;
 	private int state;
@@ -28,8 +26,6 @@ public class SecurityCamera extends Entity{
 	
 	public SecurityCamera(float x, float y, int sx, int sy, float speed, float startA, float endA, int visionRange) {
 		super(x,y);
-		sizeX = sx;
-		sizeY = sy;
 		angle = startA;
 		startAngle = startA;
 		endAngle = endA;

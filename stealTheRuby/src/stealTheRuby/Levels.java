@@ -25,6 +25,7 @@ public class Levels {
 	public static final String PURPLEIMG_RSC = "stealTheRuby/resource/purpleTile.png";
 	public static final String SOLIDIMG_RSC = "stealTheRuby/resource/solidTile.png";
 	public static final String WOODWALLIMG_RSC = "stealTheRuby/resource/woodenWallTile.png";
+	public static final String ROCKWALLIMG_RSC = "stealTheRuby/resource/rockTile.png";
 	
 	public static void loadTextures() {
 		
@@ -43,16 +44,34 @@ public class Levels {
 		ResourceManager.loadImage(PURPLEIMG_RSC);
 		ResourceManager.loadImage(SOLIDIMG_RSC);
 		ResourceManager.loadImage(WOODWALLIMG_RSC);
+		ResourceManager.loadImage(ROCKWALLIMG_RSC);
 		
 	}
 	
-	final public static int lastLevel = 2;
+	final public static int lastLevel = 10;
+	final public static int totalCoins = 322;
 	
 	public static void loadLevel(int level, StateBasedGame game) {
 		if(level==1) {
-			level1(game);
+			level6(game);
 		}else if(level==2) {
+			level8(game);
+		}else if(level==3) {
+			level7(game);
+		}else if(level==4) {
+			level3(game);
+		}else if(level==5) {
+			level4(game);
+		}else if(level==6) {
+			level5(game);
+		}else if(level==7) {
+			level1(game);
+		}else if(level==8) {
+			level9(game);
+		}else if(level==9) {
 			level2(game);
+		}else if(level==10) {
+			level10(game);
 		}
 	}
 	
@@ -90,6 +109,8 @@ public class Levels {
 		}else if(type==15) {
 			return new Tile(x,y,tileSizeX, tileSizeY,true ,GRASSIMG_RSC);
 			//solid grass
+		}else if(type==16) {
+			return new Tile(x,y,tileSizeX, tileSizeY,true ,ROCKWALLIMG_RSC);
 		}
 		
 		return null;
@@ -126,6 +147,30 @@ public class Levels {
 				return new Stopwatch(x,y,false);
 			}else if(type==11) {
 				return new electronicsJammer(x,y,false);
+			}else if(type==12) {
+				return new Key(x, y,
+						new Color(255,200,0));
+			}else if(type==13) {
+				return new Lock(x, y,
+						new Color(255,200,0));
+			}else if(type==14) {
+				return new Key(x, y,
+						new Color(255,184,71));
+			}else if(type==15) {
+				return new Lock(x, y,
+						new Color(255,184,71));
+			}else if(type==16) {
+				return new Key(x, y,
+						new Color(255,184,222));
+			}else if(type==17) {
+				return new Lock(x, y,
+						new Color(255,184,222));
+			}else if(type==18) {
+				return new Key(x, y,
+						new Color(0,255,222));
+			}else if(type==19) {
+				return new Lock(x, y,
+						new Color(0,255,222));
 			}
 		 	
 		 	return null;
@@ -153,6 +198,18 @@ public class Levels {
 			return new SecurityCamera(x, y,8,14,0.05f,270,90,16);
 		}else if(type==7) {
 			return new SecurityCamera(x, y,8,14,0.05f,0,360,16);
+		}else if(type==8) {
+			return new SecurityCamera(x+(tileSizeX/2), y+(tileSizeY/2),8,14,0.05f,180,90,16);
+		}else if(type==9) {
+			return new SecurityCamera(x+(tileSizeX/2), y+(tileSizeY/2),8,14,0.05f,360,270,16);
+		}else if(type==10) {
+			return new SecurityCamera(x, y,8,14,0.05f,180,270,16);
+		}else if(type==11) {
+			return new SecurityCamera(x, y,8,14,0.05f,0,90,16);
+		}else if(type==12) {
+			return new SecurityCamera(x, y,8,14,0.05f,90,180,16);
+		}else if(type==13) {
+			return new SecurityCamera(x, y,8,14,0.05f,270,360,16);
 		}
 		return null;
 	}
@@ -212,8 +269,1325 @@ public class Levels {
 		}
 	}
 	
+	private static void level10(StateBasedGame game) {
+		
+		String levelName = "The Louvre";
+		//20 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,1,1,1,1,1,1},
+				{9,9,9,9,9,9,13,12,12,12,12,13,5,5,5,5,13,9,13,1,1,1,1,1,1},
+				{9,0,0,0,0,9,13,12,12,12,12,13,5,5,5,5,13,9,13,1,1,1,1,1,1},
+				{9,1,1,1,0,9,13,13,9,13,13,13,13,13,9,13,13,9,13,1,1,1,1,1,1},
+				{9,1,1,1,0,9,1,1,9,1,1,1,1,1,9,1,1,9,13,13,13,13,13,13,13},
+				{9,1,1,1,0,9,9,9,9,9,9,9,9,9,9,9,1,9,13,7,7,7,7,7,13},
+				{9,1,1,1,0,9,0,9,0,0,0,9,0,0,0,9,1,9,13,7,4,4,4,7,13},
+				{9,1,1,1,0,9,0,9,0,9,0,9,0,9,0,9,9,9,7,7,4,4,4,7,13},
+				{9,1,1,1,0,9,0,0,0,9,0,0,0,9,0,9,1,9,13,7,4,4,4,7,13},
+				{9,1,1,1,0,9,9,9,9,9,9,9,9,9,9,9,1,9,13,7,7,7,7,7,13},
+				{9,1,1,1,0,9,1,1,9,1,1,1,1,1,9,1,1,9,13,13,13,13,13,13,13},
+				{9,1,1,1,0,9,13,13,9,13,13,13,13,13,9,13,13,9,13,1,1,1,1,1,1},
+				{9,0,0,0,0,9,13,6,6,6,6,13,8,8,8,8,13,9,13,1,1,1,1,1,1},
+				{9,9,9,9,9,9,13,6,6,6,6,13,8,8,8,8,13,9,13,1,1,1,1,1,1},
+				{13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,12,0,0,0,11,0,0,0,5,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{-1,0,0,0,0,0,0,3,0,0,0,9,0,0,0,0,0,0,1,1,0,2,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,7,0,0,0,9,0,0,0,10,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,13,0,12,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,12,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0},
+				{0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,13,0,12,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(5*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,4*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,4*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(19*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2 + 5, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(19*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(19*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	private static void level9(StateBasedGame game) {
+		
+		String levelName = "Disco";
+		//20 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0},
+				{0,5,5,5,5,5,0,5,5,0,9,9,9,9,6,6,6,0,8,8,8,8,8,8,0},
+				{0,5,5,0,5,5,5,5,5,5,9,9,9,9,0,6,6,6,8,8,8,8,8,8,0},
+				{0,5,5,0,5,5,0,5,5,0,9,9,9,9,0,6,6,6,8,8,8,8,8,8,0},
+				{0,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0},
+				{0,5,5,0,8,8,8,8,8,8,8,0,12,12,12,12,12,0,6,6,6,6,6,6,0},
+				{0,5,5,0,8,8,8,0,8,8,8,0,12,12,12,12,12,0,6,6,6,6,6,6,0},
+				{0,5,5,0,8,8,8,0,8,8,8,0,12,12,0,12,12,0,6,0,0,0,0,0,0},
+				{0,5,5,5,8,8,8,0,8,8,8,0,12,12,0,12,12,0,8,8,8,8,8,8,0},
+				{0,0,0,0,0,0,0,0,8,8,8,0,12,12,0,12,12,0,8,8,8,8,8,8,0},
+				{0,12,12,12,12,12,12,12,8,8,8,0,12,12,0,12,12,0,8,8,8,8,8,8,0},
+				{0,12,12,12,12,12,12,0,0,0,0,0,12,12,0,12,12,0,0,0,0,6,0,0,0},
+				{0,12,12,12,12,12,12,0,12,0,12,12,12,12,0,12,12,6,6,6,6,6,6,6,0},
+				{0,0,0,0,0,12,0,0,12,0,12,12,12,12,0,12,12,0,6,6,6,6,6,6,0},
+				{0,12,12,12,12,12,12,12,12,12,12,12,12,12,0,12,12,0,6,6,6,6,6,6,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,6,0,0,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+				{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0},
+				{0,0,0,0,0,0,0,0,2,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,1,1,0,0,1,1,0,1,1,0,0,0,0,0,0,11,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,1,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(8*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(8*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(8*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(10*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(10*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(18*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(18*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(23*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(23*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(18*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(18*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(18*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(23*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(23*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(18*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		Guard g4 = new Guard(4*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p4 = new ArrayList<Vector>();
+		p4.add(new Vector(4*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(4*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(6*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(6*tileSizeX + tileSizeX/2,8*tileSizeY + tileSizeY/2));
+		
+		g4.setPatrolPath(p4);
+		guards.add(g4);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level8(StateBasedGame game) {
+		
+		String levelName = "Zig Zag";
+		//20 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+				{9,9,9,9,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1,1,1,1},
+				{9,9,9,9,9,3,0,3,3,3,0,3,3,3,0,3,3,3,0,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,3,3,0,3,3,3,0,3,3,3,0,3,3,3,0,1,1,1,1},
+				{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+				{0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		Guard g4 = new Guard(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p4 = new ArrayList<Vector>();
+		p4.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g4.setPatrolPath(p4);
+		guards.add(g4);
+		
+		Guard g5 = new Guard(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p5 = new ArrayList<Vector>();
+		p5.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g5.setPatrolPath(p5);
+		guards.add(g5);
+		
+		Guard g6 = new Guard(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p6 = new ArrayList<Vector>();
+		p6.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g6.setPatrolPath(p6);
+		guards.add(g6);
+		
+		Guard g7 = new Guard(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p7 = new ArrayList<Vector>();
+		p7.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g7.setPatrolPath(p7);
+		guards.add(g7);
+		
+Guard g8 = new Guard(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p8 = new ArrayList<Vector>();
+		p8.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g8.setPatrolPath(p8);
+		guards.add(g8);
+		
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level7(StateBasedGame game) {
+		
+		String levelName = "Halls";
+		//20 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,4,4,5,5,5,5,5,0,11,11,5,11,11,0,5,5,5,5,5,4,4,0,1},
+				{1,0,4,4,5,0,5,0,5,0,11,11,5,11,11,0,5,0,5,0,5,4,4,0,1},
+				{1,0,4,4,5,0,5,0,5,0,11,11,5,11,11,0,5,0,5,0,5,4,4,0,1},
+				{1,0,4,4,5,0,5,0,5,0,11,11,5,11,11,0,5,0,5,0,5,4,4,0,1},
+				{1,0,4,4,5,0,5,0,5,0,11,11,5,11,11,0,5,0,5,0,5,4,4,0,1},
+				{1,0,4,0,5,0,5,0,5,0,11,0,5,0,11,0,5,0,5,0,5,0,4,0,1},
+				{1,0,4,0,5,0,5,0,5,0,11,0,5,0,11,0,5,0,5,0,5,0,4,0,1},
+				{1,0,4,0,5,0,5,0,5,0,11,0,5,0,11,0,5,0,5,0,5,0,4,0,1},
+				{1,0,4,0,5,0,5,0,5,0,11,0,5,0,11,0,5,0,5,0,5,0,4,0,1},
+				{1,0,0,0,5,5,5,5,5,11,11,0,0,0,11,11,5,5,5,5,5,0,0,0,1},
+				{1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
+				{0,0,1,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,1,0,0},
+				{0,0,1,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,1,0,0},
+				{0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+				{0,0,7,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,7,0,0},
+				{0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(16*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(16*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(16*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(18*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(18*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(20*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(20*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(18*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(18*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(8*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(8*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(8*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(6*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(6*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(4*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(4*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(6*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(6*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level6(StateBasedGame game) {
+		
+		String levelName = "Gallery";
+		//20 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9},
+				{1,1,0,11,11,11,11,11,11,11,11,11,0,4,4,4,4,4,4,4,0,9,9,9,9},
+				{1,1,0,11,0,0,0,0,0,0,11,11,11,4,4,0,0,0,0,4,0,9,9,9,9},
+				{1,1,0,11,0,0,6,6,6,6,6,6,6,6,4,0,0,0,0,4,0,9,9,9,9},
+				{1,1,0,6,6,6,6,0,0,0,0,0,0,6,4,4,4,4,4,4,4,4,4,4,4},
+				{1,1,0,6,0,0,0,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
+				{1,1,0,6,6,6,6,6,6,11,11,6,0,6,6,0,0,0,0,0,0,6,6,6,6},
+				{1,1,0,6,0,0,0,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
+				{1,1,0,6,6,6,6,0,0,0,0,0,0,6,4,4,4,4,4,4,4,4,4,4,4},
+				{1,1,0,11,0,0,6,6,6,6,6,6,6,6,4,0,0,0,0,4,0,9,9,9,9},
+				{1,1,0,11,0,0,0,0,0,0,11,11,11,4,4,0,0,0,0,4,0,9,9,9,9},
+				{1,1,0,11,11,11,11,11,11,11,11,11,0,4,4,4,4,4,4,4,0,9,9,9,9},
+				{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,-1,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(19*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(14*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(14*tileSizeX + tileSizeX/2,2*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,2*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(19*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(14*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(14*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(3*tileSizeX + tileSizeX/2,7*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(3*tileSizeX + tileSizeX/2,7*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(3*tileSizeX + tileSizeX/2,2*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(10*tileSizeX + tileSizeX/2,2*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(10*tileSizeX + tileSizeX/2,4*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(6*tileSizeX + tileSizeX/2,4*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(6*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(3*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(3*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(10*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(10*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(6*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(6*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(3*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	private static void level5(StateBasedGame game) {
+		
+		String levelName = "Castle";
+		//17 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+				{1,1,1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,16},
+				{1,1,1,16,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,16,16,16,16,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,4,4,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,16,16,4,4,4,16},
+				{1,1,1,16,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,4,4,4,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,16,16,4,4,4,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,4,4,16},
+				{1,1,1,16,4,4,16,4,16,4,16,4,16,4,16,4,16,4,16,4,16,16,16,16,16},
+				{1,1,1,16,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,16},
+				{1,1,1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,16},
+				{1,1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{-1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,2,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(21*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(21*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(23*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(23*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(21*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(5*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(5*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level4(StateBasedGame game) {
+		
+		String levelName = "Courtyard";
+		//17 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,14,14,14,14,14,14,14,14,14,1,14,14,14,14,14,14,14,14,14,1,1,1,1},
+				{1,1,1,14,7,7,7,14,1,1,1,1,1,1,1,1,1,14,7,7,7,14,1,1,1},
+				{1,1,1,14,7,7,7,14,1,1,1,1,1,1,1,1,1,14,7,7,7,14,1,1,1},
+				{1,1,1,14,14,1,14,14,1,1,14,14,1,14,14,1,1,14,14,1,14,14,1,1,1},
+				{1,1,1,14,1,1,1,1,1,1,14,5,5,5,14,1,1,1,1,1,1,14,1,1,1},
+				{1,1,1,14,1,1,1,1,1,1,14,5,5,5,14,1,1,1,1,1,1,14,1,1,1},
+				{1,1,1,14,1,1,1,1,1,1,14,5,5,5,14,1,1,1,1,1,1,14,1,1,1},
+				{1,1,1,14,1,1,1,1,1,1,14,5,5,5,14,1,1,1,1,1,1,14,1,1,1},
+				{1,1,1,14,14,1,14,14,1,1,14,14,14,14,14,1,1,14,14,1,14,14,1,1,1},
+				{1,1,1,14,11,11,11,14,1,1,1,1,1,1,1,1,1,14,11,11,11,14,1,1,1},
+				{1,1,1,14,11,11,11,14,1,1,1,1,1,1,1,1,1,14,11,11,11,14,1,1,1},
+				{1,1,1,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,13,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,5,0,0,1,1,1,1,1,1,1,1,1,0,0,7,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,1,0,8,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(4*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(4*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(4*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(17*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(20*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(20*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(8*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(8*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(8*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(16*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(16*tileSizeX + tileSizeX/2,12*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level2(StateBasedGame game) {
+		
+		String levelName = "Maze";
+		//155 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,1,1,1,1,1,1,1,13,6,13,1,1,1,1,1,1,1,1,1,1,1},
+				{13,13,13,13,13,13,13,13,13,13,13,13,6,13,13,13,13,13,13,13,13,13,13,13,13},
+				{13,6,13,6,13,6,13,13,13,6,6,6,6,6,6,6,13,13,13,6,13,6,13,6,13},
+				{13,6,6,6,6,6,6,6,6,6,6,13,13,13,6,6,6,6,6,6,6,6,6,6,13},
+				{13,6,13,6,6,13,13,13,6,13,6,13,13,13,6,13,6,13,13,13,6,6,13,6,13},
+				{13,6,13,6,6,6,13,6,6,13,6,6,6,6,6,13,6,6,13,6,6,6,13,6,13},
+				{13,6,6,6,13,6,13,6,6,13,6,13,13,13,6,13,6,6,13,6,13,6,6,6,13},
+				{13,13,13,6,13,6,6,6,6,6,6,13,6,13,6,6,6,6,6,6,13,6,13,13,13},
+				{13,6,6,6,13,6,13,6,6,13,6,13,6,13,6,13,6,6,13,6,13,6,6,6,13},
+				{13,6,13,6,6,6,13,6,6,13,6,13,6,13,6,13,6,6,13,6,6,6,13,6,13},
+				{13,6,13,6,6,13,13,13,6,13,6,13,6,13,6,13,6,13,13,13,6,6,13,6,13},
+				{13,6,6,6,6,6,6,6,6,6,6,13,6,13,6,6,6,6,6,6,6,6,6,6,13},
+				{13,6,13,6,13,6,13,13,13,6,6,6,6,6,6,6,13,13,13,6,13,6,13,6,13},
+				{13,13,13,13,13,13,13,13,13,13,13,13,6,13,13,13,13,13,13,13,13,13,13,13,13},
+				{1,1,1,1,1,1,1,1,1,1,1,13,13,13,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,7,0,1,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0,14,0},
+				{0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,0},
+				{0,1,0,1,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,1,0,1,0},
+				{0,1,0,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,0,1,0},
+				{0,1,1,1,0,1,0,1,1,0,1,0,0,0,1,0,1,1,0,1,0,1,1,1,0},
+				{0,0,0,1,0,1,1,1,1,1,1,0,2,0,1,1,1,1,1,1,0,1,0,0,0},
+				{0,1,1,1,0,1,0,1,1,0,1,0,8,0,1,0,1,1,0,1,0,1,1,1,0},
+				{0,1,0,1,1,1,0,1,1,0,1,0,15,0,1,0,1,1,0,1,1,1,0,1,0},
+				{0,1,0,1,1,0,0,0,1,0,1,0,17,0,1,0,1,0,0,0,1,1,0,1,0},
+				{0,1,1,1,1,1,1,1,1,1,1,0,19,0,1,1,1,1,1,1,1,1,1,1,0},
+				{0,16,0,1,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,1,0,18,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(10*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(10*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(10*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(14*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(14*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(14*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(8*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(8*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(8*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		Guard g4 = new Guard(16*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p4 = new ArrayList<Vector>();
+		p4.add(new Vector(16*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(16*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g4.setPatrolPath(p4);
+		guards.add(g4);
+		
+		Guard g5 = new Guard(3*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p5 = new ArrayList<Vector>();
+		p5.add(new Vector(3*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(3*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g5.setPatrolPath(p5);
+		guards.add(g5);
+		
+		Guard g6 = new Guard(21*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p6 = new ArrayList<Vector>();
+		p6.add(new Vector(21*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(21*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g6.setPatrolPath(p6);
+		guards.add(g6);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	private static void level3(StateBasedGame game) {
+		
+		String levelName = "Storehouse";
+		//17 coins
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{15,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+				{1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,1},
+				{15,2,2,2,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,2,1},
+				{1,2,4,2,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,10,4,2,1},
+				{1,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,1},
+				{1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,1},
+				{1,2,4,2,2,4,10,10,4,10,10,4,10,10,4,10,10,4,10,10,4,2,2,2,1},
+				{1,2,4,2,2,4,10,10,4,10,10,4,10,10,4,10,10,4,10,10,4,2,2,2,1},
+				{1,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,1},
+				{1,2,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+				{1,2,13,13,13,13,13,3,10,10,10,10,3,10,10,10,10,3,13,13,13,13,3,2,1},
+				{1,2,3,13,13,13,13,3,10,10,10,10,3,10,10,10,10,3,13,13,13,13,3,2,1},
+				{1,2,3,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,3,2,1},
+				{1,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+				{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,9,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,10,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0},
+				{0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(4*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(4*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(22*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(22*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(22*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(2*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(2*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(2*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(22*tileSizeX + tileSizeX/2,9*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		Guard g4 = new Guard(22*tileSizeX + tileSizeX/2,13*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p4 = new ArrayList<Vector>();
+		p4.add(new Vector(22*tileSizeX + tileSizeX/2,13*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(2*tileSizeX + tileSizeX/2,13*tileSizeY + tileSizeY/2));
+		
+		g4.setPatrolPath(p4);
+		guards.add(g4);
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
 	private static void level1(StateBasedGame game) {
-		String levelName = "TEST LEVEL 1";
+		String levelName = "Building";
+		//16 coins
 			
 			MainGame mg = (MainGame)game;
 			int tileSizeX = mg.map.getTileSizeX();
@@ -324,113 +1698,5 @@ public class Levels {
 			
 			setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 		}
-		
-	
-	private static void level2(StateBasedGame game) {
-		
-		String levelName = "TESTING LEVEL 2";
-		
-		MainGame mg = (MainGame)game;
-		int tileSizeX = mg.map.getTileSizeX();
-		int tileSizeY = mg.map.getTileSizeY();
-		
-		
-		int[][] tlevel = 
-			   {{1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-				{1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
-				{1,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,1,1,1},
-				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1}};
-		
-		//-1 = getaway vehicle
-		
-		int[][] ilevel = 
-			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1,0,0,0,0,5,0,0,0,0,0,-1,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,6,2,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		
-		int[][] traplevel = 
-			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		
-		int[][] cameralevel = 
-			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-		
-		//guards
-		ArrayList<Guard> guards = new ArrayList<Guard>();
-		
-		Guard g1 = new Guard(3*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
-		
-		ArrayList<Vector> p1 = new ArrayList<Vector>();
-		p1.add(new Vector(8*tileSizeX + tileSizeX/2,7*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(8*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(10*tileSizeX + tileSizeX/2,10*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(10*tileSizeX + tileSizeX/2,7*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(15*tileSizeX + tileSizeX/2,7*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(15*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(9*tileSizeX + tileSizeX/2,5*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(9*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
-		p1.add(new Vector(8*tileSizeX + tileSizeX/2,6*tileSizeY + tileSizeY/2));
-		
-		g1.setPatrolPath(p1);
-		guards.add(g1);
-		
-		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
-	}
+			
 }

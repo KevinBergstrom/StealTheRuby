@@ -20,6 +20,8 @@ public class MainGame extends StateBasedGame {
 	public static final int GAMEOVERSTATE = 4;
 	public static final int WINSTATE = 5;
 	
+	public static boolean DEBUG = false;
+	
 	public static final String TESTIMG_RSC = "stealTheRuby/resource/testTile.png";
 	public static final String VISIONCONEIMG_RSC = "stealTheRuby/resource/visionCone.png";
 	public static final String SECURITYCAMERAIMG_RSC = "stealTheRuby/resource/securityCamera.png";

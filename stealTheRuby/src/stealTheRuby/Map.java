@@ -3,13 +3,11 @@ package stealTheRuby;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import jig.Entity;
-import jig.ResourceManager;
 import jig.Vector;
 
 public class Map {
@@ -417,6 +415,7 @@ public class Map {
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
+		MainGame mg = (MainGame)game;
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
 				if(geometry[x][y]!=null) {
@@ -437,7 +436,9 @@ public class Map {
 				curGuard.renderCone(g);
 			}
 			//TODO DEBUG MODE
-			//curGuard.renderPath(g);
+			if(mg.DEBUG) {
+				curGuard.renderPath(g);
+			}
 		}
 		for(int i = 0;i<cameras.size();i++) {
 			SecurityCamera curCamera = cameras.get(i);

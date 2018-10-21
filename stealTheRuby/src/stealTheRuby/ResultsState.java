@@ -34,7 +34,6 @@ public class ResultsState extends BasicGameState{
 	
 	private String timeStr;
 	private String spottedStr;
-	private String attemptsStr;
 	
 	private int state;
 	private float debounce;

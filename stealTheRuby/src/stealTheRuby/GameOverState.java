@@ -42,7 +42,6 @@ public class GameOverState extends BasicGameState {
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		MainGame mg = (MainGame)game;
 		loadTextures();
 		bars = new Tile(-234*2, 178*2 + 1, 234*2, 167*2, false, GAMEOVERBARSIMG_RSC);
 		rubies = new ArrayList<Tile>();

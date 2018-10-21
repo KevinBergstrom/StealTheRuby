@@ -6,7 +6,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
 
 import jig.Entity;
 import jig.ResourceManager;
@@ -17,8 +16,6 @@ public class Guard extends Entity{
 	private Vector velocity;
 	private Vector facing;
 	private float speed;
-	private int sizex;
-	private int sizey;
 	
 	private int state;
 	private float patrolSpeed;
@@ -39,13 +36,11 @@ public class Guard extends Entity{
 	
 	public Guard(final float x, final float y, int sx, int sy) {
 		super(x,y);
-		sizex = sx;
-		sizey = sy;
 		
 		moveAnims = new Animation[8];
 		
 		//add an invisible bounding box
-		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx, sy);
+		Image boundImage = ResourceManager.getImage(MainGame.TESTIMG_RSC).getScaledCopy(sx-4, sy-4);
 		boundImage.setAlpha(0);
 		addImageWithBoundingBox(boundImage);
 		

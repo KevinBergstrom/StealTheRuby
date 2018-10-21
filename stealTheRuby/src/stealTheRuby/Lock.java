@@ -1,9 +1,6 @@
 package stealTheRuby;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
-
-import jig.ResourceManager;
 
 public class Lock extends Item{
 
