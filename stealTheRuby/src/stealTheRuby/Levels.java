@@ -48,7 +48,7 @@ public class Levels {
 		
 	}
 	
-	final public static int lastLevel = 7;//TODO update this
+	final public static int lastLevel = 8;//TODO update this
 	final public static int totalCoins = 100;//TODO update this
 	
 	public static void loadLevel(int level, StateBasedGame game) {
@@ -66,6 +66,8 @@ public class Levels {
 			level6(game);
 		}else if(level==7) {
 			level7(game);
+		}else if(level==8) {
+			level8(game);
 		}
 	}
 	
@@ -325,6 +327,283 @@ private static void levelTest(StateBasedGame game) {
 		
 		//guards
 		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
+	}
+	
+	private static void level8(StateBasedGame game) {
+		
+		String levelName = "Zig Zag";
+		
+		MainGame mg = (MainGame)game;
+		int tileSizeX = mg.map.getTileSizeX();
+		int tileSizeY = mg.map.getTileSizeY();
+		
+		
+		int[][] tlevel = 
+			   {{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+				{9,9,9,9,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,1,1,1,1},
+				{9,9,9,9,9,3,0,3,3,3,0,3,3,3,0,3,3,3,0,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{9,9,9,9,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,1,1,1},
+				{1,1,1,1,0,3,3,3,0,3,3,3,0,3,3,3,0,3,3,3,0,1,1,1,1},
+				{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		
+		//-1 = getaway vehicle
+		
+		int[][] ilevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+				{0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] traplevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		int[][] cameralevel = 
+			   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+		
+		//guards
+		ArrayList<Guard> guards = new ArrayList<Guard>();
+		
+		Guard g1 = new Guard(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p1 = new ArrayList<Vector>();
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p1.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		
+		g1.setPatrolPath(p1);
+		guards.add(g1);
+		
+		Guard g2 = new Guard(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p2 = new ArrayList<Vector>();
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p2.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g2.setPatrolPath(p2);
+		guards.add(g2);
+		
+		Guard g3 = new Guard(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p3 = new ArrayList<Vector>();
+		p3.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p3.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g3.setPatrolPath(p3);
+		guards.add(g3);
+		
+		Guard g4 = new Guard(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p4 = new ArrayList<Vector>();
+		p4.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p4.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g4.setPatrolPath(p4);
+		guards.add(g4);
+		
+		Guard g5 = new Guard(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p5 = new ArrayList<Vector>();
+		p5.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p5.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g5.setPatrolPath(p5);
+		guards.add(g5);
+		
+		Guard g6 = new Guard(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p6 = new ArrayList<Vector>();
+		p6.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p6.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g6.setPatrolPath(p6);
+		guards.add(g6);
+		
+		Guard g7 = new Guard(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p7 = new ArrayList<Vector>();
+		p7.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p7.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		
+		g7.setPatrolPath(p7);
+		guards.add(g7);
+		
+Guard g8 = new Guard(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2, tileSizeX, tileSizeY);
+		
+		ArrayList<Vector> p8 = new ArrayList<Vector>();
+		p8.add(new Vector(19*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(5*tileSizeX + tileSizeX/2,1*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(5*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(7*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(7*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(9*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(9*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(11*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(11*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(13*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(13*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(15*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(15*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(17*tileSizeX + tileSizeX/2,3*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(17*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		p8.add(new Vector(19*tileSizeX + tileSizeX/2,11*tileSizeY + tileSizeY/2));
+		
+		g8.setPatrolPath(p8);
+		guards.add(g8);
+		
 		
 		setLevel(game, levelName, tlevel, ilevel, traplevel, cameralevel, guards);
 	}
