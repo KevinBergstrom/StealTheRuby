@@ -415,7 +415,6 @@ public class Map {
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		MainGame mg = (MainGame)game;
 		for(int x = 0;x<tilesX;x++) {
 			for(int y = 0;y<tilesY;y++) {
 				if(geometry[x][y]!=null) {
@@ -435,8 +434,7 @@ public class Map {
 			if(curGuard.getFrozen()<=0) {
 				curGuard.renderCone(g);
 			}
-			//TODO DEBUG MODE
-			if(mg.DEBUG) {
+			if(MainGame.DEBUG) {
 				curGuard.renderPath(g);
 			}
 		}

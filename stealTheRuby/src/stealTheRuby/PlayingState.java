@@ -136,7 +136,7 @@ public class PlayingState extends BasicGameState{
 			mg.collectAnims.get(i).render(g);
 		}
 		
-		if(mg.DEBUG) {
+		if(MainGame.DEBUG) {
 			g.drawString("DEBUG MODE", 10, 30);
 		}
 		if(GODMODE) {
@@ -190,7 +190,7 @@ public class PlayingState extends BasicGameState{
 			mg.player.setEscaped(true);
 		}
 		if (input.isKeyDown(Input.KEY_F1)) {
-			mg.DEBUG = true;
+			MainGame.DEBUG = true;
 		}
 		if (input.isKeyDown(Input.KEY_F2)) {
 			GODMODE = true;
