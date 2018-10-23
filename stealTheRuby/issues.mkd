@@ -33,6 +33,7 @@
 - **[31]** Fix png errors
 - **[32]** Add final levels
 - **[33]** Final polish
+- **[34]** Fix huge framerates on some computers
 
 ## Open Issues ##
 
