@@ -83,6 +83,7 @@ public class MainGame extends StateBasedGame {
 	            app = new AppGameContainer(new MainGame("Steal The Ruby", 800, 600));
 	            app.setDisplayMode(800, 600, false);
 	            app.setVSync(true);
+	            app.setTargetFrameRate(60);
 	            app.start();
 	        } 
 	catch
